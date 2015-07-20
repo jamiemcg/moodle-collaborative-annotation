@@ -36,3 +36,7 @@ $string['annotationname_help'] = 'This is the name of the document that users wi
 $string['annotation'] = 'annotation';
 $string['pluginadministration'] = 'Annotation administration';
 $string['pluginname'] = 'annotation';
+
+$string['content'] = 'Content';
+$string['document_type'] = 'Document Type';
+$string['selectfile'] = 'Select File';

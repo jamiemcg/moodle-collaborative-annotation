@@ -62,6 +62,19 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->add_intro_editor();
 
+        // Add a file manager to handle uploading of files
+        $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
+        $mform->setExpanded('contentsection');
+        $filemanager_options = array();
+        $filemanager_options['accepted_types'] = '*';
+        $filemanager_options['maxbytes'] = 0;
+        $filemanager_options['maxfiles'] = 1;
+        $filemanager_options['mainfile'] = true;
+        $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
+        $mform->addRule('files', null, 'required');
+
+        // Add dropdown to select document type (text document, source code, image)
+        
 
         /**
          * Removed elements related to grading
