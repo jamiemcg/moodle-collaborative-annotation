@@ -40,7 +40,7 @@
  * The variable name for the capability definitions array is $capabilities
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name
+ * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

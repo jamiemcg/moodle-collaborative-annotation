@@ -21,7 +21,7 @@
  * lib.php/modulename_install() post installation hook and partially defaults.php.
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name <your@email.adress>
+ * @copyright  2015 Jamie McGowan <your@email.adress>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

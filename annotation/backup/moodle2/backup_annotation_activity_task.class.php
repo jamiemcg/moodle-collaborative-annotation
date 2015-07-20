@@ -19,7 +19,7 @@
  *
  * @package   mod_annotation
  * @category  backup
- * @copyright 2015 Your Name <your@email.adress>
+ * @copyright 2015 Jamie McGowan <your@email.adress>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,7 +32,7 @@ require_once($CFG->dirroot . '/mod/annotation/backup/moodle2/backup_annotation_s
  *
  * @package   mod_annotation
  * @category  backup
- * @copyright 2015 Your Name <your@email.adress>
+ * @copyright 2015 Jamie McGowan <your@email.adress>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_annotation_activity_task extends backup_activity_task {

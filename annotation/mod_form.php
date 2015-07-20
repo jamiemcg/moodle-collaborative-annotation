@@ -21,7 +21,7 @@
  * visit: http://docs.moodle.org/en/Development:lib/formslib.php
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name
+ * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -33,7 +33,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
  * Module instance settings form
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name
+ * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_annotation_mod_form extends moodleform_mod {
@@ -62,15 +62,13 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->add_intro_editor();
 
-        // Adding the rest of annotation settings, spreading all them into this fieldset
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        $mform->addElement('static', 'label1', 'annotationsetting1', 'Your annotation fields go here. Replace me!');
 
-        $mform->addElement('header', 'annotationfieldset', get_string('annotationfieldset', 'annotation'));
-        $mform->addElement('static', 'label2', 'annotationsetting2', 'Your annotation fields go here. Replace me!');
-
+        /**
+         * Removed elements related to grading
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
+
+        */
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

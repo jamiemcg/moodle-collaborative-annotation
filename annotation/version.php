@@ -21,14 +21,16 @@
  * See https://docs.moodle.org/dev/version.php for more info.
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name <your@email.address>
+ * @copyright  2015 Jamie McGowan <your@email.address>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_annotation';
-$plugin->version = 20150720;
+
+//$Plugin->version is of the format: YYYYMMDDXX, where XX is a release number
+$plugin->version = 2015072005;
 $plugin->release = 'v0.1';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;

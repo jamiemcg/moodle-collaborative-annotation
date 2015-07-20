@@ -22,18 +22,17 @@
  * if you like, and it can span multiple lines.
  *
  * @package    mod_annotation
- * @copyright  2015 Your Name
+ * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'annotation';
-$string['modulenameplural'] = 'annotations';
-$string['modulename_help'] = 'Use the annotation module for... | The annotation module allows...';
-$string['annotationfieldset'] = 'Custom example fieldset';
-$string['annotationname'] = 'annotation name';
-$string['annotationname_help'] = 'This is the content of the help tooltip associated with the annotationname field. Markdown syntax is supported.';
+$string['modulename'] = 'Annotated Document';
+$string['modulenameplural'] = 'Annotated Documents';
+$string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents.';
+$string['annotationname'] = 'Document Name';
+$string['annotationname_help'] = 'This is the name of the document that users will see for the activity.';
 $string['annotation'] = 'annotation';
-$string['pluginadministration'] = 'annotation administration';
+$string['pluginadministration'] = 'Annotation administration';
 $string['pluginname'] = 'annotation';
