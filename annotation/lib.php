@@ -75,30 +75,20 @@ function annotation_supports($feature) {
  * @return int The id of the newly inserted annotation record
  */
 function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $mform = null) {
-    global $DB;
-    global $USER;
-
+    global $CFG, $DB, $USER;
+    require_once("$CFG->dirroot/mod/annotation/locallib.php");
     $annotation->timecreated = time();
     $annotation->id = $DB->insert_record('annotation', $annotation);
 
     //-----------------------------------------------------
     //Add the docuemnt to the mdl_annotation_document table
     
-    $record = new stdClass();
-    $record->id = $annotation->id;
-    $record->user_id = $USER->id;
-    $record->group_id = 100 //FIX
-    $record->time_created = $annotation->timecreated;
-    $record->document_type = "Text"; //FIX
-    $record->location = "Unknown"; //FIX
-
-    //$DB->insert_record('annotation_document', $record);
-
+  
 
     //-----------------------------------------------------
 
     annotation_grade_item_update($annotation);
-
+    resource_set_mainfile($annotation);
     return $annotation->id;
 }
 

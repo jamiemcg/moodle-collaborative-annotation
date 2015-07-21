@@ -36,3 +36,21 @@ defined('MOODLE_INTERNAL') || die();
  *    return new stdClass();
  *}
  */
+
+function resource_set_mainfile($data) {
+    global $DB;
+    $fs = get_file_storage();
+    $cmid = $data->coursemodule;
+    $draftitemid = $data->files;
+
+    $context = context_module::instance($cmid);
+    if ($draftitemid) {
+        file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation', 'content', 0, array('subdirs'=>true));
+    }
+    $files = $fs->get_area_files($context->id, 'mod_annotation', 'content', 0, 'sortorder', false);
+    if (count($files) == 1) {
+        // only one file attached, set it as main file automatically
+        $file = reset($files);
+        file_set_sortorder($context->id, 'mod_annotation', 'content', 0, $file->get_filepath(), $file->get_filename(), 1);
+    }
+}
