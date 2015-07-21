@@ -72,12 +72,12 @@ class mod_annotation_mod_form extends moodleform_mod {
         $filemanager_options['mainfile'] = true;
         $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
         $mform->addRule('files', null, 'required');
-
-        // Add dropdown to select document type (text document, source code, image)
         
+        // Add a type selector
+
 
         /**
-         * Removed elements related to grading
+         * Temporarily removed elements related to grading
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
 
