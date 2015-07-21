@@ -42,7 +42,6 @@ class mod_annotation_mod_form extends moodleform_mod {
      * Defines forms elements
      */
     public function definition() {
-
         $mform = $this->_form;
 
         // Adding the "general" fieldset, where all the common settings are showed.
@@ -62,7 +61,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Adding the standard "intro" and "introformat" fields.
         $this->add_intro_editor();
 
-        // Add a file manager to handle uploading of files
+        // Add a file manager to handle uploading of files.
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
         $mform->setExpanded('contentsection');
         $filemanager_options = array();
@@ -72,21 +71,32 @@ class mod_annotation_mod_form extends moodleform_mod {
         $filemanager_options['mainfile'] = true;
         $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
         $mform->addRule('files', null, 'required');
-        
-        // Add a type selector
+
+       
+
+        // Add a type selector TODO.
 
 
-        /**
-         * Temporarily removed elements related to grading
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
-
-        */
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
 
         // Add standard buttons, common to all modules.
         $this->add_action_buttons();
+	}
+
+
+    public function definition_after_data() {
+    	parent::definition_after_data();
+    	$mform = $this->_form;
+    	$cmid = $mform->getElementValue('coursemodule');
+    	if(!empty($cmid)) {
+    		//TODO
+    		//Disable changing the file uploading a new file if we are updating the activity
+    		//This is because previous annotations may not match the new file
+    		//freeze('files');
+    	}
     }
 }

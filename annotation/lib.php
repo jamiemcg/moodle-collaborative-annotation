@@ -28,7 +28,6 @@
  * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -62,6 +61,7 @@ function annotation_supports($feature) {
     }
 }
 
+
 /**
  * Saves a new instance of the annotation into the database
  *
@@ -76,12 +76,26 @@ function annotation_supports($feature) {
  */
 function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $mform = null) {
     global $DB;
+    global $USER;
 
     $annotation->timecreated = time();
-
-    // You may have to add extra stuff in here.
-
     $annotation->id = $DB->insert_record('annotation', $annotation);
+
+    //-----------------------------------------------------
+    //Add the docuemnt to the mdl_annotation_document table
+    
+    $record = new stdClass();
+    $record->id = $annotation->id;
+    $record->user_id = $USER->id;
+    $record->group_id = 100 //FIX
+    $record->time_created = $annotation->timecreated;
+    $record->document_type = "Text"; //FIX
+    $record->location = "Unknown"; //FIX
+
+    //$DB->insert_record('annotation_document', $record);
+
+
+    //-----------------------------------------------------
 
     annotation_grade_item_update($annotation);
 
