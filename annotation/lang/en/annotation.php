@@ -39,4 +39,7 @@ $string['pluginname'] = 'annotation';
 
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
+$string['image'] = '*Image';
 $string['selectfile'] = 'Select File';
+$string['source_code'] = 'Source Code';
+$string['text_document'] = 'Text Document';

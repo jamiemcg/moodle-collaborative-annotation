@@ -56,15 +56,30 @@ $event->add_record_snapshot('course', $PAGE->course);
 $event->add_record_snapshot($PAGE->cm->modname, $annotation);
 $event->trigger();
 
-// Print the page header.
-$sourcecode = true; //TODO get this from DB
+//Get the data about the file from the DB
+$cmid = $cm->id;
+$table = "annotation_document";
+$results = $DB->get_records($table, array('cmid' => $cmid));
+foreach ($results as $result) {
+        $contenthash = $result->location;
+        $document_type = $result->document_type;
+        break;
+}
 
-if($sourcecode) {
+
+if($document_type == 2) {
+    //The document is an image
+    //TODO render it, if have time
+    die("Can't render images yet");
+}
+
+else if($document_type == 1) {
+    //The docuemnt is a source code file
+    $sourcecode = true;
     $PAGE->requires->css('/mod/annotation/scripts/styles/default.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
     $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
 }
-
 
 
 $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
@@ -92,27 +107,20 @@ echo $OUTPUT->heading('Moodle Collaborative Annotation Plugin');
 
 //--------TODO--------------
 
-//Gest the file contents from the DB
-$cmid = $cm->id;
-$table = "annotation_document";
-$results = $DB->get_records($table, array('cmid' => $cmid));
-foreach ($results as $result) {
-        $contenthash = $result->location;
-        break; //Bad way of doing it, TODO
-    }
 
+//Build the path to the file from the content_hash
 $path = $CFG->dirroot.'\\..\\moodledata\\filedir\\';
 $path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) . '\\';
 $path = $path . $contenthash;
 $file_contents = file_get_contents($path);
 
-if($sourcecode) {
+if($document_type == 1) {
     echo "<pre><code>";
 }
 
 echo $file_contents;
 
-if($sourcecode) {
+if($document_type == 1) {
     echo "</code></pre>";
 }
 

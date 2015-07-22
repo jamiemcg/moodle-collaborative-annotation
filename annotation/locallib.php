@@ -57,8 +57,6 @@ function store_annotation_document($data) {
     //Find out the file location by getting the content hash
     $table = "files";
     $results = $DB->get_records($table, array('itemid' => $draftitemid));
-    echo "<br><hr>";
-    print_object($results);
     foreach ($results as $result) {
         $userid = $result->userid;
         $timecreated = $result->timecreated;
@@ -73,12 +71,10 @@ function store_annotation_document($data) {
     $record->user_id = $userid;
     $record->group_id = 0;
     $record->time_created = $timecreated;
-    $record->document_type = "";
+    $record->document_type = $data->type; //TODO
     $record->location = $contenthash;
-    $record->lang = "";
+    $record->lang = ""; //TODO : possibly remove lang field as automatic detection
     $record->cmid = $cmid;
 
     $insertid = $DB->insert_record('annotation_document', $record, false);
-    echo "<br><hr>";
-
 }

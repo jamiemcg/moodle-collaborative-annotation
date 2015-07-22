@@ -64,6 +64,11 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Add a file manager to handle uploading of files.
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
         $mform->setExpanded('contentsection');
+
+        //Add selector for document type - text, source, image
+        $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'), 2 => get_string('image', 'annotation'));
+        $mform->addElement('select', 'type', get_String('document_type', 'annotation'), $doctypes);
+
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';
         $filemanager_options['maxbytes'] = 0;
@@ -71,11 +76,6 @@ class mod_annotation_mod_form extends moodleform_mod {
         $filemanager_options['mainfile'] = true;
         $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
         $mform->addRule('files', null, 'required');
-
-       
-
-        // Add a type selector TODO.
-
 
         // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
