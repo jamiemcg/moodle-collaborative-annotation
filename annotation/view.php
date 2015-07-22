@@ -27,6 +27,7 @@
 
 // Replace annotation with the name of your module and remove this line.
 
+global $CFG;
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 
@@ -78,6 +79,23 @@ if ($annotation->intro) {
 
 // Replace the following lines with you own code.
 echo $OUTPUT->heading('Moodle Collaborative Annotation Plugin');
+
+
+//--------TODO--------------
+
+$sourcecode = true; //TODO get this from DB
+
+
+
+$contenthash = "663ac75715b8ecd133762ef5354f950e797937c9"; //TODO get this from DB
+$path = $CFG->dirroot.'\\..\\moodledata\\filedir\\';
+$path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) . '\\';
+$path = $path . $contenthash;
+
+$file_contents = file_get_contents($path);
+print_object($file_contents);
+
+//--------TODO--------------
 
 // Finish the page.
 echo $OUTPUT->footer();

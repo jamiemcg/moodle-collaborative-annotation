@@ -43,10 +43,15 @@ function resource_set_mainfile($data) {
     $cmid = $data->coursemodule;
     $draftitemid = $data->files;
 
+    echo "<pre>";
+    print_object($data);
+    echo "</pre><hr>";
+
     $context = context_module::instance($cmid);
     if ($draftitemid) {
-        file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation', 'content', 0, array('subdirs'=>true));
+        $messagetext = file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation', 'content', 0, array('subdirs'=>true));
     }
+    print_object($messagetext);
     $files = $fs->get_area_files($context->id, 'mod_annotation', 'content', 0, 'sortorder', false);
     if (count($files) == 1) {
         // only one file attached, set it as main file automatically
