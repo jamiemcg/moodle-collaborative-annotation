@@ -37,25 +37,48 @@ defined('MOODLE_INTERNAL') || die();
  *}
  */
 
-function resource_set_mainfile($data) {
-    global $DB;
+function store_annotation_document($data) {
+    global $DB, $CFG;
     $fs = get_file_storage();
     $cmid = $data->coursemodule;
     $draftitemid = $data->files;
-
-    echo "<pre>";
-    print_object($data);
-    echo "</pre><hr>";
 
     $context = context_module::instance($cmid);
     if ($draftitemid) {
         $messagetext = file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation', 'content', 0, array('subdirs'=>true));
     }
-    print_object($messagetext);
     $files = $fs->get_area_files($context->id, 'mod_annotation', 'content', 0, 'sortorder', false);
     if (count($files) == 1) {
         // only one file attached, set it as main file automatically
         $file = reset($files);
         file_set_sortorder($context->id, 'mod_annotation', 'content', 0, $file->get_filepath(), $file->get_filename(), 1);
     }
+   
+    //Find out the file location by getting the content hash
+    $table = "files";
+    $results = $DB->get_records($table, array('itemid' => $draftitemid));
+    echo "<br><hr>";
+    print_object($results);
+    foreach ($results as $result) {
+        $userid = $result->userid;
+        $timecreated = $result->timecreated;
+        $contenthash = $result->contenthash;
+        break; //Bad way of doing it, TODO
+    }
+
+    //Insert a reference into mdl_annotation_document
+    $table = 'annotation_document';
+    $record = new stdClass();
+    $record->id = 0; //should auto increment it
+    $record->user_id = $userid;
+    $record->group_id = 0;
+    $record->time_created = $timecreated;
+    $record->document_type = "";
+    $record->location = $contenthash;
+    $record->lang = "";
+    $record->cmid = $cmid;
+
+    $insertid = $DB->insert_record('annotation_document', $record, false);
+    echo "<br><hr>";
+
 }

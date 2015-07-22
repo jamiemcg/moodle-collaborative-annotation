@@ -93,7 +93,14 @@ echo $OUTPUT->heading('Moodle Collaborative Annotation Plugin');
 //--------TODO--------------
 
 //Gest the file contents from the DB
-$contenthash = "9e483740748544ac6830ea9a11f93d8afa1b77d5"; //TODO get this from DB
+$cmid = $cm->id;
+$table = "annotation_document";
+$results = $DB->get_records($table, array('cmid' => $cmid));
+foreach ($results as $result) {
+        $contenthash = $result->location;
+        break; //Bad way of doing it, TODO
+    }
+
 $path = $CFG->dirroot.'\\..\\moodledata\\filedir\\';
 $path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) . '\\';
 $path = $path . $contenthash;
