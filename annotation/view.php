@@ -57,6 +57,15 @@ $event->add_record_snapshot($PAGE->cm->modname, $annotation);
 $event->trigger();
 
 // Print the page header.
+$sourcecode = true; //TODO get this from DB
+
+if($sourcecode) {
+    $PAGE->requires->css('/mod/annotation/scripts/styles/default.css');
+    $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
+    $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
+}
+
+
 
 $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($annotation->name));
@@ -83,17 +92,24 @@ echo $OUTPUT->heading('Moodle Collaborative Annotation Plugin');
 
 //--------TODO--------------
 
-$sourcecode = true; //TODO get this from DB
-
-
-
-$contenthash = "663ac75715b8ecd133762ef5354f950e797937c9"; //TODO get this from DB
+//Gest the file contents from the DB
+$contenthash = "9e483740748544ac6830ea9a11f93d8afa1b77d5"; //TODO get this from DB
 $path = $CFG->dirroot.'\\..\\moodledata\\filedir\\';
 $path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) . '\\';
 $path = $path . $contenthash;
-
 $file_contents = file_get_contents($path);
-print_object($file_contents);
+
+if($sourcecode) {
+    echo "<pre><code>";
+}
+
+echo $file_contents;
+
+if($sourcecode) {
+    echo "</code></pre>";
+}
+
+
 
 //--------TODO--------------
 
