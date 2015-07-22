@@ -28,15 +28,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['modulename'] = 'Annotated Document';
-$string['modulenameplural'] = 'Annotated Documents';
-$string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents.';
+//Standard/required moodle strings
+$string['annotation'] = 'annotation';
 $string['annotationname'] = 'Document Name';
 $string['annotationname_help'] = 'This is the name of the document that users will see for the activity.';
-$string['annotation'] = 'annotation';
+$string['modulename'] = 'Annotated Document';
+$string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents.';
+$string['modulenameplural'] = 'Annotated Documents';
 $string['pluginadministration'] = 'Annotation administration';
 $string['pluginname'] = 'annotation';
 
+//Customs strings for annotation
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
 $string['image'] = '*Image';

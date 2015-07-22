@@ -28,6 +28,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
+require_once ($CFG->libdir.'/formslib.php');
 
 /**
  * Module instance settings form
@@ -59,7 +60,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addHelpButton('name', 'annotationname', 'annotation');
 
         // Adding the standard "intro" and "introformat" fields.
-        $this->add_intro_editor();
+        $this->standard_intro_elements();
 
         // Add a file manager to handle uploading of files.
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
@@ -97,6 +98,7 @@ class mod_annotation_mod_form extends moodleform_mod {
     		//Disable changing the file uploading a new file if we are updating the activity
     		//This is because previous annotations may not match the new file
     		//freeze('files');
+            
     	}
     }
 }
