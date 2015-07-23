@@ -97,8 +97,8 @@ function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $
  * @return boolean Success/Fail
  */
 function annotation_update_instance(stdClass $annotation, mod_annotation_mod_form $mform = null) {
-    global $DB;
-
+    global $DB, $CFG;
+    require_once("$CFG->dirroot/mod/annotation/locallib.php");
     $annotation->timemodified = time();
     $annotation->id = $annotation->instance;
 
@@ -108,6 +108,7 @@ function annotation_update_instance(stdClass $annotation, mod_annotation_mod_for
 
     annotation_grade_item_update($annotation);
 
+    update_annotation_document($annotation);
     return $result;
 }
 
@@ -128,14 +129,16 @@ function annotation_delete_instance($id) {
         return false;
     }
 
-    $DB->delete_records('annotation', array('id' => $annotation->id));
-    annotation_grade_item_delete($annotation); 
+    $cm = get_coursemodule_from_instance('annotation', $annotation->id, $course->id, false, MUST_EXIST);
+    $cmid = $cm->id;
 
-    //TODO delete any records relating to the `annotation` instance
-    /*
-    $cmid = $annotation->coursemodule;
+    $DB->delete_records('annotation', array('id' => $annotation->id));
     $DB->delete_records('annotation_document', array('cmid' => $cmid));
-    */
+    annotation_grade_item_delete($annotation);
+
+    $context = context_module::instance($cm->id);
+    $fs = get_file_storage();
+    $fs->delete_area_files($context->id);
 
     return true;
 }

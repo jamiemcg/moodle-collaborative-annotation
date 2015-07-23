@@ -92,14 +92,23 @@ class mod_annotation_mod_form extends moodleform_mod {
 
     public function definition_after_data() {
     	parent::definition_after_data();
+        global $DB;
     	$mform = $this->_form;
     	$cmid = $mform->getElementValue('coursemodule');
     	if(!empty($cmid)) {
-    		//TODO
-    		//Disable changing the file uploading a new file if we are updating the activity
-    		//This is because previous annotations may not match the new file
-    		//freeze('files');
-            
+    		//The user is updating the instance of the activity
+            //Remove the file manager as the annotations may not make 
+            //sense if the file they are applied to are changed
+            $mform->removeElement('files');
+
+            //Find out what type of document it was and set selector
+            $table = "annotation_document";
+            $results = $DB->get_records($table, array('cmid' => $cmid));
+            foreach ($results as $result) {
+                    $document_type = $result->document_type;
+                    break;
+            }
+            $mform->setDefault('type', $document_type);
     	}
     }
 }

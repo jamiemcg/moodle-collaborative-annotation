@@ -78,3 +78,19 @@ function store_annotation_document($data) {
 
     $insertid = $DB->insert_record('annotation_document', $record, false);
 }
+
+function update_annotation_document($data) {
+    global $DB, $CFG;
+    $fs = get_file_storage();
+    $cmid = $data->coursemodule;
+
+    $table = "annotation_document";
+    $context = context_module::instance($cmid);
+    $record = $DB->get_records($table);
+
+    $document_type = $data->type;
+    
+    
+    $sql = "UPDATE mdl_annotation_document SET document_type = ? WHERE cmid = ? ";
+    $DB->execute($sql, array($document_type, $cmid));
+}
