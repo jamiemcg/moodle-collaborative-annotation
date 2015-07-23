@@ -118,6 +118,7 @@ if($document_type == 1) {
     echo "<pre><code>";
 }
 
+$file_contents = htmlentities($file_contents); //always replace the HTML entities
 echo $file_contents;
 
 if($document_type == 1) {

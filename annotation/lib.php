@@ -102,7 +102,7 @@ function annotation_update_instance(stdClass $annotation, mod_annotation_mod_for
     $annotation->timemodified = time();
     $annotation->id = $annotation->instance;
 
-    // You may have to add extra stuff in here.
+    //TODO
 
     $result = $DB->update_record('annotation', $annotation);
 
@@ -128,11 +128,14 @@ function annotation_delete_instance($id) {
         return false;
     }
 
-    // Delete any dependent records here.
-
     $DB->delete_records('annotation', array('id' => $annotation->id));
+    annotation_grade_item_delete($annotation); 
 
-    annotation_grade_item_delete($annotation);
+    //TODO delete any records relating to the `annotation` instance
+    /*
+    $cmid = $annotation->coursemodule;
+    $DB->delete_records('annotation_document', array('cmid' => $cmid));
+    */
 
     return true;
 }
