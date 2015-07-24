@@ -66,15 +66,8 @@ foreach ($results as $result) {
         break;
 }
 
-
-if($document_type == 2) {
-    //The document is an image
-    //TODO render it, if have time
-    die("Can't render images yet");
-}
-
-else if($document_type == 1) {
-    //The docuemnt is a source code file
+if($document_type == 1) {
+    //The docuemnt is a source code file so load our js/css requirement
     $sourcecode = true;
     $PAGE->requires->css('/mod/annotation/scripts/styles/default.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
@@ -92,16 +85,15 @@ $PAGE->set_heading(format_string($course->fullname));
 // Output starts here.
 echo $OUTPUT->header();
 
-// Conditions to show the intro can change to look for own settings or whatever.
-if ($annotation->intro) {
-    echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
-}
 
 // Replace the following lines with you own code.
-echo $OUTPUT->heading('Moodle Collaborative Annotation Plugin');
+echo $OUTPUT->heading($annotation->name);
 
-
-//--------TODO--------------
+// If an intro (description) exists for the current activity, display it
+if ($annotation->intro) {
+    echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
+    echo "<hr>";
+}
 
 
 //Build the path to the file from the content_hash
@@ -110,18 +102,36 @@ $path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) .
 $path = $path . $contenthash;
 $file_contents = file_get_contents($path);
 
-if($document_type == 1) {
-    echo "<pre><code>";
+//Is it an image
+if($document_type == 2) {
+    //Can't render the images directly, have to determine MIME type and base64 encode
+    //Need to find out MIME type from mdl_files table
+    $table = "files";
+    $results = $DB->get_records($table, array('contenthash' => $contenthash));
+    foreach ($results as $result) {
+            $mimetype = $result->mimetype;
+            break;
+    }
+
+    $base64 = base64_encode($file_contents);
+    echo '<img src="data:' . $mimetype . ';base64,' . $base64 . '">';
 }
+else {
+    //It is a plain text document 
 
-$file_contents = htmlentities($file_contents); //always replace the HTML entities
-echo $file_contents;
+    if($document_type == 1) {
+        //It is source code
+        echo "<pre><code>";
+    }
 
-if($document_type == 1) {
-    echo "</code></pre>";
+    $file_contents = htmlentities($file_contents); //always replace the HTML entities
+    echo $file_contents;
+
+    if($document_type == 1) {
+        echo "</code></pre>";
+    }
+
 }
-
-
 
 //--------TODO--------------
 

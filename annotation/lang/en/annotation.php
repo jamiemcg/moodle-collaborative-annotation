@@ -31,9 +31,9 @@ defined('MOODLE_INTERNAL') || die();
 //Standard/required moodle strings
 $string['annotation'] = 'annotation';
 $string['annotationname'] = 'Document Name';
-$string['annotationname_help'] = 'This is the name of the document that users will see for the activity.';
+$string['annotationname_help'] = 'This is the name of the document/file that users will see for the activity.';
 $string['modulename'] = 'Annotated Document';
-$string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents.';
+$string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents. Accepted formats are Plain Text Documents, Source Code and Images.'; //TODO extend this string
 $string['modulenameplural'] = 'Annotated Documents';
 $string['pluginadministration'] = 'Annotation administration';
 $string['pluginname'] = 'annotation';
@@ -41,7 +41,7 @@ $string['pluginname'] = 'annotation';
 //Customs strings for annotation
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
-$string['image'] = '*Image';
+$string['image'] = 'Image';
 $string['selectfile'] = 'Select File';
 $string['source_code'] = 'Source Code';
 $string['text_document'] = 'Text Document';
