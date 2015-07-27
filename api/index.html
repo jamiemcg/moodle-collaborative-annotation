@@ -1,0 +1,104 @@
+<html>
+	<head>
+		<title>Annotation storage testing</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+		
+	</head>
+
+	<body id="content">
+		<h1 style="text-align:center">Main Heading</h1>
+			
+		</style>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+		<h2>Heading aodisfj f</h2>
+
+		<pre><code class="java">public class Java {
+		    public static void main(String [] args) {
+		        System.out.println("Hello World");
+		    }
+		}
+		</code></pre>
+
+		<hr>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+		<button id="get_button">GET</button>
+		<button id="post_button">POST</button>
+
+
+		<script src="./jquery.min.js"></script>
+		<script src="./annotator-full.min.js"></script>
+		<script src="https://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+		<link rel="stylesheet" href="./styles/annotator.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script>
+			Annotator.Plugin.Debug = function (element, options) {
+				  var myPlugin = {};
+				  myPlugin.pluginInit = function () {
+				    // This annotator instance
+				    this.annotator
+				        .subscribe("annotationCreated", function (annotation) {
+				          annotation['uri'] = window.location.href;
+				          console.log("annotationCreated called");
+				          console.log(annotation);	
+				        	$.post("https://webcourse.cs.nuim.ie/~yr314032/api/annotations/", {'annotation' : JSON.stringify(annotation)}, function( data ) {
+							  alert(data);
+							});
+				        })
+				        .subscribe("annotationDeleted", function (annotation) {
+				          console.log("annotationDeleted called");
+				          console.log(annotation);
+				        })
+				  };
+				  return myPlugin;
+				};
+
+			var content = $('#content').annotator();
+        	content.annotator('addPlugin', 'Debug');
+        	content.annotator('addPlugin', 'Tags');
+        	/*
+        	content.annotator('addPlugin', 'Store', {
+        		prefix: '.',
+        		annotationData: {
+        			'uri' : document.location.href
+        		},
+        	});
+*/
+		</script>
+
+
+		<script type="text/javascript">
+			$( "#get_button" ).click(function() {
+			  console.log( "GET button clicked." );
+			  $.get("https://webcourse.cs.nuim.ie/~yr314032/api/annotations", function( data ) {
+				  alert(data);
+				});
+
+			});
+			$( "#post_button" ).click(function() {
+			  console.log( "POST button clicked." );
+			  $.post("https://webcourse.cs.nuim.ie/~yr314032/api/annotations/", {'name':'jamie'}, function( data ) {
+				  alert(data);
+				});
+			});
+		</script>
+	</body>
+</html>
