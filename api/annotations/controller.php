@@ -1,7 +1,7 @@
 <?php
 
 //global $CFG, $DB, $USER; //Moodle global variables
-
+//require_login(); //Require the user to be logged into Moodle, if not redirect to homepage
 /**
  * GET request to the API root
  * Returns api methods

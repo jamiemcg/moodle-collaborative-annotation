@@ -42,6 +42,66 @@
 		<button id="get_button">GET</button>
 		<button id="post_button">POST</button>
 
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+		<h2>Heading aodisfj f</h2>
+
+		<pre><code class="java">public class Java {
+		    public static void main(String [] args) {
+		        System.out.println("Hello World");
+		    }
+		}
+		</code></pre>
+
+		<hr>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+		<h2>Heading aodisfj f</h2>
+
+		<pre><code class="java">public class Java {
+		    public static void main(String [] args) {
+		        System.out.println("Hello World");
+		    }
+		}
+		</code></pre>
+
+		<hr>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
 
 		<script src="./jquery.min.js"></script>
 		<script src="./annotator-full.min.js"></script>
@@ -50,7 +110,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 		<script>hljs.initHighlightingOnLoad();</script>
 		<script>
-			Annotator.Plugin.Debug = function (element, options) {
+			/*Annotator.Plugin.Debug = function (element, options) {
 				  var myPlugin = {};
 				  myPlugin.pluginInit = function () {
 				    // This annotator instance
@@ -70,10 +130,30 @@
 				  };
 				  return myPlugin;
 				};
+			*/
+			Annotator.Plugin.StoreLogger = function (element) {
+			  return {
+			    pluginInit: function () {
+			      this.annotator
+			          .subscribe("annotationCreated", function (annotation) {
+			            console.info("The annotation: %o has just been created!", annotation)
+			          })
+			          .subscribe("annotationUpdated", function (annotation) {
+			            console.info("The annotation: %o has just been updated!", annotation)
+			          })
+			          .subscribe("annotationDeleted", function (annotation) {
+			            console.info("The annotation: %o has just been deleted!", annotation)
+			          });
+			    }
+			  }
+			};
 
 			var content = $('#content').annotator();
-        	content.annotator('addPlugin', 'Debug');
+        	//content.annotator('addPlugin', 'Debug');
+        	content.annotator('addPlugin', 'Filter');
+        	content.annotator('addPlugin', 'StoreLogger');
         	content.annotator('addPlugin', 'Tags');
+        	content.annotator('addPlugin', 'Unsupported'); //Notifies users if their browser is unsupported
         	/*
         	content.annotator('addPlugin', 'Store', {
         		prefix: '.',
