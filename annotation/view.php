@@ -70,10 +70,13 @@ if($document_type == 2) {
 	//The document_type is an image so load annotorious css/js
 	$PAGE->requires->css('/mod/annotation/styles/annotorious.css');
 	$PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
+	$PAGE->requires->js('/mod/annotation/scripts/annotorious-storage.js');
 }
 else {
 	//The document is a plain text file (text document or source code)
-	
+	$PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
+	$PAGE->requires->js('/mod/annotation/scripts/jquery-2.1.4.min.js');
+	$PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
 }
 
 if($document_type == 1) {
@@ -128,6 +131,7 @@ if($document_type == 2) {
 }
 else {
     //It is a plain text document 
+	echo '<div id="anno-content">'; //Start of annotatable content
 
     if($document_type == 1) {
         //It is source code
@@ -141,6 +145,8 @@ else {
         echo "</code></pre>";
     }
 
+    echo '</div>'; //The end of annotatable content
+    $PAGE->requires->js('/mod/annotation/scripts/anno-init.js');
 }
 
 //--------TODO--------------
