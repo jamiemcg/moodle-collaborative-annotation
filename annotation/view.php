@@ -66,10 +66,20 @@ foreach ($results as $result) {
         break;
 }
 
+if($document_type == 2) {
+	//The document_type is an image so load annotorious css/js
+	$PAGE->requires->css('/mod/annotation/styles/annotorious.css');
+	$PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
+}
+else {
+	//The document is a plain text file (text document or source code)
+	
+}
+
 if($document_type == 1) {
-    //The docuemnt is a source code file so load our js/css requirement
+    //The docuement is a source code file so load highlight.js css/js
     $sourcecode = true;
-    $PAGE->requires->css('/mod/annotation/scripts/styles/default.css');
+    $PAGE->requires->css('/mod/annotation/styles/highlight.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
     $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
 }
@@ -114,7 +124,7 @@ if($document_type == 2) {
     }
 
     $base64 = base64_encode($file_contents);
-    echo '<img src="data:' . $mimetype . ';base64,' . $base64 . '">';
+    echo '<img class="annotatable" src="data:' . $mimetype . ';base64,' . $base64 . '">';
 }
 else {
     //It is a plain text document 
