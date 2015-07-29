@@ -16,10 +16,6 @@ global $CFG, $DB, $USER;
 
 print_r($_POST);
 
-
-echo $USER->firstname . " " . $USER->lastname;
-echo $USER->id;
-
 //Create a new annotation object
 //Populate it with *some* of the information from the POST request
 //Add other data -> timestamp, user, etc...
@@ -28,14 +24,24 @@ echo $USER->id;
 //Return the timecreated and user to the client for display
 
 $annotation = new stdClass();
-$annotation->id = 1;
-$annotation->user_id = $USER->id;
-$annotation->user_name = $USER->firstname . " " . $USER->lastname;
-$annotation->text = htmlentities($_POST['text']);
+$annotation->id = 0; //This will be changed by the DB
+$annotation->userid = $USER->id;
+$annotation->username = $USER->firstname . " " . $USER->lastname;
+$annotation->annotation = htmlentities($_POST['text']);
 $annotation->shapes = json_encode($_POST['shapes']);
 $annotation->url = $_POST['url'];
 $annotation->timecreated = time();
 $annotation->tags = htmlentities(json_decode($_POST['tags'])); //TODO
 
+$table = "annotation_image";
 
-print_r($annotation);
+//Insert into DB and get the id
+$lastinsertid = $DB->insert_record($table, $annotation);
+
+//Now need to return response with the:
+//annoation id, username, userid, timecreated
+
+$annotation->id = $lastinsertid;
+
+//Returns the data to the client for processing
+echo json_encode($annotation);

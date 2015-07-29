@@ -14,7 +14,8 @@ require(['jquery'], function($) {
 		    src : 'http://image.to.annotate',
 		    text : 'My annotation',
 		    username: 'Jamie McGowan',
-		    timecreated: new Date(),
+		    userid: 1
+		    timecreated: new Date().toLocaleString(),
 		    shapes : [{
 		        type : 'rect',
 		        geometry : { x : 0.1, y: 0.1, width : 0.5, height: 0.3 }
@@ -49,6 +50,10 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
     require(['jquery'], function($) {
         $.post("./annotorious/create.php", annotation, function(data) {
             console.log(data);
+            annotation.id = data.id; //Set id to that assigned by the server
+
+            var d = data.timecreated;
+            annotation.timecreated = d.toLocaleTimeString() + " " + d.toLocaleDateString(); //change the
         });
     });
 });
@@ -85,6 +90,8 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 });
 
 
+//Custom plugin to display extra data on the annotation popups
+//Displayed when a user hovers over an annoation
 annotorious.plugin.ExtraData = function(opt_config_options) { }
 annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {
 	//initialisation code goes here
