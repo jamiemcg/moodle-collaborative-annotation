@@ -127,7 +127,7 @@ if($document_type == 2) {
     }
 
     $base64 = base64_encode($file_contents);
-    echo '<img class="annotatable" src="data:' . $mimetype . ';base64,' . $base64 . '">';
+    echo '<img class="annotatable" data-original="http://image.to.annotate" src="data:' . $mimetype . ';base64,' . $base64 . '">';
 }
 else {
     //It is a plain text document 

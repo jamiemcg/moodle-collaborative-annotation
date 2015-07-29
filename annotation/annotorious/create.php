@@ -27,5 +27,15 @@ echo $USER->id;
 //Return the ID to the client
 //Return the timecreated and user to the client for display
 
+$annotation = new stdClass();
+$annotation->id = 1;
+$annotation->user_id = $USER->id;
+$annotation->user_name = $USER->firstname . " " . $USER->lastname;
+$annotation->text = htmlentities($_POST['text']);
+$annotation->shapes = json_encode($_POST['shapes']);
+$annotation->url = $_POST['url'];
+$annotation->timecreated = time();
+$annotation->tags = htmlentities(json_decode($_POST['tags'])); //TODO
 
-//echo $_POST['text'];
+
+print_r($annotation);
