@@ -38,5 +38,7 @@ if(!empty($_POST)) {
 	$annotation->id = $lastinsertid;
 
 	//Returns the data to the client for processing
+	//TODO waste of data transfer, only return what it
+	//required: id, username, timecreated....
 	echo json_encode($annotation);
 }
