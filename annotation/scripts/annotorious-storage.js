@@ -5,10 +5,13 @@
   */
 require(['jquery'], function($) {
 	$(document).ready(function() {
-		//TODO
-		//AJAX request, with curr page id
-		//get all results, loop through creating and 
-		//displaying the new annotation objects
+		/* TODO
+		 * AJAX request, with curr page id
+		 * get all results, loop through creating and 
+		 * displaying the new annotation objects
+		 * check if the annotation.userid = current.userid, 
+		 * if not, disable edit [editable: false]
+		*/
 		console.log('called');
 		var myAnnotation = {
 		    src : 'http://image.to.annotate',
