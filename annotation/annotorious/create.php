@@ -7,8 +7,12 @@
  * 
  */
 
+
+require_once(__DIR__ . "../../../../config.php");
+require_login();
+
+
 global $CFG, $DB, $USER;
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/config.php');
 
 print_r($_POST);
 
