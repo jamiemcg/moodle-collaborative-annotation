@@ -11,21 +11,19 @@ require(['jquery'], function($) {
 		 * displaying the new annotation objects
 		 * check if the annotation.userid = current.userid, 
 		 * if not, disable edit [editable: false]
+		 * do the above checking serverside
 		*/
-		console.log('called');
-		var myAnnotation = {
-		    src : 'http://image.to.annotate',
-		    text : 'My annotation',
-		    username: 'Jamie McGowan',
-		    userid: 1
-		    timecreated: new Date().toLocaleString(),
-		    shapes : [{
-		        type : 'rect',
-		        geometry : { x : 0.1, y: 0.1, width : 0.5, height: 0.3 }
-		    }]
-		};
-		anno.addAnnotation(myAnnotation);
-		console.log(myAnnotation);
+
+		var post_data = {
+			url: document.location.href
+		}
+
+		require(['jquery'], function($) {
+	        $.post("./annotorious/load.php", post_data, function(data) {
+	            console.log('data form server');
+	    		console.log(data);
+	    	});
+		});
 	});
 });
 	
@@ -39,26 +37,22 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
     delete annotation.context; //Use annotation.url instead
     annotation.url = document.location.href; //Used to associate annotation with file/doc
     annotation.tags = "";
-    annotation.username = "Jamie McGowan"; //TODO
 
-    //TODO this should be handled by server
-    var d = new Date();
-
-
-    annotation.timecreated = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-    annotation.timecreated += " " + d.getHours() + ":" + d.getMinutes();
-
-    console.log(annotation);
     //Send AJAX request to server to store new annotation
     require(['jquery'], function($) {
         $.post("./annotorious/create.php", annotation, function(data) {
-            console.log(data);
+        	data = JSON.parse(data);
+            console.log('data form server');
+    		console.log(data);
+    		console.log(data.username);
             annotation.id = data.id; //Set id to that assigned by the server
-
-            var d = data.timecreated;
-            annotation.timecreated = d.toLocaleTimeString() + " " + d.toLocaleDateString(); //change the
+            annotation.username = data.username;
+            var d = timeConverter(data.timecreated);
+            annotation.timecreated = d;
         });
     });
+    console.log('annotation after server');
+    console.log(annotation);
 });
 
 anno.addHandler('onAnnotationUpdated', function(annotation) {
@@ -110,3 +104,17 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator)	 {
 }
 
 anno.addPlugin('ExtraData', {});
+
+
+function timeConverter(UNIX_timestamp){
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  return time;
+}
