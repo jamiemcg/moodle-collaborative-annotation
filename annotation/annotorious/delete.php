@@ -7,11 +7,9 @@
  * 
  */
  
-
  if(!empty($_POST['id']) && !empty($_POST['userid'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();
-
 
 	global $CFG, $DB, $USER;
 

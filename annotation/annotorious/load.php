@@ -9,7 +9,6 @@ if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();
 
-
 	global $CFG, $DB, $USER;
 
 	$userid = $USER->id; //Gets the current users id

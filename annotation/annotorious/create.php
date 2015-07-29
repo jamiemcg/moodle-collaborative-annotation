@@ -11,16 +11,9 @@ if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();
 
-
 	global $CFG, $DB, $USER;
 
-	//Create a new annotation object
-	//Populate it with *some* of the information from the POST request
-	//Add other data -> timestamp, user, etc...
-	//Store it in the DB
-	//Return the ID to the client
-	//Return the timecreated and user to the client for display
-
+	//Create a new object to store the annotation data
 	$annotation = new stdClass();
 	$annotation->id = 0; //This will be changed by the DB
 	$annotation->userid = $USER->id;

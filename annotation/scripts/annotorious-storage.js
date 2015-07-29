@@ -23,6 +23,7 @@ require(['jquery'], function($) {
                 delete annotation.annotation;
                 annotation.shapes = JSON.parse(annotation.shapes);
                 annotation.src = "http://image.to.annotate"; //Base64 workaround
+                annotation.timecreated = timeConverter(annotation.timecreated);
                 anno.addAnnotation(annotation);
             }
         });
@@ -51,8 +52,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
             console.log(data.username);
             annotation.id = data.id; //Set id to that assigned by the server
             annotation.username = data.username;
-            var d = timeConverter(data.timecreated);
-            annotation.timecreated = d;
+            annotation.timecreated = timeConverter(data.timecreated);
         });
     });
     console.log('annotation after server');
@@ -61,7 +61,14 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
 
 anno.addHandler('onAnnotationUpdated', function(annotation) {
     console.log(annotation);
-    annotation.url = document.location.href;
+    require(['jquery'], function($) {
+    	$.post("./annotorious/update.php", annotation, function(data) {
+    		data = JSON.parse(data);
+            annotation.id = data.id; //Set id to that assigned by the server
+            annotation.username = data.username;
+            annotation.timecreated = timeConverter(data.timecreated);
+    	});
+    });
 });
 
 /**
@@ -95,7 +102,6 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
         $.post("./annotorious/delete.php", post_data, function(data) {
             console.log('data from server');
             console.log(data);
-					         
         });
 
     });
@@ -128,8 +134,13 @@ function timeConverter(UNIX_timestamp) {
     var month = months[a.getMonth()];
     var date = a.getDate();
     var hour = a.getHours();
+    if(hour < 10) {
+    	hour = "0" + hour;
+    }
     var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+    if(min < 10) {
+    	min = "0" + min;
+    }
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
     return time;
 }
