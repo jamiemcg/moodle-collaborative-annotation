@@ -2,9 +2,7 @@
 
 /**
  * Deletes an annotation from the server
- * Sepecified by id number in DELETE request
- * 
- * 
+ * Sepecified by id number in DELETE request 
  */
  
  if(!empty($_POST['id']) && !empty($_POST['userid'])) {

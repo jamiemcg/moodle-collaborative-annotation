@@ -108,6 +108,11 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 });
 
 
+anno.addHandler('onPopupShown', function(annotation) {
+	//annotation.text = htmlEntities(annotation.text);
+});
+
+
 //Custom plugin to display extra data on the annotation popups
 //Displayed when a user hovers over an annoation
 annotorious.plugin.ExtraData = function(opt_config_options) {}
@@ -126,7 +131,9 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
 
 anno.addPlugin('ExtraData', {});
 
-
+/**
+  * Converts a UNIX timestamp into readable format
+  */
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -143,4 +150,11 @@ function timeConverter(UNIX_timestamp) {
     }
     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
     return time;
+}
+
+/**
+  * Converts special characters into their escaped values
+  */
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }

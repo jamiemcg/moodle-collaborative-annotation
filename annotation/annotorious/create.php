@@ -4,7 +4,6 @@
  * Stores an annotation with the data received from a POST request
  * Must attatch timestamp, id, user_id to the annotation
  * Returns the id of the created annotation
- * 
  */
 
 if(!empty($_POST)) {
