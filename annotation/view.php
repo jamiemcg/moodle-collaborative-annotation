@@ -74,9 +74,10 @@ if($document_type == 2) {
 }
 else {
 	//The document is a plain text file (text document or source code)
-	$PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
-	$PAGE->requires->js('/mod/annotation/scripts/jquery-2.1.4.min.js');
-	$PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
+    //TODO
+    $PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
+    $PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
+    $PAGE->requires->js('/mod/annotation/scripts/annotator-storage.js');
 }
 
 if($document_type == 1) {
@@ -131,7 +132,7 @@ if($document_type == 2) {
 }
 else {
     //It is a plain text document 
-	echo '<div id="anno-content">'; //Start of annotatable content
+	echo '<div id="annotator-content">'; //Start of annotatable content
 
     if($document_type == 1) {
         //It is source code
@@ -146,7 +147,6 @@ else {
     }
 
     echo '</div>'; //The end of annotatable content
-    $PAGE->requires->js('/mod/annotation/scripts/anno-init.js');
 }
 
 //--------TODO--------------
