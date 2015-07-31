@@ -12,10 +12,13 @@ if(!empty($_POST)) {
 
 	global $CFG, $DB, $USER;
 
+	print_object($_POST);
+
 	//Create a new object to for storing the annotation
-	$annotation = new stdClass();
+ 	$annotation = new stdClass();
 	$annotation->id = 0; //DB will change this later
 	$annotation->userid = $USER->id;
+	$annotation->url = $_POST['url'];
 	$annotation->annotation = htmlentities($_POST['text']);
 	$annotation->ranges = json_encode($_POST['ranges']);
 	$annotation->tags = json_encode(htmlentities($_POST['tags']));
