@@ -16,7 +16,6 @@ if(!empty($_POST)) {
 	$annotation = new stdClass();
 	$annotation->id = 0; //DB will change this later
 	$annotation->userid = $USER->id;
-	$annotation->username = $USER->firstname . " " . $USER->lastname;
 	$annotation->annotation = htmlentities($_POST['text']);
 	$annotation->ranges = json_encode($_POST['ranges']);
 	$annotation->tags = json_encode(htmlentities($_POST['tags']));
@@ -29,6 +28,7 @@ if(!empty($_POST)) {
 	//Insert the annotation into the DB and get its id
 	$lastinsertid = $DB->insert_record($table, $annotation);
 	$annotation->id = $lastinsertid;
+	$annotation->username = $USER->firstname . " " . $USER->lastname;
 
 	//TODO send less stuff back, waste of transfer
 	echo json_encode($annotation);

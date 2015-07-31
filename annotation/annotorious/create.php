@@ -16,7 +16,7 @@ if(!empty($_POST)) {
 	$annotation = new stdClass();
 	$annotation->id = 0; //This will be changed by the DB
 	$annotation->userid = $USER->id;
-	$annotation->username = $USER->firstname . " " . $USER->lastname;
+	$annotation->username = $USER->firstname . " " . $USER->lastname; //TODO rewrite this, don't store, get username dynamically incase of changes
 	$annotation->annotation = htmlentities($_POST['text']);
 	$annotation->shapes = json_encode($_POST['shapes']);
 	$annotation->url = $_POST['url'];
