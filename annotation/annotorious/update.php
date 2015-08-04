@@ -2,9 +2,11 @@
 
 /**
  * Updates the text of an annotation. The annotation
- * is specified by an id number in a PUT request.
+ * is specified by an id number in a POST request.
  * 
  */
+
+//TODO don't rely on $_POST['userid']
 
 if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");

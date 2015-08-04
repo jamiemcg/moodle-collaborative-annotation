@@ -15,7 +15,7 @@ if(!empty($_POST['url'])) {
 	$table = 'annotation_image';
 	$url = $_POST['url'];
 
-	$sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
+	$sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ?";
 	$rs = $DB->get_recordset_sql($sql, array($url));
 	
 	$annotations = array();
@@ -25,14 +25,10 @@ if(!empty($_POST['url'])) {
 		//Get username of annotation creator
 		$user = $DB->get_record('user', array("id" =>$record->userid));
 		$record->username = $user->firstname . " " . $user->lastname;
+		unset($record->userid); //Don't send the user's id, not required
+		
 
-		//Enable editing of annotation only if current user created it
-		if($record->userid == $userid) {
-			$record->editable = true;
-		}
-		else {
-			$record->editable = false;
-		}
+		//TODO: Disable editing if the current user didn't create the annotation
 
 		$annotations[] = $record;
 	}

@@ -1,48 +1,86 @@
 require(['jquery'], function(jQuery) {
-    //Rename the plugin after it is complete
+    //TODO: Rename the plugin after it is completed
     Annotator.Plugin.StoreLogger = function(element) {
         return {
             pluginInit: function() {
-                this.annotator
-                    .subscribe("beforeAnnotationCreated", function(annotation) {	
-                    	annotation.url = document.location.href;
-                    	jQuery.post("./annotator/create.php", annotation, function(data) {
-                    		annotation.id = data.id;
-                    	 	annotation.username = data.username;
-                    	 	annotation.timecreated = data.timecreated;
-                    	 });
-                    	console.log("Before Created: %o", annotation);
+                this.annotator.subscribe("beforeAnnotationCreated", function(annotation) {
+                        annotation.url = document.location.href;
                     })
                     .subscribe("annotationCreated", function(annotation) {
-                    	console.log("Created: %o", annotation);
-                    	jQuery.post("./annotator/create.php", annotation, function(data) {
-                    		console.log(data);
-                    	});
+                        jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
+                            data = JSON.parse(data);
+                            annotation.username = data.username;
+                            annotation.timecreated = timeConverter(data.timecreated);
+                            annotation.id = data.id;
+                            console.info("The annotation: %o has just been created!", annotation);
+                        });
                     })
                     .subscribe("annotationUpdated", function(annotation) {
-                        console.info("The annotation: %o has just been updated!", annotation)
+                        jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {
+                            if (data == 0) { 
+                                //Incorrect user logged in
+                                console.error("The annotation couldn't be updated");
+                                alert("Warning: You cannot edit annotations created by others!");
+                            }
+                            else {
+                                data = JSON.parse(data);
+                                annotation.timecreated = timeConverter(data); //Update the time displayed
+                                console.info("The annotation: %o has just been updated!", annotation);
+                            }
+                        });
                     })
                     .subscribe("annotationDeleted", function(annotation) {
-                        console.info("The annotation: %o has just been deleted!", annotation)
+                        //Check if the annotation actually exists (workaround annotatorjs bug #258)
+                        if (annotation.id) {
+                            var post_data = {
+                                id: annotation.id
+                            };
+                            jQuery.post("./annotator/delete.php", post_data, function(data) {
+                                //TODO: bug, always returns 1 if annotation exists
+                                if (data == 1) {
+                                    console.info("The annotation: %o has just been deleted!", annotation);
+                                } else {
+                                    console.error("The annotation couldn't be deleted");
+                                    alert("Warning: You cannot delete annotations created by others!");
+                                }
+                            });
+                        } else {
+                            //Event was called when user clicked cancel. Do nothing.
+                        }
                     });
             }
         }
     };
 
-    var annotator_content = jQuery("#annotator-content").annotator();
 
+    var annotator_content = jQuery("#annotator-content").annotator();
     annotator_content.annotator('addPlugin', 'StoreLogger');
     //annotator_content.annotator('addPlugin', 'Filter'); //Need to rewrite the Filter plugin
     annotator_content.annotator('addPlugin', 'Tags');
-    annotator_content.annotator('addPlugin', 'Unsupported'); //Notifies users if their browser is unsupported
+    annotator_content.annotator('addPlugin', 'Unsupported');
 
-    function storeAnnotation(annotation) {
-		jQuery.post("./annotator/create.php", annotation, function(data) {
-			annotation.id = data.id;
-			annotation.username = data.username;
-			annotation.timecreated = data.timecreated;
-	    });
-	}
+    //Load the existing annotations when the page is loaded
+    jQuery(document).ready(function() {
+        var post_data = {
+            url: document.location.href
+        }
+        jQuery.post("./annotator/load.php", post_data, function(data) {
+            //Load the annotations from the database
+            data = JSON.parse(data);
+            console.log('Data loaded from server: %o', data);
+            for (var i = 0; i < data.length; i++) {
+                var annotation = data[i];
+                annotation.text = annotation.annotation;
+                delete annotation.annotation;
+                annotation.ranges = JSON.parse(annotation.ranges);
+                annotation.highlights = JSON.parse(annotation.highlights);
+                annotation.timecreated = timeConverter(annotation.timecreated);
+
+                //Loads them one by one
+                annotator_content.annotator('loadAnnotations', [annotation]);
+            }
+        });
+    });
 });
 
 /**

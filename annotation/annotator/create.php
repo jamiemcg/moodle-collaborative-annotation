@@ -12,27 +12,23 @@ if(!empty($_POST)) {
 
 	global $CFG, $DB, $USER;
 
-	print_object($_POST);
-
-	//Create a new object to for storing the annotation
- 	$annotation = new stdClass();
-	$annotation->id = 0; //DB will change this later
-	$annotation->userid = $USER->id;
+	$annotation = new stdClass();
 	$annotation->url = $_POST['url'];
-	$annotation->annotation = htmlentities($_POST['text']);
 	$annotation->ranges = json_encode($_POST['ranges']);
-	$annotation->tags = json_encode(htmlentities($_POST['tags']));
-	$annotation->highlights = json_encode($_POST['highlights']);
 	$annotation->quote = htmlentities($_POST['quote']);
+	$annotation->highlights = json_encode($_POST['highlights']);
+	$annotation->annotation = htmlentities($_POST['text']);
+	
+	//TODO issue with tags!
+
 	$annotation->timecreated = time();
+	$annotation->id = 1; //DB will change this
+	$annotation->userid = $USER->id;
 
 	$table = "annotation_annotation";
-
-	//Insert the annotation into the DB and get its id
 	$lastinsertid = $DB->insert_record($table, $annotation);
 	$annotation->id = $lastinsertid;
 	$annotation->username = $USER->firstname . " " . $USER->lastname;
-
-	//TODO send less stuff back, waste of transfer
+	
 	echo json_encode($annotation);
 }

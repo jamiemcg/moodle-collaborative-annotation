@@ -74,7 +74,7 @@ if($document_type == 2) {
 }
 else {
 	//The document is a plain text file (text document or source code)
-    //TODO
+    //Load annotator.js and custom storage plugin
     $PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-storage.js');
@@ -151,5 +151,5 @@ else {
 
 //--------TODO--------------
 
-// Finish the page.
+// Finish the page. E.g. list of annotations, etc..
 echo $OUTPUT->footer();
