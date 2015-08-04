@@ -32,8 +32,8 @@ require(['jquery'], function($) {
 
 
 /**
- * Called when an annotation has been created. Send the data
- * to the server for it to process and save it.
+ * Called when an annotation has been created. Sends the data
+ * to the server in a POST request for it to process and save it.
  */
 anno.addHandler('onAnnotationCreated', function(annotation) {
     delete annotation.src; //Waste of data so delete. Not required?
@@ -59,23 +59,26 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
     console.log(annotation);
 });
 
+/**
+ *  Called when the user updates an annotation.
+ *  Sends the new data in a POST request for the server to store it.
+ */
 anno.addHandler('onAnnotationUpdated', function(annotation) {
     console.log(annotation);
     require(['jquery'], function($) {
-    	$.post("./annotorious/update.php", annotation, function(data) {
-    		data = JSON.parse(data);
+        $.post("./annotorious/update.php", annotation, function(data) {
+            data = JSON.parse(data);
             annotation.id = data.id; //Set id to that assigned by the server
             annotation.username = data.username;
             annotation.timecreated = timeConverter(data.timecreated);
-    	});
+        });
     });
 });
 
 /**
- *	Called when the user clicks the delete button on an annotation.
+ * Called when the user clicks the delete button on an annotation.
  * Asks the user to confirm deletion.
  */
-
 anno.addHandler('beforeAnnotationRemoved', function(annotation) {
     var r = confirm("Are you sure you want to delete this annotation?");
     if (r == false) {
@@ -85,12 +88,10 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
 });
 
 
-
-
 /**
  * Called when the user confirms that they want to delete an annotation.
- * Sends request to server to delete the annotation. Sends the id of the
- * annotation to be deleted.
+ * Sends POST request to server to delete the annotation. Sends the id of 
+ * the annotation to be deleted.
  */
 anno.addHandler('onAnnotationRemoved', function(annotation) {
     console.log(annotation);
@@ -109,17 +110,14 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 
 
 anno.addHandler('onPopupShown', function(annotation) {
-	//annotation.text = htmlEntities(annotation.text);
+    //annotation.text = htmlEntities(annotation.text);
 });
 
 
 //Custom plugin to display extra data on the annotation popups
 //Displayed when a user hovers over an annoation
 annotorious.plugin.ExtraData = function(opt_config_options) {}
-annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {
-    //initialisation code goes here
-}
-
+annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {}
 annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     annotator.popup.addField(function(annotation) {
         return '<em>' + annotation.username + '</em>'
@@ -128,12 +126,10 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
         return '<em>' + annotation.timecreated + '<em>';
     });
 }
-
 anno.addPlugin('ExtraData', {});
 
-/**
-  * Converts a UNIX timestamp into readable format
-  */
+
+//Converts a UNIX timestamp into readable format
 function timeConverter(UNIX_timestamp) {
     var a = new Date(UNIX_timestamp * 1000);
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -141,20 +137,20 @@ function timeConverter(UNIX_timestamp) {
     var month = months[a.getMonth()];
     var date = a.getDate();
     var hour = a.getHours();
-    if(hour < 10) {
-    	hour = "0" + hour;
+    if (hour < 10) {
+        hour = "0" + hour;
     }
     var min = a.getMinutes();
-    if(min < 10) {
-    	min = "0" + min;
+    if (min < 10) {
+        min = "0" + min;
     }
     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min;
     return time;
 }
 
 /**
-  * Converts special characters into their escaped values
-  */
+ * Converts special characters into their escaped values
+ */
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
