@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/annotation/db" VERSION="20150731" COMMENT="XMLDB file for Moodle mod/annotation"
+<XMLDB PATH="mod/annotation/db" VERSION="20150804" COMMENT="XMLDB file for Moodle mod/annotation"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -22,7 +22,7 @@
         <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="annotation_document" COMMENT="annotation_document table retrofitted from MySQL">
+    <TABLE NAME="annotation_document" COMMENT="Stores information required for the managing of files for mod/annotation">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="user_id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
@@ -36,30 +36,26 @@
         <KEY NAME="id" TYPE="unique" FIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="annotation_annotation" COMMENT="annotation_annotation table retrofitted from MySQL">
+    <TABLE NAME="annotation_annotation" COMMENT="Stores annotations made to text files and source code">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="document_id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="group_id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="user_id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="url" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="annotation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="document_text" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="time_created" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="tags" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="paragraph_id" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="line_id" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="starts_at" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="ends_at" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="quote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="highlights" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="ranges" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="tags" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="id" TYPE="unique" FIELDS="id"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="annotation_image" COMMENT="annotation_image table retrofitted from MySQL">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true" COMMENT="Primary Key."/>
+        <FIELD NAME="id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="username" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="annotation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="shapes" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="url" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
@@ -67,7 +63,7 @@
         <FIELD NAME="tags" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary key" TYPE="primary" FIELDS="id" COMMENT="The id of the annotation is the primary key"/>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
   </TABLES>
