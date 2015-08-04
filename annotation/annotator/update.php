@@ -39,6 +39,4 @@ if(!empty($_POST)) {
 	else {
 		echo "0"; //Return error response
 	}
-	//TODO: check if the annotation was created by the current user
-	//by checking the number of rows effected, if 0 return error
 }

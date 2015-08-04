@@ -1,5 +1,6 @@
 require(['jquery'], function(jQuery) {
     //TODO: Rename the plugin after it is completed
+    //TODO: Rewrite the subscriptions as functions to improve readability
     Annotator.Plugin.StoreLogger = function(element) {
         return {
             pluginInit: function() {
@@ -17,12 +18,11 @@ require(['jquery'], function(jQuery) {
                     })
                     .subscribe("annotationUpdated", function(annotation) {
                         jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {
-                            if (data == 0) { 
+                            if (data == 0) {
                                 //Incorrect user logged in
                                 console.error("The annotation couldn't be updated");
                                 alert("Warning: You cannot edit annotations created by others!");
-                            }
-                            else {
+                            } else {
                                 data = JSON.parse(data);
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
                                 console.info("The annotation: %o has just been updated!", annotation);
@@ -47,6 +47,11 @@ require(['jquery'], function(jQuery) {
                         } else {
                             //Event was called when user clicked cancel. Do nothing.
                         }
+                    })
+                    .subscribe("annotationViewerTextField", function(field, annotation) {
+                        field.innerHTML += "<br>";
+                        field.innerHTML += "<span style='text-align:right'>" + annotation.username + "</span><br>";
+                        field.innerHTML += "<span style='text-align:right'>" + annotation.timecreated + "</span>";
                     });
             }
         }

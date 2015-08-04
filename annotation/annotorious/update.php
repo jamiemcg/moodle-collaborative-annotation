@@ -23,6 +23,7 @@ if(!empty($_POST)) {
 		$table = "annotation_image";
 		$DB->update_record($table, $annotation);
 
+		$annotation->username = $USER->firstname . " " . $USER->lastname; //Needs to be reset
 		echo json_encode($annotation);
 	}
 	else {
