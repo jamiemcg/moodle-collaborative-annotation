@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -32,4 +33,7 @@ if(!empty($_POST)) {
 	//TODO waste of data transfer, only return what it
 	//required: id, username, timecreated....
 	echo json_encode($annotation);
+}
+else {
+	http_response_code(400);
 }

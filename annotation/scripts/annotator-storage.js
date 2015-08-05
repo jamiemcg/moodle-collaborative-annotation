@@ -23,7 +23,6 @@ require(['jquery'], function(jQuery) {
                                 console.error("The annotation couldn't be updated");
                                 alert("Warning: You cannot edit annotations created by others!");
                             } else {
-                                data = JSON.parse(data);
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
                                 console.info("The annotation: %o has just been updated!", annotation);
                             }
@@ -36,7 +35,6 @@ require(['jquery'], function(jQuery) {
                                 id: annotation.id
                             };
                             jQuery.post("./annotator/delete.php", post_data, function(data) {
-                                //TODO: bug, always returns 1 if annotation exists
                                 if (data == 1) {
                                     console.info("The annotation: %o has just been deleted!", annotation);
                                 } else {
@@ -48,19 +46,41 @@ require(['jquery'], function(jQuery) {
                             //Event was called when user clicked cancel. Do nothing.
                         }
                     })
-                    .subscribe("annotationViewerTextField", function(field, annotation) {
+                    /*.subscribe("annotationViewerTextField", function(field, annotation) {
                         field.innerHTML += "<br>";
                         field.innerHTML += "<span style='text-align:right'>" + annotation.username + "</span><br>";
                         field.innerHTML += "<span style='text-align:right'>" + annotation.timecreated + "</span>";
-                    });
+                    }) Use this if the other way takes up too much space*/
+                    ;
             }
         }
     };
 
+    /**
+      * Simple plugin that displays the time an annotation was craeted and the user who created it
+      */
+    Annotator.Plugin.ExtraData = function(element) {
+        var plugin = {};
+        plugin.pluginInit = function() {
+            this.annotator.viewer.addField({
+                load: function(field, annotation) {
+                    field.innerHTML = annotation.username;
+                }
+            })
+            this.annotator.viewer.addField({
+                load: function(field, annotation) {
+                    field.innerHTML = annotation.timecreated;
+                }
+            })
+        }
+        return plugin;
+    }
+
 
     var annotator_content = jQuery("#annotator-content").annotator();
-    annotator_content.annotator('addPlugin', 'StoreLogger');
     //annotator_content.annotator('addPlugin', 'Filter'); //Need to rewrite the Filter plugin
+    annotator_content.annotator('addPlugin', 'ExtraData');
+    annotator_content.annotator('addPlugin', 'StoreLogger');
     annotator_content.annotator('addPlugin', 'Tags');
     annotator_content.annotator('addPlugin', 'Unsupported');
 
@@ -79,9 +99,10 @@ require(['jquery'], function(jQuery) {
                 delete annotation.annotation;
                 annotation.ranges = JSON.parse(annotation.ranges);
                 annotation.highlights = JSON.parse(annotation.highlights);
+                annotation.tags = JSON.parse(annotation.tags);
                 annotation.timecreated = timeConverter(annotation.timecreated);
 
-                //Loads them one by one
+                //Load them one by one
                 annotator_content.annotator('loadAnnotations', [annotation]);
             }
         });

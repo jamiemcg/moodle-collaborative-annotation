@@ -24,7 +24,8 @@ if(!empty($_POST)) {
 		$DB->update_record($table, $annotation);
 
 		$annotation->username = $USER->firstname . " " . $USER->lastname; //Needs to be reset
-		echo json_encode($annotation);
+		
+		echo json_encode($annotation); //Return updated object to client [waste of transfer]
 	}
 	else {
 		echo "0";

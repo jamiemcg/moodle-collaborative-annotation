@@ -19,8 +19,10 @@ if(!empty($_POST)) {
 	$annotation->highlights = json_encode($_POST['highlights']);
 	$annotation->annotation = htmlentities($_POST['text']);
 	
-	//TODO issue with tags!
-
+	if(isset($_POST['tags']) && !empty($_POST['tags'])) {
+		$annotation->tags = json_encode($_POST['tags']);
+	}
+	
 	$annotation->timecreated = time();
 	$annotation->id = 1; //DB will change this
 	$annotation->userid = $USER->id;
@@ -31,4 +33,7 @@ if(!empty($_POST)) {
 	$annotation->username = $USER->firstname . " " . $USER->lastname;
 	
 	echo json_encode($annotation);
+}
+else {
+	http_response_code(400);
 }

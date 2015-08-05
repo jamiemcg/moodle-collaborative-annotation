@@ -4,6 +4,7 @@
  * Loads the annotations from the server for the image currently being viewed.
  * GET request with the window.location.url
  */
+
 if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();
@@ -27,7 +28,9 @@ if(!empty($_POST['url'])) {
 		$record->username = $user->firstname . " " . $user->lastname;
 		unset($record->userid); //Don't send the user's id, not required
 		
-
+		if($record->tags == "") {
+			$record->tags = null;
+		}
 		//TODO: Disable editing if the current user didn't create the annotation
 
 		$annotations[] = $record;
@@ -35,4 +38,7 @@ if(!empty($_POST['url'])) {
 	$rs->close();
 
 	echo json_encode($annotations);
+}
+else {
+	http_response_code(400);
 }

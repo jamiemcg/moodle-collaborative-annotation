@@ -40,3 +40,6 @@ if(!empty($_POST['url'])) {
 
 	echo json_encode($annotations);
 }
+else {
+	http_response_code(400);
+}

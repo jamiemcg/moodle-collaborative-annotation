@@ -33,3 +33,6 @@
 		echo "0"; //Return failure response
 	}
 }
+else {
+	http_response_code(400);
+}

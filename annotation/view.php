@@ -66,6 +66,8 @@ foreach ($results as $result) {
         break;
 }
 
+$PAGE->requires->css('/mod/annotation/styles/main.css');
+
 if($document_type == 2) {
 	//The document_type is an image so load annotorious css/js
 	$PAGE->requires->css('/mod/annotation/styles/annotorious.css');
@@ -138,12 +140,18 @@ else {
         //It is source code
         echo "<pre><code>";
     }
+    else {
+        echo "<pre class='pre-text'>";
+    }
 
     $file_contents = htmlentities($file_contents); //always replace the HTML entities
     echo $file_contents;
 
     if($document_type == 1) {
         echo "</code></pre>";
+    }
+    else {
+        echo "</pre>";
     }
 
     echo '</div>'; //The end of annotatable content

@@ -17,8 +17,13 @@ if(!empty($_POST)) {
 
 	$timecreated = time();
 	$annotation = htmlentities($_POST['text']);
-	//TODO: tag support
-	//$tags = .....
+
+	if(isset($_POST['tags']) && !empty($_POST['tags'])) {
+		$tags = json_encode($_POST['tags']);
+	}
+	else {
+		$tags = NULL; //Uses null for no tags instead of empty string
+	}
 
 	$params = array(
 					"id" => $id,
@@ -30,13 +35,16 @@ if(!empty($_POST)) {
 	//If the user logged in didn't create the annotation $count will be 0
 	if($count)	 {
 		//Save changes to the database
-		$sql = "UPDATE mdl_annotation_annotation SET timecreated = ?, annotation = ? WHERE id = ? AND userid = ?";
-		$DB->execute($sql, array($timecreated, $annotation, $id, $userid));
-
+		$sql = "UPDATE mdl_annotation_annotation SET timecreated = ?, annotation = ?, tags = ? WHERE id = ? AND userid = ?";
+		$DB->execute($sql, array($timecreated, $annotation, $tags, $id, $userid));
+		
 		//Return the new time
 		echo $timecreated;
 	}
 	else {
 		echo "0"; //Return error response
 	}
+}
+else {
+	http_response_code(400);
 }
