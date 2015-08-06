@@ -119,11 +119,18 @@ anno.addHandler('onPopupShown', function(annotation) {
 annotorious.plugin.ExtraData = function(opt_config_options) {}
 annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {}
 annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
+    var self = this, container = document.createElement('div');
+    container.className = "annotorious-editor-text";
+
     annotator.popup.addField(function(annotation) {
         return '<em>' + annotation.username + '</em>'
     });
     annotator.popup.addField(function(annotation) {
         return '<em>' + annotation.timecreated + '<em>';
+    });
+    annotator.editor.addField(function(annotation) {
+        self._tags = [];
+        return '<input class="annotorious-editor-text"></input>';
     });
 }
 anno.addPlugin('ExtraData', {});

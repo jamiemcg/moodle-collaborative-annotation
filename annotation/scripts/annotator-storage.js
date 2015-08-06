@@ -1,7 +1,7 @@
 require(['jquery'], function(jQuery) {
     //TODO: Rename the plugin after it is completed
     //TODO: Rewrite the subscriptions as functions to improve readability
-    Annotator.Plugin.StoreLogger = function(element) {
+    Annotator.Plugin.Storage = function(element) {
         return {
             pluginInit: function() {
                 this.annotator.subscribe("beforeAnnotationCreated", function(annotation) {
@@ -24,7 +24,7 @@ require(['jquery'], function(jQuery) {
                                 alert("Warning: You cannot edit annotations created by others!");
                             } else {
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
-                                console.info("The annotation: %o has just been updated!", annotation);
+                                console.info("The annotation: %o has just been updated! Any changes you make won't be saved!", annotation);
                             }
                         });
                     })
@@ -39,7 +39,7 @@ require(['jquery'], function(jQuery) {
                                     console.info("The annotation: %o has just been deleted!", annotation);
                                 } else {
                                     console.error("The annotation couldn't be deleted");
-                                    alert("Warning: You cannot delete annotations created by others!");
+                                    alert("Warning: You cannot delete annotations created by others! Any changes you make won't be saved!");
                                 }
                             });
                         } else {
@@ -78,9 +78,9 @@ require(['jquery'], function(jQuery) {
 
 
     var annotator_content = jQuery("#annotator-content").annotator();
-    //annotator_content.annotator('addPlugin', 'Filter'); //Need to rewrite the Filter plugin
+    annotator_content.annotator('addPlugin', 'Filter'); //May need to rewrite the Filter plugin
     annotator_content.annotator('addPlugin', 'ExtraData');
-    annotator_content.annotator('addPlugin', 'StoreLogger');
+    annotator_content.annotator('addPlugin', 'Storage');
     annotator_content.annotator('addPlugin', 'Tags');
     annotator_content.annotator('addPlugin', 'Unsupported');
 
