@@ -67,6 +67,7 @@ foreach ($results as $result) {
 }
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
+$PAGE->requires->js('/mod/annotation/scripts/main.js');
 
 if($document_type == 2) {
 	//The document_type is an image so load annotorious css/js
@@ -156,6 +157,80 @@ else {
 
     echo '</div>'; //The end of annotatable content
 }
+
+?>
+<nav class="nav-side">
+    <div class="annotation-list">
+        <h2>Annotations</h2>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        <a href="#">
+            <div class="annotation">
+                <p class="text">[Fill with annotation content]</p>
+                <p class="username">[User name]</p>
+                <hr>
+            </div>
+        </a>
+        
+    </div>
+    <a href="#" class="nav-toggle"></a>
+</nav>
+
+<?php
 
 //--------TODO--------------
 

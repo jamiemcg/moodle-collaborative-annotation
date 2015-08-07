@@ -13,27 +13,24 @@
 
 	global $CFG, $DB, $USER;
 
-	$userid = $USER->id; //Gets the current users id
+	$id = $_POST['id'];
+	$userid = $USER->id;
 
-	$annotation_id = $_POST['id'];
-	$annotation_userid = $_POST['userid'];
+	$params = array(
+					"id" => $id,
+					"userid" => $userid
+				   );
 
-	//Ensure the current user created the annotation
-	if($annotation_userid == $userid) {
-		$param = new stdClass();
-		$params = array(
-						"id" => $annotation_id,
-						"userid" => $userid
-					   );
-
-		$table = "annotation_image";
-		$DB->delete_records($table, $params);
+	$table ="annotation_image";
+	$count = $DB->count_records($table, $params);
+	//If the user logged in didn't create the annotation $count will be 0
+	if($count)	 {
+		$sql = "DELETE FROM mdl_annotation_image WHERE id = ? AND userid = ?";
+		$DB->execute($sql, array($id, $userid));
 		echo "1";
 	}
 	else {
 		echo "0";
 	}
 }
-else {
-	echo "0";
-}
+

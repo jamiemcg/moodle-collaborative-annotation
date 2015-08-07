@@ -8,7 +8,7 @@
 require(['jquery'], function($) {
     $(document).ready(function() {
         var post_data = {
-            url: document.location.href
+            url: getQueryVariables("id")
         }
         $.post("./annotorious/load.php", post_data, function(data) {
             console.log('data from server');
@@ -38,7 +38,7 @@ require(['jquery'], function($) {
 anno.addHandler('onAnnotationCreated', function(annotation) {
     delete annotation.src; //Waste of data so delete. Not required?
     delete annotation.context; //Use annotation.url instead
-    annotation.url = document.location.href; //Used to associate annotation with file/doc
+    annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
     annotation.tags = "";
 
     //TODO allow input of html text
@@ -49,14 +49,12 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
             data = JSON.parse(data);
             console.log('data from server');
             console.log(data);
-            console.log(data.username);
             annotation.id = data.id; //Set id to that assigned by the server
             annotation.username = data.username;
+            annotation.userid = data.userid;
             annotation.timecreated = timeConverter(data.timecreated);
         });
     });
-    console.log('annotation after server');
-    console.log(annotation);
 });
 
 /**
@@ -67,10 +65,15 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
     console.log(annotation);
     require(['jquery'], function($) {
         $.post("./annotorious/update.php", annotation, function(data) {
-            data = JSON.parse(data);
-            annotation.id = data.id; //Set id to that assigned by the server
-            annotation.username = data.username;
-            annotation.timecreated = timeConverter(data.timecreated);
+            if(data == 0) {
+                alert("Error! Could not update annotation!");
+            }
+            else {
+                data = JSON.parse(data);
+                annotation.id = data.id; //Set id to that assigned by the server
+                annotation.username = data.username;
+                annotation.timecreated = timeConverter(data.timecreated);
+            }
         });
     });
 });
@@ -104,13 +107,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
             console.log('data from server');
             console.log(data);
         });
-
     });
-});
-
-
-anno.addHandler('onPopupShown', function(annotation) {
-    //annotation.text = htmlEntities(annotation.text);
 });
 
 
@@ -119,22 +116,33 @@ anno.addHandler('onPopupShown', function(annotation) {
 annotorious.plugin.ExtraData = function(opt_config_options) {}
 annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {}
 annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
-    var self = this, container = document.createElement('div');
+    var self = this,
+        container = document.createElement('div');
     container.className = "annotorious-editor-text";
 
     annotator.popup.addField(function(annotation) {
         return '<em>' + annotation.username + '</em>'
     });
     annotator.popup.addField(function(annotation) {
-        return '<em>' + annotation.timecreated + '<em>';
-    });
-    annotator.editor.addField(function(annotation) {
-        self._tags = [];
-        return '<input class="annotorious-editor-text"></input>';
+        return '<em>' + annotation.timecreated + '</em>';
     });
 }
 anno.addPlugin('ExtraData', {});
 
+/**
+  * Gets a GET variable from the current URL
+  */
+function getQueryVariables(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return false;
+}
 
 //Converts a UNIX timestamp into readable format
 function timeConverter(UNIX_timestamp) {

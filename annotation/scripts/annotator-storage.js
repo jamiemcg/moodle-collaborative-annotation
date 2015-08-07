@@ -5,7 +5,7 @@ require(['jquery'], function(jQuery) {
         return {
             pluginInit: function() {
                 this.annotator.subscribe("beforeAnnotationCreated", function(annotation) {
-                        annotation.url = document.location.href;
+                        annotation.url = getQueryVariables("id");
                     })
                     .subscribe("annotationCreated", function(annotation) {
                         jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
@@ -87,7 +87,7 @@ require(['jquery'], function(jQuery) {
     //Load the existing annotations when the page is loaded
     jQuery(document).ready(function() {
         var post_data = {
-            url: document.location.href
+            url: getQueryVariables("id")
         }
         jQuery.post("./annotator/load.php", post_data, function(data) {
             //Load the annotations from the database
@@ -108,6 +108,23 @@ require(['jquery'], function(jQuery) {
         });
     });
 });
+
+/**
+  * Gets a GET variable from the current URL
+  */
+function getQueryVariables(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable) {
+            return pair[1];
+        }
+    }
+    return false;
+}
+
+
 
 /**
  * Converts a UNIX timestamp into readable format
