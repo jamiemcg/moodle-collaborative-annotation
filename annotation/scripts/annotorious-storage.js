@@ -106,6 +106,9 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
         $.post("./annotorious/delete.php", post_data, function(data) {
             console.log('data from server');
             console.log(data);
+            if(data == 0) {
+                alert("Error! Could not delete annotation!");
+            }
         });
     });
 });

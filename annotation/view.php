@@ -160,72 +160,8 @@ else {
 
 ?>
 <nav class="nav-side">
-    <div class="annotation-list">
+    <div class="annotation-list" id="annotation-list">
         <h2>Annotations</h2>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        <a href="#">
-            <div class="annotation">
-                <p class="text">[Fill with annotation content]</p>
-                <p class="username">[User name]</p>
-                <hr>
-            </div>
-        </a>
-        
     </div>
     <a href="#" class="nav-toggle"></a>
 </nav>

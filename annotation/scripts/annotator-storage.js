@@ -1,5 +1,4 @@
 require(['jquery'], function(jQuery) {
-    //TODO: Rename the plugin after it is completed
     //TODO: Rewrite the subscriptions as functions to improve readability
     Annotator.Plugin.Storage = function(element) {
         return {
@@ -14,6 +13,20 @@ require(['jquery'], function(jQuery) {
                             annotation.timecreated = timeConverter(data.timecreated);
                             annotation.id = data.id;
                             console.info("The annotation: %o has just been created!", annotation);
+
+                            //Add the annotation to the side pane
+                            if (annotation.text.length > 125) {
+                                var text = annotation.text.substring(0, 125) + "...";
+                            } else {
+                                var text = annotation.text;
+                            }
+                            var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
+                                '"><div class="annotation">';
+                            annotation_insert += '<p class="text">' + text + '</p>';
+                            annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                            annotation_insert += '<hr></div></a>';
+
+                            jQuery('#annotation-list').append(annotation_insert);
                         });
                     })
                     .subscribe("annotationUpdated", function(annotation) {
@@ -25,6 +38,8 @@ require(['jquery'], function(jQuery) {
                             } else {
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
                                 console.info("The annotation: %o has just been updated! Any changes you make won't be saved!", annotation);
+
+                                //TODO -> update the annotation in the side panel!
                             }
                         });
                     })
@@ -37,6 +52,8 @@ require(['jquery'], function(jQuery) {
                             jQuery.post("./annotator/delete.php", post_data, function(data) {
                                 if (data == 1) {
                                     console.info("The annotation: %o has just been deleted!", annotation);
+                                    var annotation_to_delete = "#" + annotation.id;
+                                    jQuery(annotation_to_delete).remove();
                                 } else {
                                     console.error("The annotation couldn't be deleted");
                                     alert("Warning: You cannot delete annotations created by others! Any changes you make won't be saved!");
@@ -51,14 +68,14 @@ require(['jquery'], function(jQuery) {
                         field.innerHTML += "<span style='text-align:right'>" + annotation.username + "</span><br>";
                         field.innerHTML += "<span style='text-align:right'>" + annotation.timecreated + "</span>";
                     }) Use this if the other way takes up too much space*/
-                    ;
+                ;
             }
         }
     };
 
     /**
-      * Simple plugin that displays the time an annotation was craeted and the user who created it
-      */
+     * Simple plugin that displays the time an annotation was craeted and the user who created it
+     */
     Annotator.Plugin.ExtraData = function(element) {
         var plugin = {};
         plugin.pluginInit = function() {
@@ -102,29 +119,46 @@ require(['jquery'], function(jQuery) {
                 annotation.tags = JSON.parse(annotation.tags);
                 annotation.timecreated = timeConverter(annotation.timecreated);
 
-                //Load them one by one
+                //Load them one by one [display them as highlights]
                 annotator_content.annotator('loadAnnotations', [annotation]);
+
+                //Add annotation to the side panel
+                if (annotation.text.length > 125) {
+                    var text = annotation.text.substring(0, 125) + "...";
+                } else {
+                    var text = annotation.text;
+                }
+                var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
+                    '"><div class="annotation">';
+                annotation_insert += '<p class="text">' + text + '</p>';
+                annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                annotation_insert += '<hr></div></a>';
+
+                jQuery('#annotation-list').append(annotation_insert);
             }
+
+            jQuery('.annotation').on('click', function(e) {
+                e.preventDefault();
+                //data-annotation-id=x
+            });
         });
     });
 });
 
 /**
-  * Gets a GET variable from the current URL
-  */
+ * Gets a GET variable from the current URL
+ */
 function getQueryVariables(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
-        if(pair[0] == variable) {
+        if (pair[0] == variable) {
             return pair[1];
         }
     }
     return false;
 }
-
-
 
 /**
  * Converts a UNIX timestamp into readable format
