@@ -1,4 +1,5 @@
 #Moodle Collaborative Annotation
+<mark>Work in progress</mark>
 The annotation module allows students and teachers to collaboratively annotate text documents, source code and images.
 
 ####Conents
