@@ -132,6 +132,27 @@ function annotation_delete_instance($id) {
     $cm = get_coursemodule_from_instance('annotation', $annotation->id, $course->id, false, MUST_EXIST);
     $cmid = $cm->id;
 
+    //Delete the associated annotations
+    //Determine DOC type
+    $table = "annotation_document";
+    $results = $DB->get_records($table, array('cmid' => $cmid));
+    foreach ($results as $result) {
+            $contenthash = $result->location;
+            $document_type = $result->document_type;
+            break; //Bad way of doing this
+    }
+
+    if($document_type == 2) {
+        //Doc is an image
+        $sql = "DELETE FROM mdl_annotation_image WHERE url=?";
+    }
+    else {
+        //Doc is a text file/source code
+        $sql = "DELETE FROM mdl_annotation_annotation WHERE url=?";
+    }
+
+    $DB->execute($sql, array($cmid));
+
     $DB->delete_records('annotation', array('id' => $annotation->id));
     $DB->delete_records('annotation_document', array('cmid' => $cmid));
     annotation_grade_item_delete($annotation);

@@ -111,6 +111,7 @@ require(['jquery'], function(jQuery) {
             data = JSON.parse(data);
             console.log('Data loaded from server: %o', data);
             for (var i = 0; i < data.length; i++) {
+                var annotations = [];
                 var annotation = data[i];
                 annotation.text = annotation.annotation;
                 delete annotation.annotation;

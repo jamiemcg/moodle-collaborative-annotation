@@ -63,7 +63,7 @@ $results = $DB->get_records($table, array('cmid' => $cmid));
 foreach ($results as $result) {
         $contenthash = $result->location;
         $document_type = $result->document_type;
-        break;
+        break; //Bad way of doing this
 }
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
