@@ -1,5 +1,4 @@
 #Moodle Collaborative Annotation
-####Jamie McGowan
 The annotation module allows students and teachers to collaboratively annotate text documents, source code and images.
 
 ####Conents
