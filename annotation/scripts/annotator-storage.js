@@ -61,7 +61,7 @@ require(['jquery'], function(jQuery) {
                                 }
                             });
                         } else {
-                            //Event was called when user clicked cancel. Do nothing.
+                            //Event was called when user clicked cancel. Do nothing. [bug #258]
                         }
                     })
                     /*.subscribe("annotationViewerTextField", function(field, annotation) {
@@ -93,7 +93,6 @@ require(['jquery'], function(jQuery) {
         }
         return plugin;
     }
-
 
     var annotator_content = jQuery("#annotator-content").annotator();
     annotator_content.annotator('addPlugin', 'Filter'); //May need to rewrite the Filter plugin
@@ -140,6 +139,7 @@ require(['jquery'], function(jQuery) {
             }
         });
 
+        //Scrolls to the relevant annotation when clicked on
         jQuery('body').on('click', '.annotation', function(e) {
             e.preventDefault();
             var id = this.id;
@@ -147,21 +147,32 @@ require(['jquery'], function(jQuery) {
             console.log(target);
             var position = document.getElementById(target).offsetTop;
             console.log(position);
-            jQuery(document.body).animate({
-                scrollTop: position
-            }, 750);
+
+            //Check user browser
+            if (navigator.userAgent.indexOf("Chrome") != -1) {
+                //User is using Chrome
+                jQuery(document.body).animate({
+                    scrollTop: position
+                }, 750);
+            } else {
+                jQuery('html').animate({
+                    scrollTop: position
+                }, 750);
+            }
         })
 
+        //Highlight the annotation being hovered over
         jQuery('body').on('mouseenter', '.annotation', function(e) {
             var id = this.id;
             var target = "annotation_" + id;
-            jQuery('#'+target).toggleClass('annotator-hl-active');
+            jQuery('#' + target).toggleClass('annotator-hl-active');
         })
 
+        //Stop annotation the highlighted annotation
         jQuery('body').on('mouseleave', '.annotation', function(e) {
             var id = this.id;
             var target = "annotation_" + id;
-            jQuery('#'+target).toggleClass('annotator-hl-active');
+            jQuery('#' + target).toggleClass('annotator-hl-active');
         })
     });
 });

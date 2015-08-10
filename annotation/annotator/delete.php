@@ -5,8 +5,7 @@
  * Sepecified by id number in POST request 
  */
  
-//TODO: puts checks in place e.g. if user created the annotation
-//TODO: Edit permission levels
+//TODO: Edit permission levels [teachers]
 
  if(!empty($_POST['id'])) {
 	require_once(__DIR__ . "../../../../config.php");

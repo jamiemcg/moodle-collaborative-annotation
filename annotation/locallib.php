@@ -71,9 +71,9 @@ function store_annotation_document($data) {
     $record->user_id = $userid;
     $record->group_id = 0;
     $record->time_created = $timecreated;
-    $record->document_type = $data->type; //TODO
+    $record->document_type = $data->type;
     $record->location = $contenthash;
-    $record->lang = ""; //TODO : possibly remove lang field as automatic detection
+    $record->lang = ""; //TODO : remove lang field as automatic detection?
     $record->cmid = $cmid;
 
     $insertid = $DB->insert_record('annotation_document', $record, false);
