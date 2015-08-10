@@ -25,6 +25,21 @@ require(['jquery'], function($) {
                 annotation.src = "http://image.to.annotate"; //Base64 workaround
                 annotation.timecreated = timeConverter(annotation.timecreated);
                 anno.addAnnotation(annotation);
+
+                //Add the annotations to the side panel
+                //Don't display long annotations in full
+                if (annotation.text.length > 125) {
+                    var text = annotation.text.substring(0, 125) + "...";
+                } else {
+                    var text = annotation.text;
+                }
+                var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                    '"><a href="#">';
+                annotation_insert += '<p class="text">' + text + '</p>';
+                annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                annotation_insert += '<hr></a></div>';
+
+                $('#annotation-list').append(annotation_insert);
             }
         });
     });
@@ -41,7 +56,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
     annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
     annotation.tags = "";
 
-    //TODO allow input of html text
+    //TODO HTML text?
 
     //Send AJAX request to server to store new annotation
     require(['jquery'], function($) {
@@ -53,6 +68,21 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
             annotation.username = data.username;
             annotation.userid = data.userid;
             annotation.timecreated = timeConverter(data.timecreated);
+
+            if (annotation.text.length > 125) {
+                var text = annotation.text.substring(0, 125) + "...";
+            } else {
+                var text = annotation.text;
+            }
+
+            //Add the annotation to the side panel
+            var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
+                '"><div class="annotation">';
+            annotation_insert += '<p class="text">' + text + '</p>';
+            annotation_insert += '<p class="username">' + annotation.username + '</p>'
+            annotation_insert += '<hr></div></a>';
+
+            $('#annotation-list').append(annotation_insert);
         });
     });
 });
@@ -65,14 +95,17 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
     console.log(annotation);
     require(['jquery'], function($) {
         $.post("./annotorious/update.php", annotation, function(data) {
-            if(data == 0) {
+            if (data == 0) {
                 alert("Error! Could not update annotation!");
-            }
-            else {
+            } else {
                 data = JSON.parse(data);
                 annotation.id = data.id; //Set id to that assigned by the server
                 annotation.username = data.username;
                 annotation.timecreated = timeConverter(data.timecreated);
+
+                //Update the annotation in the side panel
+                var annotation_to_update = "#" + annotation.id;
+                $(annotation_to_update).find('.text').text(annotation.text);
             }
         });
     });
@@ -106,8 +139,11 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
         $.post("./annotorious/delete.php", post_data, function(data) {
             console.log('data from server');
             console.log(data);
-            if(data == 0) {
+            if (data == 0) {
                 alert("Error! Could not delete annotation!");
+            } else {
+                var annotation_to_delete = "#" + annotation.id;
+                $(annotation_to_delete).remove();
             }
         });
     });
@@ -133,14 +169,14 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
 anno.addPlugin('ExtraData', {});
 
 /**
-  * Gets a GET variable from the current URL
-  */
+ * Gets a GET variable from the current URL
+ */
 function getQueryVariables(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
-        if(pair[0] == variable) {
+        if (pair[0] == variable) {
             return pair[1];
         }
     }

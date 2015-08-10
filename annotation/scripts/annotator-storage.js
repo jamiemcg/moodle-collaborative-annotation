@@ -39,7 +39,8 @@ require(['jquery'], function(jQuery) {
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
                                 console.info("The annotation: %o has just been updated! Any changes you make won't be saved!", annotation);
 
-                                //TODO -> update the annotation in the side panel!
+                                var annotation_to_update = "#" + annotation.id;
+                                jQuery(annotation_to_update).find('.text').text(annotation.text);
                             }
                         });
                     })
@@ -123,25 +124,45 @@ require(['jquery'], function(jQuery) {
                 annotator_content.annotator('loadAnnotations', [annotation]);
 
                 //Add annotation to the side panel
+                //Don't display long annotations in full
                 if (annotation.text.length > 125) {
                     var text = annotation.text.substring(0, 125) + "...";
                 } else {
                     var text = annotation.text;
                 }
-                var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
-                    '"><div class="annotation">';
+                var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                    '"><a href="#">';
                 annotation_insert += '<p class="text">' + text + '</p>';
                 annotation_insert += '<p class="username">' + annotation.username + '</p>'
-                annotation_insert += '<hr></div></a>';
+                annotation_insert += '<hr></a></div>';
 
                 jQuery('#annotation-list').append(annotation_insert);
             }
-
-            jQuery('.annotation').on('click', function(e) {
-                e.preventDefault();
-                //data-annotation-id=x
-            });
         });
+
+        jQuery('body').on('click', '.annotation', function(e) {
+            e.preventDefault();
+            var id = this.id;
+            var target = "annotation_" + id;
+            console.log(target);
+            var position = document.getElementById(target).offsetTop;
+            console.log(position);
+            jQuery(document.body).animate({
+                scrollTop: position
+            }, 750);
+        })
+
+        jQuery('body').on('mouseenter', '.annotation', function(e) {
+            var id = this.id;
+            var target = "annotation_" + id;
+            jQuery('#'+target).toggleClass('annotator-hl-active');
+        })
+
+        jQuery('body').on('mouseleave', '.annotation', function(e) {
+            var id = this.id;
+            var target = "annotation_" + id;
+            jQuery('#'+target).toggleClass('annotator-hl-active');
+        })
     });
 });
 
