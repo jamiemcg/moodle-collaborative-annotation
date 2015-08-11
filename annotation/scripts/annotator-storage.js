@@ -23,18 +23,19 @@ require(['jquery'], function(jQuery) {
                             var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                                 '"><a href="#">';
                             annotation_insert += '<p class="text">' + text + '</p>';
-                            annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                            annotation_insert += '<p class="username">' + annotation.username + '</p>';
                             annotation_insert += '<hr></a></div>';
                             
                             jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
                             jQuery(annotation.highlights).attr("id", "annotation_" + annotation.id);
+                            jQuery(annotation.highlights).addClass("annotation_" + annotation.id);
 
                             jQuery('#annotation-list').append(annotation_insert);
                         });
                     })
                     .subscribe("annotationUpdated", function(annotation) {
                         jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {
-                            if (data == 0) {
+                            if (data === 0) {
                                 //Incorrect user logged in
                                 console.error("The annotation couldn't be updated");
                                 alert("Warning: You cannot edit annotations created by others!");
@@ -108,7 +109,7 @@ require(['jquery'], function(jQuery) {
     jQuery(document).ready(function() {
         var post_data = {
             url: getQueryVariables("id")
-        }
+        };
         jQuery.post("./annotator/load.php", post_data, function(data) {
             //Load the annotations from the database
             data = JSON.parse(data);
@@ -167,14 +168,14 @@ require(['jquery'], function(jQuery) {
         jQuery('body').on('mouseenter', '.annotation', function(e) {
             var id = this.id;
             var target = "annotation_" + id;
-            jQuery('#' + target).toggleClass('annotator-hl-active');
+            jQuery('.' + target).toggleClass('annotator-hl-active');
         })
 
         //Stop annotation the highlighted annotation
         jQuery('body').on('mouseleave', '.annotation', function(e) {
             var id = this.id;
             var target = "annotation_" + id;
-            jQuery('#' + target).toggleClass('annotator-hl-active');
+            jQuery('.' + target).toggleClass('annotator-hl-active');
         })
     });
 });
