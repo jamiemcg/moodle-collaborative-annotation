@@ -15,16 +15,19 @@ require(['jquery'], function(jQuery) {
                             console.info("The annotation: %o has just been created!", annotation);
 
                             //Add the annotation to the side pane
+                            var text = annotation.text;
                             if (annotation.text.length > 125) {
-                                var text = annotation.text.substring(0, 125) + "...";
-                            } else {
-                                var text = annotation.text;
+                                //Don't display full annotation if its long
+                                text = annotation.text.substring(0, 125) + "...";
                             }
-                            var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
-                                '"><div class="annotation">';
+                            var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                                '"><a href="#">';
                             annotation_insert += '<p class="text">' + text + '</p>';
                             annotation_insert += '<p class="username">' + annotation.username + '</p>'
-                            annotation_insert += '<hr></div></a>';
+                            annotation_insert += '<hr></a></div>';
+                            
+                            jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
+                            jQuery(annotation.highlights).attr("id", "annotation_" + annotation.id);
 
                             jQuery('#annotation-list').append(annotation_insert);
                         });
@@ -111,7 +114,6 @@ require(['jquery'], function(jQuery) {
             data = JSON.parse(data);
             console.log('Data loaded from server: %o', data);
             for (var i = 0; i < data.length; i++) {
-                var annotations = [];
                 var annotation = data[i];
                 annotation.text = annotation.annotation;
                 delete annotation.annotation;
@@ -124,11 +126,10 @@ require(['jquery'], function(jQuery) {
                 annotator_content.annotator('loadAnnotations', [annotation]);
 
                 //Add annotation to the side panel
-                //Don't display long annotations in full
+                var text = annotation.text;
                 if (annotation.text.length > 125) {
-                    var text = annotation.text.substring(0, 125) + "...";
-                } else {
-                    var text = annotation.text;
+                    //Don't display full annotation if its long
+                    text = annotation.text.substring(0, 125) + "...";
                 }
                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                     '"><a href="#">';
