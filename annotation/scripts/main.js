@@ -1,5 +1,5 @@
 /**
-  *	This 'main.js' file contains shared code for annotating images and text
+  *	This 'main.js' file contains code for both text and image annotating
   */
 require(['jquery'], function($) {
 	$('.nav-side .nav-toggle').on('click', function(e) {

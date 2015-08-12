@@ -99,11 +99,31 @@ require(['jquery'], function(jQuery) {
     }
 
     var annotator_content = jQuery("#annotator-content").annotator();
-    annotator_content.annotator('addPlugin', 'Filter'); //May need to rewrite the Filter plugin
     annotator_content.annotator('addPlugin', 'ExtraData');
     annotator_content.annotator('addPlugin', 'Storage');
+    annotator_content.annotator('addPlugin', 'Filter', {
+        filters: [{
+            label: 'User',
+            property: 'username',
+            isFiltered: function(input, username) {
+                if (input && username && username.length) {
+                    var keywords = input.split(/\s+/g);
+                    username = username.split(" "); //Split first and second name
+                    for (var i = 0; i < keywords.length; i += 1) {
+                        for (var j = 0; j < username.length; j += 1) {
+                            if (username[j].toUpperCase().indexOf(keywords[i].toUpperCase()) !== -1) { //bad formatting
+                                return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        }]
+    });
     annotator_content.annotator('addPlugin', 'Tags');
     annotator_content.annotator('addPlugin', 'Unsupported');
+
 
     //Load the existing annotations when the page is loaded
     jQuery(document).ready(function() {
