@@ -65,6 +65,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Add a file manager to handle uploading of files.
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
         $mform->setExpanded('contentsection');
+        $mform->addElement('html', '<b>' . get_string('file_select_info', 'annotation') . '</b><br>');
 
         //Add selector for document type - text, source, image
         $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'), 2 => get_string('image', 'annotation'));
@@ -81,6 +82,29 @@ class mod_annotation_mod_form extends moodleform_mod {
 
         // Add standard grading elements.
         //$this->standard_grading_coursemodule_elements();
+
+        //Group options settings
+        $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
+        
+        $name = get_string('group_annotations', 'annotation');
+        $mform->addElement('selectyesno', 'group_annotation', $name);
+        $mform->addHelpButton('group_annotation', 'group_annotations', 'annotation');
+
+        $name = get_string('group_annotations_visible', 'annotation');
+        $mform->addElement('selectyesno', 'group_annotations_visible', $name);
+        $mform->addHelpButton('group_annotations_visible', 'group_annotations_visible', 'annotation');
+
+        //Availabilty / time restriction section
+        $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
+        $mform->setExpanded('availability', false);
+
+        $name = get_string('allow_annotations_from', 'annotation');
+        $mform->addElement('date_time_selector', 'allow_from', $name, array('optional'=>true));
+        $mform->addHelpButton('allow_from', 'allow_annotations_from', 'annotation');
+
+        $name = get_string('allow_annotations_until', 'annotation');
+        $mform->addElement('date_time_selector', 'allow_until', $name, array('optional'=>true));
+        $mform->addHelpButton('allow_until', 'allow_annotations_until', 'annotation');
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
