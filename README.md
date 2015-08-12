@@ -1,10 +1,11 @@
 #Moodle Collaborative Annotation
 
 ##Work in Progress!
+-----
 
 The annotation module allows students and teachers to collaboratively annotate text documents, source code and images.
 
-####Conents
+####Contents
  - [Installation](#installation)
  - [Usage](#usage)
  - [Installation Details](#installation-details)
@@ -34,9 +35,9 @@ You can check out existing issues or report newly discovered issues [here on Git
 
 ##Libraries
 This module makes use of the following open source projects:
-- [Annotator](http://annotatorjs.org/)
-- [Annotorious](http://annotorious.github.io/)
-- [highlight.js](https://highlightjs.org/)
+- [Annotator](http://annotatorjs.org/) - Text annotations
+- [Annotorious](http://annotorious.github.io/) - Image annotations
+- [highlight.js](https://highlightjs.org/) - Source code highlighting
 
 ##Source Code
 You can check out the source code [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation).
