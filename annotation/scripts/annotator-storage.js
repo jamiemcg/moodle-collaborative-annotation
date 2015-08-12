@@ -25,7 +25,7 @@ require(['jquery'], function(jQuery) {
                             annotation_insert += '<p class="text">' + text + '</p>';
                             annotation_insert += '<p class="username">' + annotation.username + '</p>';
                             annotation_insert += '<hr></a></div>';
-                            
+
                             jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
                             jQuery(annotation.highlights).attr("id", "annotation_" + annotation.id);
                             jQuery(annotation.highlights).addClass("annotation_" + annotation.id);
