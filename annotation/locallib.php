@@ -73,7 +73,7 @@ function store_annotation_document($data) {
     $record->time_created = $timecreated;
     $record->document_type = $data->type;
     $record->location = $contenthash;
-    $record->lang = ""; //TODO : remove lang field as automatic detection?
+    $record->lang = ""; //TODO : remove lang field because of automatic detection?
     $record->cmid = $cmid;
 
     $insertid = $DB->insert_record('annotation_document', $record, false);

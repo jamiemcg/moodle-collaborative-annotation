@@ -80,7 +80,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addRule('files', null, 'required', 'client');
 
         // Add standard grading elements.
-        $this->standard_grading_coursemodule_elements();
+        //$this->standard_grading_coursemodule_elements();
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();

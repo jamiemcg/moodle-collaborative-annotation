@@ -103,6 +103,10 @@ require(['jquery'], function(jQuery) {
     annotator_content.annotator('addPlugin', 'Storage');
     annotator_content.annotator('addPlugin', 'Filter', {
         filters: [{
+            //TODO group support
+            label: 'Group',
+            property: 'group'
+        }, {
             label: 'User',
             property: 'username',
             isFiltered: function(input, username) {
