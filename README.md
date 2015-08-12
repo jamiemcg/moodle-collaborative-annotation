@@ -3,7 +3,7 @@
 ##Work in Progress!
 -----
 
-The annotation module allows students and teachers to collaboratively annotate text documents, source code and images.
+The annotation module allows students and teachers to collaboratively annotate text documents, source code and images
 
 ####Contents
  - [Installation](#installation)
@@ -14,11 +14,11 @@ The annotation module allows students and teachers to collaboratively annotate t
  - [Source Code](#source-code)
 
 ##Installation
-1. Download the latest [zip file from GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/archive/master.zip).
-2. Unzip the file.
-3. Copy the ```annotation``` folder to your the ```/moodle/htdocs/mod/``` folder.
+1. Download the latest [zip file from GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/archive/master.zip)
+2. Unzip the file
+3. Copy the ```annotation``` folder to your ```/moodle/htdocs/mod/``` folder
 4. Navigate your browser to ```Settings > Site administration > Notifications``` and install the plugin
-5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information
+5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information on installing plugins
 
 ##Usage
 
@@ -40,4 +40,4 @@ This module makes use of the following open source projects:
 - [highlight.js](https://highlightjs.org/) - Source code highlighting
 
 ##Source Code
-You can check out the source code [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation).
+You can check out the source code [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation)
