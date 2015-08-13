@@ -80,11 +80,9 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
         $mform->addRule('files', null, 'required', 'client');
 
-        // Add standard grading elements.
-        //$this->standard_grading_coursemodule_elements();
-
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
+        $mform->addElement('html', '<mark>Not yet implemented</mark><br>');
         
         $name = get_string('group_annotations', 'annotation');
         $mform->addElement('selectyesno', 'group_annotation', $name);
@@ -97,6 +95,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         //Availabilty / time restriction section
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
         $mform->setExpanded('availability', false);
+        $mform->addElement('html', '<mark>Not yet implemented</mark><br>');
 
         $name = get_string('allow_annotations_from', 'annotation');
         $mform->addElement('date_time_selector', 'allow_from', $name, array('optional'=>true));
@@ -106,10 +105,13 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'allow_until', $name, array('optional'=>true));
         $mform->addHelpButton('allow_until', 'allow_annotations_until', 'annotation');
 
-        // Add standard elements, common to all modules.
+        // Add standard elements, common to all modules
         $this->standard_coursemodule_elements();
 
-        // Add standard buttons, common to all modules.
+        // Add standard grading elements
+        $this->standard_grading_coursemodule_elements();
+
+        // Add standard buttons, common to all modules
         $this->add_action_buttons();
 	}
 
@@ -125,14 +127,24 @@ class mod_annotation_mod_form extends moodleform_mod {
             //sense if the file they are applied to are changed
             $mform->removeElement('files');
 
+            //TODO: remove group settings for editing??
+
             //Find out what type of document it was and set selector
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
             foreach ($results as $result) {
                     $document_type = $result->document_type;
+                    $group_annotation = $result->group_annotation;
+                    $group_annotations_visible = $result->group_annotations_visible;
+                    $allow_from = $result->allow_from;
+                    $allow_until = $result->allow_until;
                     break;
             }
             $mform->setDefault('type', $document_type);
+            $mform->setDefault('group_annotation', $group_annotation);
+            $mform->setDefault('group_annotations_visible', $group_annotations_visible);
+            $mform->setDefault('allow_from', $allow_from);
+            $mform->setDefault('allow_until', $allow_until);
     	}
     }
 }

@@ -63,6 +63,10 @@ $results = $DB->get_records($table, array('cmid' => $cmid));
 foreach ($results as $result) {
         $contenthash = $result->location;
         $document_type = $result->document_type;
+        $group_annotation = $result->group_annotation;
+        $group_annotations_visible = $result->group_annotations_visible;
+        $allow_from = $result->allow_from;
+        $allow_until = $result->allow_until;
         break; //Bad way of doing this
 }
 
@@ -102,8 +106,6 @@ $PAGE->set_heading(format_string($course->fullname));
 // Output starts here.
 echo $OUTPUT->header();
 
-
-// Replace the following lines with you own code.
 echo $OUTPUT->heading($annotation->name);
 
 // If an intro (description) exists for the current activity, display it
@@ -111,6 +113,34 @@ if ($annotation->intro) {
     echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
     echo "<hr>";
 }
+
+//If availability settings are defined, display the settings
+if($allow_from && $allow_until) {
+    $allow_from = date('d/m/Y H:i:s', $allow_from);
+    $allow_until = date('d/m/Y H:i:s', $allow_until);
+    echo get_string('annotatable_from', 'annotation') . " " . $allow_from . " " . get_string('until', 'annotation') . " " . $allow_until;
+    echo "<br>";
+}
+else if($allow_from) {
+    $allow_from = date('d/m/Y H:i:s', $allow_from);
+    echo get_string('annotatable_from', 'annotation') . " " . $allow_from;
+    echo "<br>";
+}
+else if($allow_until) {
+    $allow_until = date('d/m/Y H:i:s', $allow_until);
+    echo get_string('annotatable_until', 'annotation') . " " . $allow_until;
+    echo "<br>";
+}
+else {
+    //Not set, do nothing
+}
+
+
+// If groups are enabled and the current user is a teacher or group visibility is enables
+// display the names of the groups so they are available for filtering
+
+// if ((annotations.groups && annotations.groupvisibility) || user == teacher) display group names
+//TODO: CONTINUE FROM HERE
 
 
 //Build the path to the file from the content_hash
@@ -159,6 +189,7 @@ else {
 }
 
 ?>
+
 <nav class="nav-side">
     <div class="annotation-list" id="annotation-list">
         <h2>Annotations</h2>
@@ -168,7 +199,5 @@ else {
 
 <?php
 
-//--------TODO--------------
-
-// Finish the page. E.g. list of annotations, etc..
+//TODO: Check timing settings, launch read only mode?
 echo $OUTPUT->footer();

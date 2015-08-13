@@ -7,6 +7,7 @@ The annotation module allows students and teachers to collaboratively annotate t
 
 ####Contents
  - [Installation](#installation)
+ - [Screenshots](#screenshots)
  - [Usage](#usage)
  - [Installation Details](#installation-details)
  - [Issues](#issues)
@@ -19,6 +20,8 @@ The annotation module allows students and teachers to collaboratively annotate t
 3. Copy the ```annotation``` folder to your ```/moodle/htdocs/mod/``` folder
 4. Navigate your browser to ```Settings > Site administration > Notifications``` and install the plugin
 5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information on installing plugins
+
+##Screenshots
 
 ##Usage
 
@@ -34,13 +37,13 @@ The installation of this module results in the creation of four new database tab
 ![Database Schema](https://github.com/jamiemcg/moodle-collaborative-annotation/blob/master/Current%20Database%20Structure.png "Current Database Schema. May change.")
 
 ##Issues
-You can check out existing issues or report newly discovered issues [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
+You can check out existing issues or report newly discovered issues [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
 
 ##Libraries
 This module makes use of the following open source projects:
-- [Annotator](http://annotatorjs.org/) - Text annotations
+- [Annotatorjs](http://annotatorjs.org/) - Text annotations
 - [Annotorious](http://annotorious.github.io/) - Image annotations
 - [highlight.js](https://highlightjs.org/) - Source code highlighting
 
 ##Source Code
-You can check out the source code [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation)
+You can check out the source code [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation)

@@ -47,7 +47,7 @@ $string['annotation_availability'] = 'Availability';
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
 $string['document_type_help'] = '';
-$string['file_select_info'] = 'Please select either a plain text file or an image and specify the correct document type';
+$string['file_select_info'] = 'Please choose either a plain text file or an image and specify the correct document type';
 $string['group_annotation'] = 'Group Annotation';
 $string['group_annotations'] = 'Students annotate in groups';
 $string['group_annotations_help'] = 'If enabled, students will be divided into groups based on the default set of groups for the course. Users will then be able to filter annotations by groups.';
@@ -58,3 +58,8 @@ $string['selectfile'] = 'Select File';
 $string['source_code'] = 'Source Code';
 $string['teacher_permissions'] = 'Allow teachers to edit and delete students annotations';
 $string['text_document'] = 'Text Document';
+
+//Strings for view.php
+$string['annotatable_from'] = 'This file is annotatable from';
+$string['annotatable_until'] = 'This file is annotatable until';
+$string['until'] = 'until';

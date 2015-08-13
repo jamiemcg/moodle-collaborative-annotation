@@ -35,13 +35,13 @@ require(['jquery'], function(jQuery) {
                     })
                     .subscribe("annotationUpdated", function(annotation) {
                         jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {
-                            if (data === 0) {
+                            if (data == 0) {
                                 //Incorrect user logged in
                                 console.error("The annotation couldn't be updated");
-                                alert("Warning: You cannot edit annotations created by others!");
+                                alert("Warning: You cannot edit annotations created by others!  Any changes you make won't be saved!");
                             } else {
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
-                                console.info("The annotation: %o has just been updated! Any changes you make won't be saved!", annotation);
+                                console.info("The annotation: %o has just been updated!", annotation);
 
                                 var annotation_to_update = "#" + annotation.id;
                                 jQuery(annotation_to_update).find('.text').text(annotation.text);
@@ -98,39 +98,39 @@ require(['jquery'], function(jQuery) {
         return plugin;
     }
 
-    var annotator_content = jQuery("#annotator-content").annotator();
-    annotator_content.annotator('addPlugin', 'ExtraData');
-    annotator_content.annotator('addPlugin', 'Storage');
-    annotator_content.annotator('addPlugin', 'Filter', {
-        filters: [{
-            //TODO group support
-            label: 'Group',
-            property: 'group'
-        }, {
-            label: 'User',
-            property: 'username',
-            isFiltered: function(input, username) {
-                if (input && username && username.length) {
-                    var keywords = input.split(/\s+/g);
-                    username = username.split(" "); //Split first and second name
-                    for (var i = 0; i < keywords.length; i += 1) {
-                        for (var j = 0; j < username.length; j += 1) {
-                            if (username[j].toUpperCase().indexOf(keywords[i].toUpperCase()) !== -1) { //bad formatting
-                                return true;
+    //Load the existing annotations when the page is loaded
+    jQuery(document).ready(function() {
+        var annotator_content = jQuery("#annotator-content").annotator();
+        annotator_content.annotator('addPlugin', 'ExtraData');
+        annotator_content.annotator('addPlugin', 'Storage');
+        annotator_content.annotator('addPlugin', 'Filter', {
+            filters: [{
+                //TODO group support
+                //Only add this filter if group mode && group.visibility
+                label: 'Group',
+                property: 'group'
+            }, {
+                label: 'User',
+                property: 'username',
+                isFiltered: function(input, username) {
+                    if (input && username && username.length) {
+                        var keywords = input.split(/\s+/g);
+                        username = username.split(" "); //Split first and second name
+                        for (var i = 0; i < keywords.length; i += 1) {
+                            for (var j = 0; j < username.length; j += 1) {
+                                if (username[j].toUpperCase().indexOf(keywords[i].toUpperCase()) !== -1) { //bad formatting
+                                    return true;
+                                }
                             }
                         }
                     }
+                    return false;
                 }
-                return false;
-            }
-        }]
-    });
-    annotator_content.annotator('addPlugin', 'Tags');
-    annotator_content.annotator('addPlugin', 'Unsupported');
+            }]
+        });
+        annotator_content.annotator('addPlugin', 'Tags');
+        annotator_content.annotator('addPlugin', 'Unsupported');
 
-
-    //Load the existing annotations when the page is loaded
-    jQuery(document).ready(function() {
         var post_data = {
             url: getQueryVariables("id")
         };

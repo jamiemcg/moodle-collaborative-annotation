@@ -75,6 +75,10 @@ function store_annotation_document($data) {
     $record->location = $contenthash;
     $record->lang = ""; //TODO : remove lang field because of automatic detection?
     $record->cmid = $cmid;
+    $record->group_annotation = $data->group_annotation;
+    $record->group_annotations_visible = $data->group_annotations_visible;
+    $record->allow_from = $data->allow_from;
+    $record->allow_until = $data->allow_until;
 
     $insertid = $DB->insert_record('annotation_document', $record, false);
 }
@@ -89,8 +93,11 @@ function update_annotation_document($data) {
     $record = $DB->get_records($table);
 
     $document_type = $data->type;
+    $group_annotation = $data->group_annotation;
+    $group_annotations_visible = $data->group_annotations_visible;
+    $allow_from = $data->allow_from;
+    $allow_until = $data->allow_until;
     
-    
-    $sql = "UPDATE mdl_annotation_document SET document_type = ? WHERE cmid = ? ";
-    $DB->execute($sql, array($document_type, $cmid));
+    $sql = "UPDATE mdl_annotation_document SET document_type = ?, group_annotation = ?, group_annotations_visible = ?, allow_from = ?, allow_until = ? WHERE cmid = ? ";
+    $DB->execute($sql, array($document_type, $group_annotation, $group_annotations_visible, $allow_from, $allow_until, $cmid));
 }
