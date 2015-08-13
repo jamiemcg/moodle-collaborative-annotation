@@ -30,6 +30,9 @@ The installation of this module results in the creation of four new database tab
 3. ```mdl_annotation_document```: stores details about the uploaded files
 4. ```mdl_annotation_image```: stores annotations for image files
 
+**Database Structure (may change):**
+![Database Schema](https://github.com/jamiemcg/moodle-collaborative-annotation/blob/master/Current%20Database%20Structure.png "Current Database Schema. May change.")
+
 ##Issues
 You can check out existing issues or report newly discovered issues [here on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
 
