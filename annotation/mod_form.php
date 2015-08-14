@@ -140,6 +140,7 @@ class mod_annotation_mod_form extends moodleform_mod {
                     $allow_until = $result->allow_until;
                     break;
             }
+            
             $mform->setDefault('type', $document_type);
             $mform->setDefault('group_annotation', $group_annotation);
             $mform->setDefault('group_annotations_visible', $group_annotations_visible);

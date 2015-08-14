@@ -23,14 +23,15 @@
 
 	$table ="annotation_image";
 	$count = $DB->count_records($table, $params);
+	
 	//If the user logged in didn't create the annotation $count will be 0
 	if($count)	 {
 		$sql = "DELETE FROM mdl_annotation_image WHERE id = ? AND userid = ?";
 		$DB->execute($sql, array($id, $userid));
-		echo "1";
+		echo "1"; //Success code
 	}
 	else {
-		echo "0";
+		echo "0"; //Error code
 	}
 }
 

@@ -100,9 +100,6 @@ $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($annotation->name));
 $PAGE->set_heading(format_string($course->fullname));
 
-//$PAGE->set_focuscontrol('some-html-id');
-//$PAGE->add_body_class('annotation-'.$somevar);
- 
 // Output starts here.
 echo $OUTPUT->header();
 

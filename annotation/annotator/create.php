@@ -12,7 +12,7 @@ if(!empty($_POST)) {
 
 	global $CFG, $DB, $USER;
 
-	if(strlen($annotation->quote) < 1) {
+	if(strlen($_POST['text']) < 1) {
 		//No text selected, stop script and don't store annotation
 		die();
 	}
