@@ -91,3 +91,10 @@ a.nav-toggle {
     text-align: right;
     font-style: italic;
 }
+
+.group-list {
+    -webkit-column-width: 120px;
+    -moz-column-width: 120px;
+    column-width: 120px;
+
+}

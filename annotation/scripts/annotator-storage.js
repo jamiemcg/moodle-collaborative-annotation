@@ -7,31 +7,33 @@ require(['jquery'], function(jQuery) {
                         annotation.url = getQueryVariables("id");
                     })
                     .subscribe("annotationCreated", function(annotation) {
-                        jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
-                            data = JSON.parse(data);
-                            annotation.username = data.username;
-                            annotation.timecreated = timeConverter(data.timecreated);
-                            annotation.id = data.id;
-                            console.info("The annotation: %o has just been created!", annotation);
+                        if(annotation.quote.length > 0) {
+                            jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
+                                data = JSON.parse(data);
+                                annotation.username = data.username;
+                                annotation.timecreated = timeConverter(data.timecreated);
+                                annotation.id = data.id;
+                                console.info("The annotation: %o has just been created!", annotation);
 
-                            //Add the annotation to the side pane
-                            var text = annotation.text;
-                            if (annotation.text.length > 125) {
-                                //Don't display full annotation if its long
-                                text = annotation.text.substring(0, 125) + "...";
-                            }
-                            var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
-                                '"><a href="#">';
-                            annotation_insert += '<p class="text">' + text + '</p>';
-                            annotation_insert += '<p class="username">' + annotation.username + '</p>';
-                            annotation_insert += '<hr></a></div>';
+                                //Add the annotation to the side pane
+                                var text = annotation.text;
+                                if (annotation.text.length > 125) {
+                                    //Don't display full annotation if its long
+                                    text = annotation.text.substring(0, 125) + "...";
+                                }
+                                var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                                    '"><a href="#">';
+                                annotation_insert += '<p class="text">' + text + '</p>';
+                                annotation_insert += '<p class="username">' + annotation.username + '</p>';
+                                annotation_insert += '<hr></a></div>';
 
-                            jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
-                            jQuery(annotation.highlights).attr("id", "annotation_" + annotation.id);
-                            jQuery(annotation.highlights).addClass("annotation_" + annotation.id);
+                                jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
+                                jQuery(annotation.highlights).attr("id", "annotation_" + annotation.id);
+                                jQuery(annotation.highlights).addClass("annotation_" + annotation.id);
 
-                            jQuery('#annotation-list').append(annotation_insert);
-                        });
+                                jQuery('#annotation-list').append(annotation_insert);
+                            });
+                        }
                     })
                     .subscribe("annotationUpdated", function(annotation) {
                         jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {

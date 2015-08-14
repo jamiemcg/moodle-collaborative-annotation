@@ -139,8 +139,36 @@ else {
 // If groups are enabled and the current user is a teacher or group visibility is enables
 // display the names of the groups so they are available for filtering
 
-// if ((annotations.groups && annotations.groupvisibility) || user == teacher) display group names
-//TODO: CONTINUE FROM HERE
+//TODO check if current user has role of teacher
+if($group_annotation && ($group_annotations_visible)) {
+    //Find and display all of the group names relevant to this activity (i.e. the course groups)    
+    $params = array(
+                    "courseid" => $course->id
+                   );
+
+    $table ="groups";
+    $count = $DB->count_records($table, $params);
+    //Only print "Groups:" if any groups actually exist
+    if($count > 0) {
+        echo "<p>Groups:</p>";
+        $sql = "SELECT * FROM mdl_groups WHERE courseid = ?";
+        $rs = $DB->get_recordset_sql($sql, array($course->id));
+
+        echo "<ul class='group-list'>";
+        foreach ($rs as $group) {
+            echo "<li>" . $group->name . "</li>";
+        }
+        echo "</ul>";
+    }
+}
+
+else if($group_annotation) {
+    //Group annotation is enabled but not group visibility, do not display group names, only show
+    //annotations created by this group
+}
+else {
+    //No groups
+}
 
 
 //Build the path to the file from the content_hash
@@ -149,7 +177,7 @@ $path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) .
 $path = $path . $contenthash;
 $file_contents = file_get_contents($path);
 
-//Is it an image
+//Check if it is an image
 if($document_type == 2) {
     //Can't render the images directly, have to determine MIME type and base64 encode
     //Need to find out MIME type from mdl_files table

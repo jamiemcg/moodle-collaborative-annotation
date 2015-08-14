@@ -13,7 +13,6 @@ if(!empty($_POST['url'])) {
 
 	$userid = $USER->id; //Gets the current users id
 
-	$table = 'annotation_image';
 	$url = $_POST['url'];
 
 	$sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ?";
@@ -35,7 +34,7 @@ if(!empty($_POST['url'])) {
 
 		$annotations[] = $record;
 	}
-	$rs->close();
+	$rs->close(); //Close the record set
 
 	echo json_encode($annotations);
 }

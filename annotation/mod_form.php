@@ -82,7 +82,7 @@ class mod_annotation_mod_form extends moodleform_mod {
 
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
-        $mform->addElement('html', '<mark>Not yet implemented</mark><br>');
+        $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
         
         $name = get_string('group_annotations', 'annotation');
         $mform->addElement('selectyesno', 'group_annotation', $name);
@@ -95,7 +95,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         //Availabilty / time restriction section
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
         $mform->setExpanded('availability', false);
-        $mform->addElement('html', '<mark>Not yet implemented</mark><br>');
+        $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
 
         $name = get_string('allow_annotations_from', 'annotation');
         $mform->addElement('date_time_selector', 'allow_from', $name, array('optional'=>true));

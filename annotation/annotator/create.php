@@ -12,6 +12,11 @@ if(!empty($_POST)) {
 
 	global $CFG, $DB, $USER;
 
+	if(strlen($annotation->quote) < 1) {
+		//No text selected, stop script and don't store annotation
+		die();
+	}
+
 	$annotation = new stdClass();
 	$annotation->url = $_POST['url'];
 	$annotation->ranges = json_encode($_POST['ranges']);
