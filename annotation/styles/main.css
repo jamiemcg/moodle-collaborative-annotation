@@ -96,4 +96,5 @@ a.nav-toggle {
     -webkit-column-width: 120px;
     -moz-column-width: 120px;
     column-width: 120px;
+    list-style-type: circle;
 }

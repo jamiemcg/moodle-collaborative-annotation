@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -136,7 +136,7 @@ function annotation_delete_instance($id) {
     $cmid = $cm->id;
 
     //Delete the associated annotations
-    //Determine DOC type [image vs text/code]
+    //Determine DOC type
     $table = "annotation_document";
     $results = $DB->get_records($table, array('cmid' => $cmid));
     foreach ($results as $result) {
@@ -154,8 +154,8 @@ function annotation_delete_instance($id) {
         $sql = "DELETE FROM mdl_annotation_annotation WHERE url=?";
     }
 
-    //Delete related records from the database
     $DB->execute($sql, array($cmid));
+
     $DB->delete_records('annotation', array('id' => $annotation->id));
     $DB->delete_records('annotation_document', array('cmid' => $cmid));
     annotation_grade_item_delete($annotation);

@@ -13,6 +13,7 @@ require(['jquery'], function(jQuery) {
                                 annotation.username = data.username;
                                 annotation.timecreated = timeConverter(data.timecreated);
                                 annotation.id = data.id;
+                                annotation.groupname = data.groupname;
                                 console.info("The annotation: %o has just been created!", annotation);
 
                                 //Add the annotation to the side pane
@@ -110,7 +111,7 @@ require(['jquery'], function(jQuery) {
                 //TODO group support
                 //Only add this filter if group mode && group.visibility
                 label: 'Group',
-                property: 'group'
+                property: 'groupname'
             }, {
                 label: 'User',
                 property: 'username',

@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@
  * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-// Replace annotation with the name of your module and remove this line.
 
 global $CFG;
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
@@ -129,7 +127,7 @@ else if($allow_until) {
     echo "<br>";
 }
 else {
-    //No availability settings defined, do nothing
+    //Not set, do nothing
 }
 
 
@@ -144,8 +142,9 @@ if($group_annotation && ($group_annotations_visible)) {
                    );
 
     $table ="groups";
-    $count = $DB->count_records($table, $params); //Count how many groups exist for this course
-    if($count > 0) { //Only print "Groups:" if any groups exist
+    $count = $DB->count_records($table, $params);
+    //Only print "Groups:" if any groups actually exist
+    if($count > 0) {
         echo "<p>Groups:</p>";
         $sql = "SELECT * FROM mdl_groups WHERE courseid = ?";
         $rs = $DB->get_recordset_sql($sql, array($course->id));
@@ -161,10 +160,9 @@ if($group_annotation && ($group_annotations_visible)) {
 else if($group_annotation) {
     //Group annotation is enabled but not group visibility, do not display group names, only show
     //annotations created by this group
-    //TODO: if current user is teacher, print groups
 }
 else {
-    //No group settings have be defined
+    //No groups
 }
 
 
@@ -176,7 +174,7 @@ $file_contents = file_get_contents($path);
 
 //Check if it is an image
 if($document_type == 2) {
-    //Can't render the images directly, have to determine MIME type and base64 encode the image
+    //Can't render the images directly, have to determine MIME type and base64 encode
     //Need to find out MIME type from mdl_files table
     $table = "files";
     $results = $DB->get_records($table, array('contenthash' => $contenthash));
@@ -193,18 +191,17 @@ else {
 	echo '<div id="annotator-content">'; //Start of annotatable content
 
     if($document_type == 1) {
-        //It is source code, print code tags for highlight.js
+        //It is source code
         echo "<pre><code>";
     }
     else {
         echo "<pre class='pre-text'>";
     }
 
-    $file_contents = htmlentities($file_contents); //always replace the HTML entities TODO
+    $file_contents = htmlentities($file_contents); //always replace the HTML entities
     echo $file_contents;
 
     if($document_type == 1) {
-        //Close the code tags for source code
         echo "</code></pre>";
     }
     else {
@@ -213,10 +210,8 @@ else {
 
     echo '</div>'; //The end of annotatable content
 }
-
 ?>
 
-<!-- The list of annotations displayed in a side bar -->
 <nav class="nav-side">
     <div class="annotation-list" id="annotation-list">
         <h2>Annotations</h2>

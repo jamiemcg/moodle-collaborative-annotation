@@ -8,12 +8,15 @@
 
 if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
+	$cmid = $_POST['url'];
+	require_once("../initialize.php");
 	require_login();
 
 	global $CFG, $DB, $USER;
 
 	if(strlen($_POST['text']) < 1) {
 		//No text selected, stop script and don't store annotation
+		//Should be blocked client side anyway
 		die();
 	}
 
@@ -31,11 +34,15 @@ if(!empty($_POST)) {
 	$annotation->timecreated = time();
 	$annotation->id = 1; //DB will change this
 	$annotation->userid = $USER->id;
+	$annotation->group_id = $group;
 
 	$table = "annotation_annotation";
 	$lastinsertid = $DB->insert_record($table, $annotation);
 	$annotation->id = $lastinsertid;
 	$annotation->username = $USER->firstname . " " . $USER->lastname;
+
+	//Gets the name of the group that the current user belongs to
+	$annotation->groupname = groups_get_group_name($group);
 	
 	echo json_encode($annotation);
 }

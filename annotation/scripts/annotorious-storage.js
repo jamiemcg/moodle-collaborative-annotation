@@ -1,7 +1,8 @@
 /**
  * Called when the page has loaded.
- * Sends a POST request to get all relevant annotations for the image currently being viewed. 
- * The url of the current page is sent and is used to load the relevant
+ * Sends a POST request to get all relevant annotations
+ * for the image currently being viewed. The url of the
+ * current page is sent and is used to load the relevant
  * annotations.
  */
 require(['jquery'], function($) {
@@ -149,7 +150,7 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 });
 
 
-//Custom plugin to display extra data (User's name and time created) on the annotation popups
+//Custom plugin to display extra data on the annotation popups
 //Displayed when a user hovers over an annoation
 annotorious.plugin.ExtraData = function(opt_config_options) {}
 annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {}

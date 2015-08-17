@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,6 +26,16 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
+
+/*
+ * Does something really useful with the passed things
+ *
+ * @param array $things
+ * @return object
+ *function annotation_do_something_useful(array $things) {
+ *    return new stdClass();
+ *}
+ */
 
 function store_annotation_document($data) {
     global $DB, $CFG;

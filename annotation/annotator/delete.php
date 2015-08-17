@@ -13,7 +13,7 @@
 
 	global $CFG, $DB, $USER;
 
-	$userid = $USER->id;  //Gets the current user's id
+	$userid = $USER->id; //Gets the current users id
 	$annotation_id = $_POST['id'];
 
 	$params = array(

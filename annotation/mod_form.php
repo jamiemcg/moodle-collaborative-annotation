@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -72,7 +72,6 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addElement('select', 'type', get_String('document_type', 'annotation'), $doctypes);
         $mform->addRule('type', null, 'required', null, 'client');
 
-        //Add file manager to form
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';
         $filemanager_options['maxbytes'] = 0;
@@ -84,6 +83,8 @@ class mod_annotation_mod_form extends moodleform_mod {
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
         $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
+        //TODO: lang->en->......
+        $mform->addElement('html', '<p>If you are enabling group support, please ensure you have assigned users to groups for the current course</p>');
         
         $name = get_string('group_annotations', 'annotation');
         $mform->addElement('selectyesno', 'group_annotation', $name);
@@ -97,6 +98,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
         $mform->setExpanded('availability', false);
         $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
+        
 
         $name = get_string('allow_annotations_from', 'annotation');
         $mform->addElement('date_time_selector', 'allow_from', $name, array('optional'=>true));
@@ -109,7 +111,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Add standard elements, common to all modules
         $this->standard_coursemodule_elements();
 
-        // Add standard grading elements, TODO: NOTE
+        // Add standard grading elements
         $this->standard_grading_coursemodule_elements();
 
         // Add standard buttons, common to all modules
@@ -122,15 +124,15 @@ class mod_annotation_mod_form extends moodleform_mod {
         global $DB;
     	$mform = $this->_form;
     	$cmid = $mform->getElementValue('coursemodule');
-    	//Check if the user is updating the
-        if(!empty($cmid)) {
+    	if(!empty($cmid)) {
+    		//The user is updating the instance of the activity
             //Remove the file manager as the annotations may not make 
             //sense if the file they are applied to are changed
             $mform->removeElement('files');
 
             //TODO: remove group settings for editing??
 
-            //Find out the previously defined values from the DB
+            //Find out what type of document it was and set selector
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
             foreach ($results as $result) {
@@ -142,12 +144,13 @@ class mod_annotation_mod_form extends moodleform_mod {
                     break;
             }
             
-            //Fill out the form with the previously defined values
             $mform->setDefault('type', $document_type);
             $mform->setDefault('group_annotation', $group_annotation);
             $mform->setDefault('group_annotations_visible', $group_annotations_visible);
             $mform->setDefault('allow_from', $allow_from);
             $mform->setDefault('allow_until', $allow_until);
+
+            //TODO: disable changing of group settings if already defined?? 
     	}
     }
 }
