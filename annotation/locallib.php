@@ -27,16 +27,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-/*
- * Does something really useful with the passed things
- *
- * @param array $things
- * @return object
- *function annotation_do_something_useful(array $things) {
- *    return new stdClass();
- *}
- */
-
 function store_annotation_document($data) {
     global $DB, $CFG;
     $fs = get_file_storage();

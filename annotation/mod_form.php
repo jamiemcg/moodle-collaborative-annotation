@@ -72,6 +72,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addElement('select', 'type', get_String('document_type', 'annotation'), $doctypes);
         $mform->addRule('type', null, 'required', null, 'client');
 
+        //Add file manager to form
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';
         $filemanager_options['maxbytes'] = 0;
@@ -108,7 +109,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Add standard elements, common to all modules
         $this->standard_coursemodule_elements();
 
-        // Add standard grading elements
+        // Add standard grading elements, TODO: NOTE
         $this->standard_grading_coursemodule_elements();
 
         // Add standard buttons, common to all modules
@@ -121,15 +122,15 @@ class mod_annotation_mod_form extends moodleform_mod {
         global $DB;
     	$mform = $this->_form;
     	$cmid = $mform->getElementValue('coursemodule');
-    	if(!empty($cmid)) {
-    		//The user is updating the instance of the activity
+    	//Check if the user is updating the
+        if(!empty($cmid)) {
             //Remove the file manager as the annotations may not make 
             //sense if the file they are applied to are changed
             $mform->removeElement('files');
 
             //TODO: remove group settings for editing??
 
-            //Find out what type of document it was and set selector
+            //Find out the previously defined values from the DB
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
             foreach ($results as $result) {
@@ -141,6 +142,7 @@ class mod_annotation_mod_form extends moodleform_mod {
                     break;
             }
             
+            //Fill out the form with the previously defined values
             $mform->setDefault('type', $document_type);
             $mform->setDefault('group_annotation', $group_annotation);
             $mform->setDefault('group_annotations_visible', $group_annotations_visible);

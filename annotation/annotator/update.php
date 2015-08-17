@@ -2,7 +2,7 @@
 
 /**
  * Updates an annotation with the data received from a POST request
- * Must attatch timestamp to the annotation
+ * Must attatch new timestamp to the annotation
  * Returns the new annotation object
  */
 

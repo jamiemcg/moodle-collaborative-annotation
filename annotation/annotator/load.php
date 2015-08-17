@@ -2,7 +2,7 @@
 
 /**
  * Loads the annotations from the server for the image currently being viewed.
- * GET request with the window.location.url
+ * Responds to a POST request with the window.location.url (id of the activity)
  */
 
 if(!empty($_POST['url'])) {

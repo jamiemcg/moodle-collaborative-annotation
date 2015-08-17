@@ -4,8 +4,6 @@
  * Deletes an annotation from the server
  * Sepecified by id number in POST request 
  */
-
-//TODO: don't rely on $_POST['userid']
  
  if(!empty($_POST['id']) && !empty($_POST['userid'])) {
 	require_once(__DIR__ . "../../../../config.php");

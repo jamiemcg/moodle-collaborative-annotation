@@ -129,7 +129,7 @@ else if($allow_until) {
     echo "<br>";
 }
 else {
-    //Not set, do nothing
+    //No availability settings defined, do nothing
 }
 
 
@@ -144,9 +144,8 @@ if($group_annotation && ($group_annotations_visible)) {
                    );
 
     $table ="groups";
-    $count = $DB->count_records($table, $params);
-    //Only print "Groups:" if any groups actually exist
-    if($count > 0) {
+    $count = $DB->count_records($table, $params); //Count how many groups exist for this course
+    if($count > 0) { //Only print "Groups:" if any groups exist
         echo "<p>Groups:</p>";
         $sql = "SELECT * FROM mdl_groups WHERE courseid = ?";
         $rs = $DB->get_recordset_sql($sql, array($course->id));
@@ -162,9 +161,10 @@ if($group_annotation && ($group_annotations_visible)) {
 else if($group_annotation) {
     //Group annotation is enabled but not group visibility, do not display group names, only show
     //annotations created by this group
+    //TODO: if current user is teacher, print groups
 }
 else {
-    //No groups
+    //No group settings have be defined
 }
 
 
@@ -176,7 +176,7 @@ $file_contents = file_get_contents($path);
 
 //Check if it is an image
 if($document_type == 2) {
-    //Can't render the images directly, have to determine MIME type and base64 encode
+    //Can't render the images directly, have to determine MIME type and base64 encode the image
     //Need to find out MIME type from mdl_files table
     $table = "files";
     $results = $DB->get_records($table, array('contenthash' => $contenthash));
@@ -193,17 +193,18 @@ else {
 	echo '<div id="annotator-content">'; //Start of annotatable content
 
     if($document_type == 1) {
-        //It is source code
+        //It is source code, print code tags for highlight.js
         echo "<pre><code>";
     }
     else {
         echo "<pre class='pre-text'>";
     }
 
-    $file_contents = htmlentities($file_contents); //always replace the HTML entities
+    $file_contents = htmlentities($file_contents); //always replace the HTML entities TODO
     echo $file_contents;
 
     if($document_type == 1) {
+        //Close the code tags for source code
         echo "</code></pre>";
     }
     else {
@@ -215,6 +216,7 @@ else {
 
 ?>
 
+<!-- The list of annotations displayed in a side bar -->
 <nav class="nav-side">
     <div class="annotation-list" id="annotation-list">
         <h2>Annotations</h2>
