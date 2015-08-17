@@ -79,6 +79,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $filemanager_options['mainfile'] = true;
         $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
         $mform->addRule('files', null, 'required', 'client');
+        $mform->addHelpButton('filemanager', 'filemanager', 'annotation');
 
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));

@@ -2,7 +2,7 @@
 
 /**
  * Loads the annotations from the server for the image currently being viewed.
- * GET request with the window.location.url
+ * POST request with the window.location.url (cmid)
  */
 if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
@@ -14,9 +14,20 @@ if(!empty($_POST['url'])) {
 
 	$table = 'annotation_image';
 	$url = $_POST['url'];
+	$cmid = $url;
 
-	$sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
-	$rs = $DB->get_recordset_sql($sql, array($url));
+	require_once("../initialize.php");
+
+	//Check if group annotations are enabled and if group visibility is enabled
+	if($group_annotation && ! $group_annotations_visible && $group != -1) {
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND group_id = ? OR group_id = -1";
+		$rs = $DB->get_recordset_sql($sql, array($url, $group));
+	}
+	else {
+		//Group annotation is disabled, load all existing annotations
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
+		$rs = $DB->get_recordset_sql($sql, array($url));
+	}
 	
 	$annotations = array();
 
@@ -25,7 +36,7 @@ if(!empty($_POST['url'])) {
 		//Get username of annotation creator
 		$user = $DB->get_record('user', array("id" =>$record->userid));
 		$record->username = $user->firstname . " " . $user->lastname;
-
+		$record->groupname = groups_get_group_name($record->group_id);
 		//Enable editing of annotation only if current user created it
 		if($record->userid == $userid) {
 			$record->editable = true;
@@ -36,7 +47,7 @@ if(!empty($_POST['url'])) {
 
 		$annotations[] = $record;
 	}
-	$rs->close();
+	$rs->close(); //Close the record set
 
 	echo json_encode($annotations);
 }

@@ -98,3 +98,7 @@ a.nav-toggle {
     column-width: 120px;
     list-style-type: circle;
 }
+
+.annotatable {
+    width: 100%;
+}

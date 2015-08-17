@@ -9,6 +9,8 @@
 
 if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
+	$cmid = $_POST['url'];
+	require_once("../initialize.php");
 	require_login();
 
 	global $CFG, $DB, $USER;
@@ -22,13 +24,16 @@ if(!empty($_POST)) {
 	$annotation->url = $_POST['url'];
 	$annotation->timecreated = time();
 	$annotation->tags = htmlentities(json_decode($_POST['tags'])); //TODO
+	$annotation->group_id = $group;
 
 	$table = "annotation_image";
 
 	//Insert into DB and get the id
+
 	$lastinsertid = $DB->insert_record($table, $annotation);
 	$annotation->id = $lastinsertid;
 	$annotation->username = $USER->firstname . " " . $USER->lastname;
+	$annotation->groupname = groups_get_group_name($group);
 	//Returns the data to the client for processing
 	
 	//TODO waste of data transfer, only return what it
