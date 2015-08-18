@@ -71,6 +71,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'), 2 => get_string('image', 'annotation'));
         $mform->addElement('select', 'type', get_String('document_type', 'annotation'), $doctypes);
         $mform->addRule('type', null, 'required', null, 'client');
+        $mform->addHelpButton('type', 'document_type', 'annotation');
 
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';

@@ -18,9 +18,6 @@
 /**
  * English strings for annotation
  *
- * You can have a rather longer description of the file as well,
- * if you like, and it can span multiple lines.
- *
  * @package    mod_annotation
  * @copyright  2015 Jamie McGowan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -46,7 +43,7 @@ $string['allow_annotations_until_help'] = 'If enabled, students will not be able
 $string['annotation_availability'] = 'Availability';
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
-$string['document_type_help'] = '';
+$string['document_type_help'] = 'Select the correct document type to ensure correct rendering.';
 $string['filemanager'] = '';
 $string['filemanager_help'] = 'Note: You can not change the selected file once you save the activity. Choose either a plain text file or an image.';
 $string['file_select_info'] = 'Please choose either a plain text file or an image and specify the correct document type';

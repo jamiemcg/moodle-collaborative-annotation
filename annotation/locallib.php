@@ -101,3 +101,19 @@ function update_annotation_document($data) {
     $sql = "UPDATE mdl_annotation_document SET document_type = ?, group_annotation = ?, group_annotations_visible = ?, allow_from = ?, allow_until = ? WHERE cmid = ? ";
     $DB->execute($sql, array($document_type, $group_annotation, $group_annotations_visible, $allow_from, $allow_until, $cmid));
 }
+
+/**
+ * Checks if the document is annotatable based of the 
+ * avaiability settings defined when creating the 
+ * activity. Returns true is the document can be annotated
+ * Returns false otherwise.
+ */
+function check_time_constraint($allow_from, $allow_until) {
+    $current_time = time();
+    if($current_time < $allow_from || $current_time > $allow_until) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}

@@ -51,7 +51,7 @@ require(['jquery'], function($) {
  * to the server in a POST request for it to process and save it.
  */
 anno.addHandler('onAnnotationCreated', function(annotation) {
-    delete annotation.src; //Waste of data so delete. Not required?
+    delete annotation.src; //Waste of data transfer so delete
     delete annotation.context; //Use annotation.url instead
     annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
     annotation.tags = "";
