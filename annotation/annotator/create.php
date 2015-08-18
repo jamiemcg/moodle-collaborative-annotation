@@ -34,6 +34,7 @@ if(!empty($_POST)) {
 	$annotation->timecreated = time();
 	$annotation->id = 1; //DB will change this
 	$annotation->userid = $USER->id;
+	
 	$annotation->group_id = $group;
 
 	$table = "annotation_annotation";

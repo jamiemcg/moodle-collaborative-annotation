@@ -6,8 +6,6 @@
  * 
  */
 
-//TODO don't rely on $_POST['userid']
-
 if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();

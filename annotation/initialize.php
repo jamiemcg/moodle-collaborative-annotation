@@ -25,15 +25,14 @@ foreach ($results as $result) {
         break; //Bad way of doing this
 }
 
-if($group_annotation) {
-	//Determine the current user's group for the current course
-    $group = groups_get_user_groups($cm->course, $USER->id);
-    if(count($group[0]) > 0) { //User may not have a group? E.g teacher?
-    	$group = $group[0][0];
-    }
-    else {
-    	$group = -1; //Set to -1 if teacher, or if group undefined
-    }
+//Determine the user's group even if group mode is disabled in case teacher 
+//changes settings in the future
+$group = groups_get_user_groups($cm->course, $USER->id);
+if(count($group[0]) > 0) { //User may not have a group? E.g teacher?
+	$group = $group[0][0];
+}
+else {
+	$group = -1; //Set to -1 if teacher, or if group undefined
 }
 
 
@@ -41,6 +40,7 @@ if($group_annotation) {
 if($allow_from) {
 	
 }
+
 if($allow_until ){
 	
 }

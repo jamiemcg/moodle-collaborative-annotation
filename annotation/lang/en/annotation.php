@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 //Standard/required moodle strings
 $string['annotation'] = 'annotation';
 $string['annotationname'] = 'Document Name';
-$string['annotationname_help'] = 'This is the name of the document/file that users will see for the activity.';
+$string['annotationname_help'] = 'This is the name that users will see for the activity.';
 $string['modulename'] = 'Annotated Document';
 $string['modulename_help'] = 'The annotation module allows users to collaboratively annotate documents. Accepted formats are Plain Text Documents, Source Code and Images.'; //TODO extend this string
 $string['modulenameplural'] = 'Annotated Documents';
@@ -47,7 +47,8 @@ $string['annotation_availability'] = 'Availability';
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
 $string['document_type_help'] = '';
-$string['filemanager_help'] = 'You can not change the selected file once you save the activity.';
+$string['filemanager'] = '';
+$string['filemanager_help'] = 'Note: You can not change the selected file once you save the activity. Choose either a plain text file or an image.';
 $string['file_select_info'] = 'Please choose either a plain text file or an image and specify the correct document type';
 $string['group_annotation'] = 'Group Annotation';
 $string['group_annotations'] = 'Students annotate in groups';

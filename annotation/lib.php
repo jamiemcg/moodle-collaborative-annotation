@@ -80,9 +80,6 @@ function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $
     $annotation->timecreated = time();
     $annotation->id = $DB->insert_record('annotation', $annotation);
 
-    print_object($annotation);
-    print_object($mform);
-
     annotation_grade_item_update($annotation); //Permanently store the file and add record to DB
     store_annotation_document($annotation);
     return $annotation->id;
