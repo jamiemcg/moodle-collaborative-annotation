@@ -135,8 +135,6 @@ class mod_annotation_mod_form extends moodleform_mod {
             //sense if the file they are applied to are changed
             $mform->removeElement('files');
 
-            //TODO: remove group settings for editing??
-
             //Find out what type of document it was and set selector
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
@@ -153,9 +151,7 @@ class mod_annotation_mod_form extends moodleform_mod {
             $mform->setDefault('group_annotation', $group_annotation);
             $mform->setDefault('group_annotations_visible', $group_annotations_visible);
             $mform->setDefault('allow_from', $allow_from);
-            $mform->setDefault('allow_until', $allow_until);
-
-            //TODO: disable changing of group settings if already defined?? 
+            $mform->setDefault('allow_until', $allow_until); 
     	}
     }
 }

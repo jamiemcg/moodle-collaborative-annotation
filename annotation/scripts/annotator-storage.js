@@ -7,7 +7,7 @@ require(['jquery'], function(jQuery) {
                         annotation.url = getQueryVariables("id");
                     })
                     .subscribe("annotationCreated", function(annotation) {
-                        if(annotation.quote.length > 0) {
+                        if (annotation.quote.length > 0) {
                             jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
                                 data = JSON.parse(data);
                                 annotation.username = data.username;
@@ -103,43 +103,54 @@ require(['jquery'], function(jQuery) {
 
     //Load the existing annotations when the page is loaded
     jQuery(document).ready(function() {
-        var annotator_content = jQuery("#annotator-content").annotator();
-        annotator_content.annotator('addPlugin', 'ExtraData');
-        annotator_content.annotator('addPlugin', 'Storage');
-        annotator_content.annotator('addPlugin', 'Filter', {
-            filters: [{
-                //TODO group support
-                //Only add this filter if group mode && group.visibility
-                label: 'Group',
-                property: 'groupname'
-            }, {
-                label: 'User',
-                property: 'username',
-                isFiltered: function(input, username) {
-                    if (input && username && username.length) {
-                        var keywords = input.split(/\s+/g);
-                        username = username.split(" "); //Split first and second name
-                        for (var i = 0; i < keywords.length; i += 1) {
-                            for (var j = 0; j < username.length; j += 1) {
-                                if (username[j].toUpperCase().indexOf(keywords[i].toUpperCase()) !== -1) { //bad formatting
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                    return false;
-                }
-            }]
-        });
-        annotator_content.annotator('addPlugin', 'Tags');
-        annotator_content.annotator('addPlugin', 'Unsupported');
-
         var post_data = {
             url: getQueryVariables("id")
         };
         jQuery.post("./annotator/load.php", post_data, function(data) {
             //Load the annotations from the database
             data = JSON.parse(data);
+            var editable = data.shift();
+            console.log(editable);
+
+            if (editable) {
+                var annotator_content = jQuery("#annotator-content").annotator();
+            } else {
+                var annotator_content = jQuery("#annotator-content").annotator({
+                    readOnly: true
+                });
+            }
+
+            annotator_content.annotator('addPlugin', 'Filter', {
+                filters: [{
+                    //TODO group support
+                    //Only add this filter if group mode && group.visibility
+                    label: 'Group',
+                    property: 'groupname'
+                }, {
+                    label: 'User',
+                    property: 'username',
+                    isFiltered: function(input, username) {
+                        if (input && username && username.length) {
+                            var keywords = input.split(/\s+/g);
+                            username = username.split(" "); //Split first and second name
+                            for (var i = 0; i < keywords.length; i += 1) {
+                                for (var j = 0; j < username.length; j += 1) {
+                                    if (username[j].toUpperCase().indexOf(keywords[i].toUpperCase()) !== -1) { //bad formatting
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                }]
+            });
+
+            annotator_content.annotator('addPlugin', 'ExtraData');
+            annotator_content.annotator('addPlugin', 'Storage');
+            annotator_content.annotator('addPlugin', 'Tags');
+            annotator_content.annotator('addPlugin', 'Unsupported');
+
             console.log('Data loaded from server: %o', data);
             for (var i = 0; i < data.length; i++) {
                 var annotation = data[i];
@@ -174,9 +185,7 @@ require(['jquery'], function(jQuery) {
             e.preventDefault();
             var id = this.id;
             var target = "annotation_" + id;
-            console.log(target);
             var position = document.getElementById(target).offsetTop;
-            console.log(position);
 
             //Check user browser
             if (navigator.userAgent.indexOf("Chrome") != -1) {

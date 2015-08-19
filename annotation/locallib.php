@@ -104,16 +104,11 @@ function update_annotation_document($data) {
 
 /**
  * Checks if the document is annotatable based of the 
- * avaiability settings defined when creating the 
- * activity. Returns true is the document can be annotated
- * Returns false otherwise.
+ * availability settings defined when creating the 
+ * activity. Returns true if the document can be annotated,
+ * returns false otherwise.
  */
 function check_time_constraint($allow_from, $allow_until) {
-    $current_time = time();
-    if($current_time < $allow_from || $current_time > $allow_until) {
-        return false;
-    }
-    else {
-        return true;
-    }
+    return true;
+    //TODO FIX THIS!!!
 }

@@ -10,6 +10,7 @@
 
 if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
+	require_once("$CFG->dirroot/mod/annotation/locallib.php");
 	require_login();
 
 	global $CFG, $DB, $USER;
@@ -35,7 +36,8 @@ if(!empty($_POST['url'])) {
 		$rs = $DB->get_recordset_sql($sql, array($url));
 	}
 
-	$annotations = array();
+	$response = array();
+	$response[] = $editable;
 
 	//Loop through results
 	foreach($rs as $record) {
@@ -51,13 +53,13 @@ if(!empty($_POST['url'])) {
 		if($record->tags == "") {
 			$record->tags = null;
 		}
-		//TODO: Disable editing if the current user didn't create the annotation
+		//TODO: Disable editing client side if the current user didn't create the annotation
 
-		$annotations[] = $record;
+		$response[] = $record;
 	}
 	$rs->close(); //Close the record set
 
-	echo json_encode($annotations);
+	echo json_encode($response);
 }
 else {
 	http_response_code(400);

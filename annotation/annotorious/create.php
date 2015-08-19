@@ -36,7 +36,7 @@ if(!empty($_POST)) {
 	$annotation->groupname = groups_get_group_name($group);
 	//Returns the data to the client for processing
 	
-	//TODO waste of data transfer, only return what it
+	//TODO waste of data transfer, only return what is
 	//required: id, username, timecreated....
 	echo json_encode($annotation);
 }

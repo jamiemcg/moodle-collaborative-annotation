@@ -11,8 +11,12 @@ require(['jquery'], function($) {
             url: getQueryVariables("id")
         }
         $.post("./annotorious/load.php", post_data, function(data) {
-            console.log('data from server');
             data = JSON.parse(data);
+            var editable = data.shift();
+            if(!editable) {
+                anno.hideSelectionWidget();
+            }
+            console.log('data from server');
             console.log(data);
 
             //The relevant annotations are stored in data (an array)
@@ -46,7 +50,7 @@ require(['jquery'], function($) {
 });
 
 
-/**
+/** 
  * Called when an annotation has been created. Sends the data
  * to the server in a POST request for it to process and save it.
  */

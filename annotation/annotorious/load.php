@@ -29,7 +29,8 @@ if(!empty($_POST['url'])) {
 		$rs = $DB->get_recordset_sql($sql, array($url));
 	}
 	
-	$annotations = array();
+	$response = array();
+	$response[] = $editable;
 
 	//Loop through results
 	foreach($rs as $record) {
@@ -45,11 +46,11 @@ if(!empty($_POST['url'])) {
 			$record->editable = false;
 		}
 
-		$annotations[] = $record;
+		$response[] = $record;
 	}
 	$rs->close(); //Close the record set
 
-	echo json_encode($annotations);
+	echo json_encode($response);
 }
 else {
 	http_response_code(400);

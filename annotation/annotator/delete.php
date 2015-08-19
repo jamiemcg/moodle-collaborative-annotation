@@ -5,8 +5,6 @@
  * Sepecified by id number in POST request 
  */
  
-//TODO: Edit permission levels [teachers]
-
  if(!empty($_POST['id'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();

@@ -7,6 +7,7 @@
 
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once(dirname(__FILE__).'/locallib.php');
 
 require_login();
 
@@ -35,12 +36,5 @@ else {
 	$group = -1; //Set to -1 if teacher, or if group undefined
 }
 
-
 //Determine availability settings
-if($allow_from) {
-	
-}
-
-if($allow_until ){
-	
-}
+$editable = check_time_constraint($allow_from, $allow_until);

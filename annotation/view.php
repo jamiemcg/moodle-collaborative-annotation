@@ -25,6 +25,7 @@
 global $CFG;
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
+require_once("$CFG->dirroot/mod/annotation/locallib.php");
 
 $id = optional_param('id', 0, PARAM_INT); // Course_module ID, or
 $n  = optional_param('n', 0, PARAM_INT);  // ... annotation instance ID - it should be named as the first character of the module.
@@ -217,6 +218,4 @@ else {
 </nav>
 
 <?php
-
-//TODO: Check timing settings, launch read only mode?
 echo $OUTPUT->footer();

@@ -80,6 +80,8 @@ function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $
     $annotation->timecreated = time();
     $annotation->id = $DB->insert_record('annotation', $annotation);
 
+    print_object($annotation);
+
     annotation_grade_item_update($annotation); //Permanently store the file and add record to DB
     store_annotation_document($annotation);
     return $annotation->id;
@@ -101,8 +103,6 @@ function annotation_update_instance(stdClass $annotation, mod_annotation_mod_for
     require_once("$CFG->dirroot/mod/annotation/locallib.php");
     $annotation->timemodified = time();
     $annotation->id = $annotation->instance;
-
-    //TODO
 
     $result = $DB->update_record('annotation', $annotation);
 
