@@ -165,7 +165,7 @@ else {
 
 //Build the path to the file from the content_hash
 $path = $CFG->dataroot . "/filedir/";
-$path = $path . substr($contenthash, 0, 2) . '\\' . substr($contenthash, 2, 2) . '\\';
+$path = $path . substr($contenthash, 0, 2) . DIRECTORY_SEPARATOR  . substr($contenthash, 2, 2) . DIRECTORY_SEPARATOR ;
 $path = $path . $contenthash;
 $file_contents = file_get_contents($path);
 
