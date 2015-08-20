@@ -29,9 +29,17 @@ require(['jquery'], function($) {
                 annotation.src = "http://image.to.annotate"; //Base64 workaround
                 annotation.timecreated = timeConverter(annotation.timecreated);
                 anno.addAnnotation(annotation);
+            }
 
-                //Add the annotations to the side panel
+            data.sort(function(a, b) {
+                return a.shapes[0].geometry.y - b.shapes[0].geometry.y;
+            });
+
+            //Add the annotations to the side panel 
+            for(var i = 0; i < data.length; i++)
+            {
                 //Don't display long annotations in full
+                annotation = data[i];
                 if (annotation.text.length > 125) {
                     var text = annotation.text.substring(0, 125) + "...";
                 } else {
