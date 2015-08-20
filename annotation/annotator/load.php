@@ -47,9 +47,11 @@ if(!empty($_POST['url'])) {
 		$user = $DB->get_record('user', array("id" =>$record->userid));
 		$record->username = $user->firstname . " " . $user->lastname;
 	
-		//Determine group name from the annotations group id
-		$record->groupname = groups_get_group_name($record->group_id);
-
+		//Determine group name from the annotations group id if groups enabled
+		if($group_annotation) {
+				$record->groupname = groups_get_group_name($record->group_id);
+		}
+		
 		unset($record->userid); //Don't send the user's id, not required
 		
 		if($record->tags == "") {

@@ -113,25 +113,20 @@ $teacher = has_capability('mod/annotation:manage', $context);
 
 //If availability settings are defined, display the settings
 if($allow_from && $allow_until) {
-    $allow_from = date('d/m/Y H:i:s', $allow_from);
-    $allow_until = date('d/m/Y H:i:s', $allow_until);
-    echo get_string('annotatable_from', 'annotation') . " " . $allow_from . " " . get_string('until', 'annotation') . " " . $allow_until;
+    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from) . " " . get_string('until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
     echo "<br>";
 }
 else if($allow_from) {
-    $allow_from = date('d/m/Y H:i:s', $allow_from);
-    echo get_string('annotatable_from', 'annotation') . " " . $allow_from;
+    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from);
     echo "<br>";
 }
 else if($allow_until) {
-    $allow_until = date('d/m/Y H:i:s', $allow_until);
-    echo get_string('annotatable_until', 'annotation') . " " . $allow_until;
+    echo get_string('annotatable_until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
     echo "<br>";
 }
 else {
     //Not set, do nothing
 }
-
 
 // If groups are enabled and the current user is a teacher or group visibility is enables
 // display the names of the groups so they are available for filtering

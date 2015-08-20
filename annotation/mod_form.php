@@ -84,7 +84,6 @@ class mod_annotation_mod_form extends moodleform_mod {
 
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
-        $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
         //TODO: lang->en->......
         $mform->addElement('html', '<p>If you are enabling group support, please ensure you have assigned users to groups for the current course</p>');
         

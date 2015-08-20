@@ -47,7 +47,9 @@ if(!empty($_POST['url'])) {
 		//Get username of annotation creator
 		$user = $DB->get_record('user', array("id" =>$record->userid));
 		$record->username = $user->firstname . " " . $user->lastname;
-		$record->groupname = groups_get_group_name($record->group_id);
+		if($group_annotation) {
+			$record->groupname = groups_get_group_name($record->group_id);
+		}
 		//Enable editing of annotation only if current user created it
 		if($record->userid == $userid) {
 			$record->editable = true;

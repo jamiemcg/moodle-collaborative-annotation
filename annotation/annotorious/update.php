@@ -3,7 +3,7 @@
 /**
  * Updates the text of an annotation. The annotation
  * is specified by an id number in a POST request.
- * 
+ * Must attatch new timestamp to updated annotation. 
  */
 
 if(!empty($_POST)) {

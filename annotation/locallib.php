@@ -103,12 +103,29 @@ function update_annotation_document($data) {
 }
 
 /**
- * Checks if the document is annotatable based of the 
- * availability settings defined when creating the 
- * activity. Returns true if the document can be annotated,
- * returns false otherwise.
+ * Checks time constraints. Returns true if
+ * the document is annotatable. Returns false otherwise.
  */
 function check_time_constraint($allow_from, $allow_until) {
+    $current_time = time();
+    if(!$allow_from && !$allow_until) {
+        return true;
+    }
+    else if($allow_from && $allow_until) {
+        if($current_time < $allow_from || $current_time > $allow_until) {
+            return false;
+        }
+    }
+    else if($allow_from) {
+        if($current_time < $allow_from) {
+            return false;
+        }
+    }
+    else if($allow_until) {
+        if($current_time > $allow_until) {
+            return false;
+        }
+    }
     return true;
     //TODO FIX THIS!!!
 }

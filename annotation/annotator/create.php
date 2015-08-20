@@ -10,6 +10,8 @@ if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
 	$cmid = $_POST['url'];
 	require_once("../initialize.php");
+	require_once("../checktime.php");
+	
 	require_login();
 
 	global $CFG, $DB, $USER;
