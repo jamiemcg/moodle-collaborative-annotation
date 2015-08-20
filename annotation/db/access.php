@@ -79,4 +79,17 @@ $capabilities = array(
             'student' => CAP_ALLOW
         )
     ),
+
+    'mod/annotation:manage' => array(
+        'riskbitmask' => RISK_SPAM,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'non-editingteacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW,
+            'teacher' => CAP_ALLOW
+        ),
+
+    )
 );

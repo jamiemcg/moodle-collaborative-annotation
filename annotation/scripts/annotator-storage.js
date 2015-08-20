@@ -25,7 +25,11 @@ require(['jquery'], function(jQuery) {
                                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                                     '"><a href="#">';
                                 annotation_insert += '<p class="text">' + text + '</p>';
-                                annotation_insert += '<p class="username">' + annotation.username + '</p>';
+                                annotation_insert += '<p class="username">'
+                                if (annotation.groupname) {
+                                    annotation_insert += '[' + annotation.groupname + '] ';
+                                }
+                                annotation_insert += annotation.username + '</p>';
                                 annotation_insert += '<hr></a></div>';
 
                                 jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
@@ -89,7 +93,11 @@ require(['jquery'], function(jQuery) {
         plugin.pluginInit = function() {
             this.annotator.viewer.addField({
                 load: function(field, annotation) {
-                    field.innerHTML = annotation.username;
+                    if (annotation.groupname) {
+                        field.innerHTML = annotation.username + " [" + annotation.groupname + "]";
+                    } else {
+                        field.innerHTML = annotation.username;
+                    }
                 }
             })
             this.annotator.viewer.addField({
@@ -151,33 +159,34 @@ require(['jquery'], function(jQuery) {
             annotator_content.annotator('addPlugin', 'Tags');
             annotator_content.annotator('addPlugin', 'Unsupported');
 
-            console.log('Data loaded from server: %o', data);
             for (var i = 0; i < data.length; i++) {
-                var annotation = data[i];
-                annotation.text = annotation.annotation;
-                delete annotation.annotation;
-                annotation.ranges = JSON.parse(annotation.ranges);
-                annotation.highlights = JSON.parse(annotation.highlights);
-                annotation.tags = JSON.parse(annotation.tags);
-                annotation.timecreated = timeConverter(annotation.timecreated);
+                data[i].text = data[i].annotation;
+                delete data[i].annotation;
+                data[i].ranges = JSON.parse(data[i].ranges);
+                data[i].highlights = JSON.parse(data[i].highlights);
+                data[i].tags = JSON.parse(data[i].tags);
+                data[i].timecreated = timeConverter(data[i].timecreated);
+                console.log(data[i]);
+            }
 
-                //Load them one by one [display them as highlights]
-                annotator_content.annotator('loadAnnotations', [annotation]);
-
-                //Add annotation to the side panel
-                var text = annotation.text;
-                if (annotation.text.length > 125) {
+            //Add annotations to the side panel
+            for (var i = 0; i < data.length; i++) {
+                var text = data[i].text;
+                if (data[i].text.length > 125) {
                     //Don't display full annotation if its long
-                    text = annotation.text.substring(0, 125) + "...";
+                    text = data[i].text.substring(0, 125) + "...";
                 }
-                var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                var annotation_insert = '<div class="annotation" id="' + data[i].id + '" title="' + data[i].timecreated +
                     '"><a href="#">';
                 annotation_insert += '<p class="text">' + text + '</p>';
-                annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                annotation_insert += '<p class="username">' + data[i].username + '</p>'
                 annotation_insert += '<hr></a></div>';
-
                 jQuery('#annotation-list').append(annotation_insert);
             }
+
+            //Load them to the screen[display them as highlights]
+            annotator_content.annotator('loadAnnotations', data);
+
         });
 
         //Scrolls to the relevant annotation when clicked on

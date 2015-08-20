@@ -18,9 +18,19 @@ if(!empty($_POST['url'])) {
 
 	require_once("../initialize.php");
 
+	$cm = get_coursemodule_from_id('annotation', $url, 0, false, MUST_EXIST);
+
+	//Determine if the user is a teacher or a student
+	$context = context_course::instance($cm->course);
+	$teacher = has_capability('mod/annotation:manage', $context);
+
 	//Check if group annotations are enabled and if group visibility is enabled
-	if($group_annotation && ! $group_annotations_visible && $group != -1) {
-		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND group_id = ? OR group_id = -1";
+	if($group_annotation && $teacher) {
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
+		$rs = $DB->get_recordset_sql($sql, array($url));
+	}
+	else if($group_annotation && ! $group_annotations_visible) {
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND group_id = ?";
 		$rs = $DB->get_recordset_sql($sql, array($url, $group));
 	}
 	else {

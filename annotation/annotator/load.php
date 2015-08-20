@@ -2,11 +2,8 @@
 
 /**
  * Loads the annotations from the server for the image currently being viewed.
- * GET request with the window.location.url
+ * POST request with the window.location.url (cmid)
  */
-
-//TODO: check if the current user is a teacher, they should be able to view
-//EVERY annotation regardless of groups
 
 if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
@@ -15,20 +12,25 @@ if(!empty($_POST['url'])) {
 
 	global $CFG, $DB, $USER;
 
-
 	$userid = $USER->id; //Gets the current users id
-
 	$url = $_POST['url'];
-
-	$cmid = $url;
+	$cmid = $url; //Used by initialize.php
 	require_once("../initialize.php");
 
-	//If $group equals -1, then either the current user hasn't been assigned a group
-	//or they are a teacher. Let them view all annotations
+	$cm = get_coursemodule_from_id('annotation', $url, 0, false, MUST_EXIST);
 
-	if($group_annotation && ! $group_annotations_visible && $group != -1) {
+	//Determine if user is student or teacher
+	$context = context_course::instance($cm->course);
+	$teacher = has_capability('mod/annotation:manage', $context);
+
+	if($group_annotation && $teacher) {
+		//The user is a teacher, load all annotations [from every group]
+		$sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ?";
+		$rs = $DB->get_recordset_sql($sql, array($url));
+	}
+	else if($group_annotation && ! $group_annotations_visible) {
 		//Load only annotations for this group
-		$sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ? AND group_id = ? OR group_id = -1" ;
+		$sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ? AND group_id = ?" ;
 		$rs = $DB->get_recordset_sql($sql, array($url, $group));
 	}
 	else {

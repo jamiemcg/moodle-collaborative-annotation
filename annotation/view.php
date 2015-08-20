@@ -107,6 +107,10 @@ if ($annotation->intro) {
     echo "<hr>";
 }
 
+//Determine if user is student or teacher
+$context = context_course::instance($course->id);
+$teacher = has_capability('mod/annotation:manage', $context);
+
 //If availability settings are defined, display the settings
 if($allow_from && $allow_until) {
     $allow_from = date('d/m/Y H:i:s', $allow_from);
@@ -133,7 +137,7 @@ else {
 // display the names of the groups so they are available for filtering
 
 //TODO check if current user has role of teacher
-if($group_annotation && ($group_annotations_visible)) {
+if($group_annotation && ($group_annotations_visible || $teacher)) {
     //Find and display all of the group names relevant to this activity (i.e. the course groups)    
     $params = array(
                     "courseid" => $course->id

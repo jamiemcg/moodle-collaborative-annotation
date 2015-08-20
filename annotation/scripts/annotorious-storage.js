@@ -40,7 +40,11 @@ require(['jquery'], function($) {
                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                     '"><a href="#">';
                 annotation_insert += '<p class="text">' + text + '</p>';
-                annotation_insert += '<p class="username">' + annotation.username + '</p>'
+                annotation_insert += '<p class="username">';
+                if(annotation.groupname) {
+                    annotation_insert += '[' + annotation.groupname + '] ';
+                } 
+                annotation_insert += annotation.username + '</p>'
                 annotation_insert += '<hr></a></div>';
 
                 $('#annotation-list').append(annotation_insert);
@@ -164,7 +168,12 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     container.className = "annotorious-editor-text";
 
     annotator.popup.addField(function(annotation) {
-        return '<em>' + annotation.username + '</em>'
+        if(annotation.groupname) {
+            return '<em>' + annotation.username + ' [' + annotation.groupname + ']</em>'
+        }
+        else {
+            return '<em>' + annotation.username + '</em>'
+        }
     });
     annotator.popup.addField(function(annotation) {
         return '<em>' + annotation.timecreated + '</em>';
