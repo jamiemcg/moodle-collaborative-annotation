@@ -218,6 +218,7 @@ require(['jquery'], function(jQuery) {
 
         //Stop annotation the highlighted annotation
         jQuery('body').on('mouseleave', '.annotation', function(e) {
+            
             var id = this.id;
             var target = "annotation_" + id;
             jQuery('.' + target).toggleClass('annotator-hl-active');

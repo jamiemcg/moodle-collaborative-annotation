@@ -22,7 +22,7 @@ if(!empty($_POST)) {
 		$tags = json_encode($_POST['tags']);
 	}
 	else {
-		$tags = NULL; //Uses null for no tags instead of empty string
+		$tags = null; //Uses null for no tags instead of empty string
 	}
 
 	$params = array(

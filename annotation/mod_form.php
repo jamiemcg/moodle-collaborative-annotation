@@ -94,6 +94,7 @@ class mod_annotation_mod_form extends moodleform_mod {
         $name = get_string('group_annotations_visible', 'annotation');
         $mform->addElement('selectyesno', 'group_annotations_visible', $name);
         $mform->addHelpButton('group_annotations_visible', 'group_annotations_visible', 'annotation');
+        $mform->disabledIf('group_annotations_visible', 'group_annotation', 'eq', 0);
 
         //Availabilty / time restriction section
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));

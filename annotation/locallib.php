@@ -76,7 +76,12 @@ function store_annotation_document($data) {
     $record->lang = ""; //TODO : remove lang field because of automatic detection?
     $record->cmid = $cmid;
     $record->group_annotation = $data->group_annotation;
-    $record->group_annotations_visible = $data->group_annotations_visible;
+    if(isset($record->group_annotations_visible)) {
+        $record->group_annotations_visible = $data->group_annotations_visible;
+    }
+    else {
+        $record->group_annotations_visible = 0;
+    }
     $record->allow_from = $data->allow_from;
     $record->allow_until = $data->allow_until;
 

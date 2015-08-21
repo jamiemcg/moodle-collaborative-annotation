@@ -2,7 +2,7 @@
 
 ##Work in Progress!
 
-The annotation module allows students and teachers to collaboratively annotate text documents, source code and images
+The annotation activity module allows students and teachers to collaboratively annotate text documents, source code and images. Students can be divided into groups to enhance peer learning. Time restrictions can be applied to make the module useful for in-class learning.
 
 ####Contents
  - [Installation](#installation)
@@ -33,7 +33,7 @@ The installation of this module results in the creation of four new database tab
 4. ```mdl_annotation_image```: stores annotations for image files
 
 **Database Structure (may change):**
-![Database Schema ](https://github.com/jamiemcg/moodle-collaborative-annotation/blob/master/Current%20Database%20Structure.png)
+![Database Schema ](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/Current%20Database%20Structure.png)
 
 ##Issues
 You can check out existing issues or report newly discovered issues [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)

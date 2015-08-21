@@ -13,7 +13,7 @@ require(['jquery'], function($) {
         $.post("./annotorious/load.php", post_data, function(data) {
             data = JSON.parse(data);
             var editable = data.shift();
-            if(!editable) {
+            if (!editable) {
                 anno.hideSelectionWidget();
             }
             console.log('data from server');
@@ -36,8 +36,7 @@ require(['jquery'], function($) {
             });
 
             //Add the annotations to the side panel 
-            for(var i = 0; i < data.length; i++)
-            {
+            for (var i = 0; i < data.length; i++) {
                 //Don't display long annotations in full
                 annotation = data[i];
                 if (annotation.text.length > 125) {
@@ -49,9 +48,9 @@ require(['jquery'], function($) {
                     '"><a href="#">';
                 annotation_insert += '<p class="text">' + text + '</p>';
                 annotation_insert += '<p class="username">';
-                if(annotation.groupname) {
+                if (annotation.groupname) {
                     annotation_insert += '[' + annotation.groupname + '] ';
-                } 
+                }
                 annotation_insert += annotation.username + '</p>'
                 annotation_insert += '<hr></a></div>';
 
@@ -176,10 +175,9 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     container.className = "annotorious-editor-text";
 
     annotator.popup.addField(function(annotation) {
-        if(annotation.groupname) {
+        if (annotation.groupname) {
             return '<em>' + annotation.username + ' [' + annotation.groupname + ']</em>'
-        }
-        else {
+        } else {
             return '<em>' + annotation.username + '</em>'
         }
     });
@@ -188,6 +186,31 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     });
 }
 anno.addPlugin('ExtraData', {});
+
+function findAnnotation(annotations, id) {
+    for(var i = 0; i < annotations.length; i++) {
+        if(annotations[i].id == id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+require(['jquery'], function($) {
+    //Highlight the annotation being hovered over
+    $('body').on('mouseenter', '.annotation', function(e) {
+        var id = this.id;
+        var annotation = findAnnotation(anno.getAnnotations(), id);
+        anno.highlightAnnotation(anno.getAnnotations()[annotation]);
+    })
+
+    //Stop annotation the highlighted annotation
+    $('body').on('mouseleave', '.annotation', function(e) {
+        var id = this.id;
+        anno.highlightAnnotation(); //Removes highlight
+        
+    })
+})
 
 /**
  * Gets a GET variable from the current URL
