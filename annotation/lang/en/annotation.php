@@ -34,7 +34,7 @@ $string['modulename_help'] = 'The annotation activity module allows users to col
 
 Teachers can manage the visibility of annotations by enabling groups support, allowing the students to annotate files in groups for peer learning.
 
-Teachers can restitrict the time that a file is annotatable, making the module useful for in-class learning. Teachers can also choose to grade students for their annotations.
+Teachers can restrict the time that a file is annotatable, making the module useful for in-class learning. Teachers can also choose to grade students for their annotations.
 ';
 $string['modulenameplural'] = 'Annotated Documents';
 $string['pluginadministration'] = 'Annotation administration';

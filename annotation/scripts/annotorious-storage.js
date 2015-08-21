@@ -31,50 +31,57 @@ require(['jquery'], function($) {
                 anno.addAnnotation(annotation);
             }
 
-            data.sort(function(a, b) {
-                return a.shapes[0].geometry.y - b.shapes[0].geometry.y;
-            });
-
-            //Add the annotations to the side panel 
-            for (var i = 0; i < data.length; i++) {
-                //Don't display long annotations in full
-                annotation = data[i];
-                if (annotation.text.length > 125) {
-                    var text = annotation.text.substring(0, 125) + "...";
-                } else {
-                    var text = annotation.text;
-                }
-                var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
-                    '"><a href="#">';
-                annotation_insert += '<p class="text">' + text + '</p>';
-                annotation_insert += '<p class="username">';
-                if (annotation.groupname) {
-                    annotation_insert += '[' + annotation.groupname + '] ';
-                }
-                annotation_insert += annotation.username + '</p>'
-                annotation_insert += '<hr></a></div>';
-
-                $('#annotation-list').append(annotation_insert);
-            }
+            updateAnnotationList();
         });
     });
-});
 
 
-/** 
- * Called when an annotation has been created. Sends the data
- * to the server in a POST request for it to process and save it.
- */
-anno.addHandler('onAnnotationCreated', function(annotation) {
-    delete annotation.src; //Waste of data transfer so delete
-    delete annotation.context; //Use annotation.url instead
-    annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
-    annotation.tags = "";
+    function updateAnnotationList() {
+        data = anno.getAnnotations();
+        data.sort(function(a, b) {
+            return a.shapes[0].geometry.y - b.shapes[0].geometry.y;
+        });
 
-    //TODO HTML text?
+        //Empty the side panel
+        $('#annotation-list .annotation').remove();
 
-    //Send AJAX request to server to store new annotation
-    require(['jquery'], function($) {
+        //Add the annotations to the side panel 
+        for (var i = 0; i < data.length; i++) {
+            //Don't display long annotations in full
+            annotation = data[i];
+            if (annotation.text.length > 125) {
+                var text = annotation.text.substring(0, 125) + "...";
+            } else {
+                var text = annotation.text;
+            }
+            var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
+                '"><a href="#">';
+            annotation_insert += '<p class="text">' + text + '</p>';
+            annotation_insert += '<p class="username">';
+            if (annotation.groupname) {
+                annotation_insert += '[' + annotation.groupname + '] ';
+            }
+            annotation_insert += annotation.username + '</p>'
+            annotation_insert += '<hr></a></div>';
+
+            $('#annotation-list').append(annotation_insert);
+        }
+    }
+
+
+    /** 
+     * Called when an annotation has been created. Sends the data
+     * to the server in a POST request for it to process and save it.
+     */
+    anno.addHandler('onAnnotationCreated', function(annotation) {
+        delete annotation.src; //Waste of data transfer so delete
+        delete annotation.context; //Use annotation.url instead
+        annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
+        annotation.tags = "";
+
+        //TODO HTML text?
+
+        //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
             data = JSON.parse(data);
             console.log('data from server');
@@ -84,20 +91,7 @@ anno.addHandler('onAnnotationCreated', function(annotation) {
             annotation.userid = data.userid;
             annotation.timecreated = timeConverter(data.timecreated);
 
-            if (annotation.text.length > 125) {
-                var text = annotation.text.substring(0, 125) + "...";
-            } else {
-                var text = annotation.text;
-            }
-
-            //Add the annotation to the side panel
-            var annotation_insert = '<a href="#" id="' + annotation.id + '" title="' + annotation.timecreated +
-                '"><div class="annotation">';
-            annotation_insert += '<p class="text">' + text + '</p>';
-            annotation_insert += '<p class="username">' + annotation.username + '</p>'
-            annotation_insert += '<hr></div></a>';
-
-            $('#annotation-list').append(annotation_insert);
+            updateAnnotationList();
         });
     });
 });
@@ -188,8 +182,8 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
 anno.addPlugin('ExtraData', {});
 
 function findAnnotation(annotations, id) {
-    for(var i = 0; i < annotations.length; i++) {
-        if(annotations[i].id == id) {
+    for (var i = 0; i < annotations.length; i++) {
+        if (annotations[i].id == id) {
             return i;
         }
     }
@@ -208,7 +202,7 @@ require(['jquery'], function($) {
     $('body').on('mouseleave', '.annotation', function(e) {
         var id = this.id;
         anno.highlightAnnotation(); //Removes highlight
-        
+
     })
 })
 

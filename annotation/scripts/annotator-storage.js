@@ -169,6 +169,10 @@ require(['jquery'], function(jQuery) {
                 console.log(data[i]);
             }
 
+            data.sort(function(a, b) {
+                return a.ranges[0].startOffset - b.ranges[0].startOffset;
+            });
+
             //Add annotations to the side panel
             for (var i = 0; i < data.length; i++) {
                 var text = data[i].text;
