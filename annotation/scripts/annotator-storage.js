@@ -213,6 +213,10 @@ require(['jquery'], function(jQuery) {
             }
         })
 
+        function updateAnnotationList() {
+            
+        }
+
         //Highlight the annotation being hovered over
         jQuery('body').on('mouseenter', '.annotation', function(e) {
             var id = this.id;
