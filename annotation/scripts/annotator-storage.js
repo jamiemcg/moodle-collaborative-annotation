@@ -118,7 +118,6 @@ require(['jquery'], function(jQuery) {
             //Load the annotations from the database
             data = JSON.parse(data);
             var editable = data.shift();
-            console.log(editable);
 
             if (editable) {
                 var annotator_content = jQuery("#annotator-content").annotator();
@@ -131,7 +130,7 @@ require(['jquery'], function(jQuery) {
             annotator_content.annotator('addPlugin', 'Filter', {
                 filters: [{
                     //TODO group support
-                    //Only add this filter if group mode && group.visibility
+                    //Only add this filter if group mode && group.visibility, how?
                     label: 'Group',
                     property: 'groupname'
                 }, {
@@ -214,7 +213,7 @@ require(['jquery'], function(jQuery) {
         })
 
         function updateAnnotationList() {
-            
+            //TODO
         }
 
         //Highlight the annotation being hovered over

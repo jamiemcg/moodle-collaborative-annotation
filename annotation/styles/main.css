@@ -4,7 +4,7 @@
 	font-style: inherit;
 	font-weight: inherit;
 	word-wrap: normal;
-    word-break: inherit;
+    word-break: keep-all;
 	background-color: inherit;
 }
 
@@ -14,6 +14,7 @@ pre {
     white-space: -pre-wrap;
     white-space: -o-pre-wrap;
     word-wrap: break-word;
+    word-break: keep-all;
 }
 
 .nav-side {
