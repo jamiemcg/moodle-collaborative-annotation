@@ -1,7 +1,5 @@
 #Moodle Collaborative Annotation
 
-##Work in Progress!
-
 The annotation activity module allows students and teachers to collaboratively annotate text documents, source code and images. Students can be divided into groups to enhance peer learning. Time restrictions can be applied to make the module useful for in-class learning.
 
 ####Contents
