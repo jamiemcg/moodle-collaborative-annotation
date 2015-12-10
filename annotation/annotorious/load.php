@@ -40,7 +40,6 @@ if(!empty($_POST['url'])) {
 	}
 	
 	$response = array();
-	$response[] = $editable;
 
 	//Loop through results
 	foreach($rs as $record) {
@@ -61,6 +60,9 @@ if(!empty($_POST['url'])) {
 		$response[] = $record;
 	}
 	$rs->close(); //Close the record set
+
+
+	$response[] = $editable; //Testing
 
 	echo json_encode($response);
 }
