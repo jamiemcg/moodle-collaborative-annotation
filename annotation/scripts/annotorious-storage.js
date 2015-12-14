@@ -83,7 +83,14 @@ require(['jquery'], function($) {
 
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
+            console.log(data);
+            if(trim(data) == "false") {
+                //Time has run out, forace a reload. Annotataion also blocked client side
+                window.location.reload();
+            }
             data = JSON.parse(data);
+            var editable = data.shift(); //Not used
+            data = data.shift();
             console.log('data from server');
             console.log(data);
             annotation.id = data.id; //Set id to that assigned by the server
@@ -220,4 +227,3 @@ function getQueryVariables(variable) {
     }
     return false;
 }
-

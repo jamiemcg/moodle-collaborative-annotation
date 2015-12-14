@@ -9,7 +9,14 @@ require(['jquery'], function(jQuery) {
                     .subscribe("annotationCreated", function(annotation) {
                         if (annotation.quote.length > 0) {
                             jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
+                                if(data == "false") {
+                                    //Time has run out, force a reload. Annotation blocked client side.
+                                    window.location.reload();
+                                }
+
                                 data = JSON.parse(data);
+                                var editable = data.shift(); //Not used
+                                data = data.shift();
                                 annotation.username = data.username;
                                 annotation.timecreated = timeConverter(data.timecreated);
                                 annotation.id = data.id;
@@ -75,11 +82,13 @@ require(['jquery'], function(jQuery) {
                             //Event was called when user clicked cancel. Do nothing.
                         }
                     })
-                    /*.subscribe("annotationViewerTextField", function(field, annotation) {
+                    /* Use this if the other way takes up too much space
+
+                    .subscribe("annotationViewerTextField", function(field, annotation) {
                         field.innerHTML += "<br>";
                         field.innerHTML += "<span style='text-align:right'>" + annotation.username + "</span><br>";
                         field.innerHTML += "<span style='text-align:right'>" + annotation.timecreated + "</span>";
-                    }) Use this if the other way takes up too much space*/
+                    }) */
                 ;
             }
         }

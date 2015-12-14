@@ -110,6 +110,8 @@ function update_annotation_document($data) {
 /**
  * Checks time constraints. Returns true if
  * the document is annotatable. Returns false otherwise.
+ * TODO:    This function is now redundant and has been replaced
+ *          in initialize.php
  */
 function check_time_constraint($allow_from, $allow_until) {
     $current_time = time();
@@ -132,5 +134,4 @@ function check_time_constraint($allow_from, $allow_until) {
         }
     }
     return true;
-    //TODO FIX THIS!!!
 }

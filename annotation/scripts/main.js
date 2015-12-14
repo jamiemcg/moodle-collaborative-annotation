@@ -41,3 +41,11 @@ function timeConverter(UNIX_timestamp) {
 function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+
+/**
+  * Simple function to trim whitespace from strings instead of using jQuery
+  */
+function trim(s){ 
+    return ( s || '' ).replace( /^\s+|\s+$/g, '' ); 
+}

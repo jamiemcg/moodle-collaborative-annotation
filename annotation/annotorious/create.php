@@ -15,6 +15,16 @@ if(!empty($_POST)) {
 
 	global $CFG, $DB, $USER;
 
+	if(!$editable) {
+		//Time has expired, do not store annotation. Send signal (-1) for client to reload.
+		echo json_encode($editable);
+		die();
+	}
+
+	//Use an array to wrap the response data
+	$response = array();
+	$response[] = $editable;
+
 	//Create a new object to store the annotation data
 	$annotation = new stdClass();
 	$annotation->id = 0; //This will be changed by the DB
@@ -38,7 +48,8 @@ if(!empty($_POST)) {
 	
 	//TODO waste of data transfer, only return what is
 	//required: id, username, timecreated....
-	echo json_encode($annotation);
+	$response[] = $annotation;
+	echo json_encode($response);
 }
 else {
 	http_response_code(400);
