@@ -95,7 +95,7 @@ require(['jquery'], function(jQuery) {
     };
 
     /**
-     * Simple plugin that displays the time an annotation was craeted and the user who created it
+     * Simple plugin that displays the time an annotation was created and the user who created it
      */
     Annotator.Plugin.ExtraData = function(element) {
         var plugin = {};

@@ -82,6 +82,15 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addRule('files', null, 'required', 'client');
         $mform->addHelpButton('files', 'filemanager', 'annotation');
 
+        //Enable/disable commenting on annotations. Enabled by default
+        //Add 'allow_commments' to 'mdl_annotation' in DB.
+        $mform->addElement('html', '<mark>Not yet fully implemented</mark><br>');
+        $name = get_string('allow_comments', 'annotation');
+        $mform->addElement('selectyesno', 'allow_comments', $name);
+        $mform->addHelpButton('allow_comments', 'allow_comments', 'annotation');
+        $mform->setDefault('allow_comments', 1);
+
+
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
         //TODO: lang->en->......
