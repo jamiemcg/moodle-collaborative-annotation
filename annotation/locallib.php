@@ -132,5 +132,4 @@ function check_time_constraint($allow_from, $allow_until) {
         }
     }
     return true;
-    //TODO FIX THIS!!!
 }
