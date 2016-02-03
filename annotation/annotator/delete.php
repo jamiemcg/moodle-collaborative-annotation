@@ -21,6 +21,7 @@
 
 	$table = "annotation_annotation";
 	$count = $DB->count_records($table, $params);
+	
 	//If the user logged in didn't create the annotation $count will be 0
 	if($count) {
 		$result = $DB->delete_records($table, $params);
