@@ -64,3 +64,53 @@ function getQueryVariables(variable) {
     }
     return false;
 }
+
+
+/*
+    Driver section for testing the commenting backend.
+    =================================================
+*/
+
+
+/*
+    When an annotation in the side bar is clicked a popup is revealed allowing the user to enter
+    a comment. Comments are not yet displayed.
+*/
+require(['jquery'], function(jQuery) {
+    jQuery(document).ready(function() {
+        jQuery('body').on('click', '.annotation', function(e) {
+            e.preventDefault();
+            var id = this.id;
+            var text = "Enter your comment for annotation_id: " + id;
+            var comment = prompt(text, "");
+
+            //Only process comment if length > 0
+            if(comment.length > 0) {
+                //Length is > 0 so we post the comment
+                //Create a JSON encoded 'comment' object that can be posted via AJAX
+
+                var post_data = {
+                    url: getQueryVariables("id"), //page url = activity_id
+                    annotation_id: id,
+                    comment: comment
+                };
+
+                console.log(post_data); //TODO: Delete this
+                
+                //Post this
+                postComment(post_data);
+            }
+        })
+    })
+});
+
+
+
+/*
+    Posts the comment and corresponding data to the server.
+    Returns True if the comment was successfully stored.
+*/
+function postComment(comment) {
+    alert(comment);
+    //TODO complete!
+}

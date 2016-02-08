@@ -1,3 +1,8 @@
+/*  
+    This contains functions related to annotating text.
+    TODO: rewrite _all_ of the subscriptions as functions as they are currently poor
+*/
+
 require(['jquery'], function(jQuery) {
     //TODO: Rewrite the subscriptions as functions to improve readability
     Annotator.Plugin.Storage = function(element) {

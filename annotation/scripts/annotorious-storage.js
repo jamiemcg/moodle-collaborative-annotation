@@ -1,3 +1,7 @@
+/*
+    This file contains functions related to Image annotating
+*/
+
 /**
  * Called when the page has loaded.
  * Sends a POST request to get all relevant annotations
