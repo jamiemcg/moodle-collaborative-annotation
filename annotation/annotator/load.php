@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * Loads the annotations from the server for the image currently being viewed.

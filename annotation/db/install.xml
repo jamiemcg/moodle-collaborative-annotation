@@ -80,6 +80,7 @@
         <FIELD NAME="annotation_id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="timecreated" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="comment" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="user_id" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
     </TABLE>
   </TABLES>

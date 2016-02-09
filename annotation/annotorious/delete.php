@@ -32,4 +32,3 @@
 		echo "0"; //Error code
 	}
 }
-

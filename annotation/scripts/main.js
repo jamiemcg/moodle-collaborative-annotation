@@ -1,6 +1,10 @@
 /**
- *	This 'main.js' file contains code for both text and image annotating
+ *	This 'main.js' file contains code for both text and image annotating, including commenting
  */
+
+/*
+    Adds toggling support to the annotation side-bar
+*/
 require(['jquery'], function($) {
     $('.nav-side .nav-toggle').on('click', function(e) {
         e.preventDefault();
@@ -97,8 +101,15 @@ require(['jquery'], function(jQuery) {
 
                 console.log(post_data); //TODO: Delete this
                 
-                //Post this
-                postComment(post_data);
+                //Send data to server and store response
+                var response = postComment(post_data);
+                if (response == false) {
+                    alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond
+                }
+                else {
+                    // Comment was successfully stored on the server, display it on the page?
+                    // response = ....
+                }
             }
         })
     })
@@ -108,9 +119,26 @@ require(['jquery'], function(jQuery) {
 
 /*
     Posts the comment and corresponding data to the server.
-    Returns True if the comment was successfully stored.
-*/
-function postComment(comment) {
-    alert(comment);
+    Returns _True_ if the comment was successfully stored.
     //TODO complete!
+*/
+function postComment(post_data) {
+    require(['jquery'], function(jQuery) {
+        jQuery.post("./comments/create.php", JSON.parse(JSON.stringify(post_data)), function(data) {
+            if(data == "false") {
+                return false;
+            }
+
+            //Get the user's name and time from the response data, already have comment text
+            var response = JSON.parse(data);
+            var debug_alert = "RESPONSE:\n";
+            debug_alert += response.username + "\n";
+            debug_alert += timeConverter(response.timecreated);
+
+            //TODO: currently just using alert until front end solved && designed
+            alert(debug_alert); //Delete this
+
+            return data;
+        });
+    })
 }
