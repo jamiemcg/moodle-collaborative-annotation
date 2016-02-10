@@ -1,10 +1,8 @@
 <?php
 
-
 /*
-	check if commenting enabled
+	!! check if commenting enabled !!
 	don't return comment, waste of data transfer
-
 */
 
 if(!empty($_POST)) {
@@ -21,24 +19,25 @@ if(!empty($_POST)) {
 		die();
 	}
 
-
 	$comment = new stdClass();
-	$comment->id = 0; //This will be changed by the DB
 	$comment->url = $_POST['url'];
 	$comment->annotation_id = $_POST['annotation_id'];
 	$comment->timecreated = time();
 	$comment->comment = $_POST['comment'];
 	$comment->userid = $USER->id;
+	$comment->id = 0; //This will be changed by the DB
 
-	/*
-	$table = "annotation_comment"; /the table name
+	$table = "annotation_comment"; //the table name
 	//Insert into DB and get the id
 	$lastinsertid = $DB->insert_record($table, $comment);
-	*/
 
-	//Send the user name and timecreated back to the client [what about comment_id?]
+	//Send the user name and timecreated back to the client
+	//Also return comment's id for completeness (may be used in future)
 	$response = new stdClass();
 	$response->username = $USER->firstname . " " . $USER->lastname;
 	$response->timecreated = $comment->timecreated;
 	echo json_encode($response);
+}
+else {
+	http_response_code(400);
 }
