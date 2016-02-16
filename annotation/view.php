@@ -128,10 +128,9 @@ else {
     //Not set, do nothing
 }
 
-// If groups are enabled and the current user is a teacher or group visibility is enables
+// If groups are enabled and the current user is a teacher or group visibility is enabled
 // display the names of the groups so they are available for filtering
 
-//TODO check if current user has role of teacher
 if($group_annotation && ($group_annotations_visible || $teacher)) {
     //Find and display all of the group names relevant to this activity (i.e. the course groups)    
     $params = array(

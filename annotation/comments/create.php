@@ -1,9 +1,9 @@
 <?php
 
-/*
-	!! check if commenting enabled !!
-	don't return comment, waste of data transfer
-*/
+/**
+ * !! check if commenting enabled !!
+ * don't return comment, waste of data transfer
+ */
 
 if(!empty($_POST)) {
 	require_once(__DIR__ . "../../../../config.php");
@@ -15,7 +15,7 @@ if(!empty($_POST)) {
 
 	if(strlen($_POST['comment']) < 1) {
 		//No text selected, do not store annotation
-		//Should be blocked client side in the future TODO
+		//Also blocked client side so should never run
 		die();
 	}
 
@@ -23,13 +23,13 @@ if(!empty($_POST)) {
 	$comment->url = $_POST['url'];
 	$comment->annotation_id = $_POST['annotation_id'];
 	$comment->timecreated = time();
-	$comment->comment = $_POST['comment'];
-	$comment->userid = $USER->id;
+	$comment->comment = htmlentities($_POST['comment']);
+	$comment->user_id = $USER->id;
 	$comment->id = 0; //This will be changed by the DB
 
 	$table = "annotation_comment"; //the table name
 	//Insert into DB and get the id
-	$lastinsertid = $DB->insert_record($table, $comment);
+	$lastinsertid = $DB->insert_record($table, $comment); //This causes 404, 'user_id' no default?
 
 	//Send the user name and timecreated back to the client
 	//Also return comment's id for completeness (may be used in future)

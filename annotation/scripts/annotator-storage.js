@@ -1,6 +1,6 @@
 /*  
     This contains functions related to annotating text.
-    TODO: rewrite _all_ of the subscriptions as functions as they are currently poor
+    TODO: rewrite _all_ of the subscriptions as functions as they are currently very bad readability
 */
 
 require(['jquery'], function(jQuery) {
@@ -36,7 +36,7 @@ require(['jquery'], function(jQuery) {
                                 }
                                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                                     '"><a href="#">';
-                                annotation_insert += '<p class="text">' + text + '</p>';
+                                annotation_insert += '<p class="text">' + htmlEntities(text) + '</p>';
                                 annotation_insert += '<p class="username">'
                                 if (annotation.groupname) {
                                     annotation_insert += '[' + annotation.groupname + '] ';

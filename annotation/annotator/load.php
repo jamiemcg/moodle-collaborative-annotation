@@ -40,7 +40,7 @@ if(!empty($_POST['url'])) {
 
 	$response = array();
 
-	$response[] = $editable; //Testing, block annotations if they are disabled
+	$response[] = $editable; //Testing block annotations if they are disabled; Could be interrupted?
 
 	//Loop through results
 	foreach($rs as $record) {
@@ -53,7 +53,9 @@ if(!empty($_POST['url'])) {
 				$record->groupname = groups_get_group_name($record->group_id);
 		}
 		
-		unset($record->userid); //Don't send the user's id, not required
+		//Don't need to return the user's id or the url
+		unset($record->userid); 
+		unset($record->url);
 		
 		if($record->tags == "") {
 			$record->tags = null;

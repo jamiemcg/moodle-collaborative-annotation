@@ -12,12 +12,12 @@ if(!empty($_POST['id'])) {
 
 	global $CFG, $DB, $USER;
 
-	$userid = $USER->id; //Gets the current users id
-	$comment_id = $_POST['id'];
+	$user_id = $USER->id; //Gets the current users id
+	$comment_id = $_POST['id']; //The id of the comment
 
 	$params = array(
 					"id" => $comment_id,
-					"userid" => $userid
+					"user_id" => $user_id
 				   );
 
 	$table = "annotation_comment";
@@ -26,10 +26,10 @@ if(!empty($_POST['id'])) {
 	//If the user logged in didn't create the comment $count will be 0
 	if($count) {
 		$result = $DB->delete_records($table, $params);
-		echo "1"; //Return success response
+		echo "1"; //Return success response (i.e. comment is deleted)
 	}
 	else {
-		echo "0"; //Return failure response [user didn't create the comment]
+		echo "0"; //Return failure response (user didn't create the comment)
 	}
 }
 else {

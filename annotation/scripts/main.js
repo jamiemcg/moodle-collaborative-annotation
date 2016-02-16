@@ -71,9 +71,30 @@ function getQueryVariables(variable) {
 
 
 /*
-    Driver section for testing the commenting backend.
+    Testing/driver section for testing the commenting backend.
     =================================================
 */
+
+
+/*
+ * Load the comments for this activity when the page loads
+ * Post the current url to /comments/load.php
+ * TODO: display the comments on the page (sidebar?)
+ */
+
+require(['jquery'], function(jQuery) {
+    jQuery(document).ready(function() {
+        var post_data = {
+            url: getQueryVariables("id")
+        };
+        jQuery.post("./comments/load.php", post_data, function(data) {
+            console.log("Commenting data returned, see network log"); //TODO remove this
+            //Process reults
+        });
+    })
+});
+
+
 
 
 /*
@@ -114,8 +135,6 @@ require(['jquery'], function(jQuery) {
         })
     })
 });
-
-
 
 /*
     Posts the comment and corresponding data to the server.
