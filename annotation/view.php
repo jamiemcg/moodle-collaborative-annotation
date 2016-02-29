@@ -208,6 +208,7 @@ else {
 }
 ?>
 
+<!-- Add the side bar to the page, will be populated client side by JavaScript -->
 <nav class="nav-side">
     <div class="annotation-list" id="annotation-list">
         <h2>Annotations</h2>

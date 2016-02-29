@@ -63,7 +63,14 @@ require(['jquery'], function(jQuery) {
                                 console.info("The annotation: %o has just been updated!", annotation);
 
                                 var annotation_to_update = "#" + annotation.id;
-                                jQuery(annotation_to_update).find('.text').text(annotation.text);
+                                if (annotation.text.length > 125) { //Check if the annotation is too long to display
+                                    var text = annotation.text.substring(0, 125) + "...";
+                                } 
+                                else {
+                                    var text = annotation.text;
+                                }
+
+                                jQuery(annotation_to_update).find('.text').text(text);
                             }
                         });
                     })
@@ -193,11 +200,53 @@ require(['jquery'], function(jQuery) {
                     //Don't display full annotation if its long
                     text = data[i].text.substring(0, 125) + "...";
                 }
-                var annotation_insert = '<div class="annotation" id="' + data[i].id + '" title="' + data[i].timecreated +
-                    '"><a href="#">';
+
+                //All of this repeated concatenation is bad, improve (templates?)
+                var annotation_insert = '<div class="annotation" id="' + data[i].id + '" title="';
+                annotation_insert += data[i].timecreated + '"><a href="#">';
                 annotation_insert += '<p class="text">' + text + '</p>';
                 annotation_insert += '<p class="username">' + data[i].username + '</p>'
-                annotation_insert += '<hr></a></div>';
+                
+                //TODO Editing here for addition of commenting system and delete buttons
+                //Check if the user created the annotation? Yes -> add delete button
+
+                var comment_count = 1; //Count how many comments have a particaulr annotation_id
+
+                //Ensure it says 1 comment or multiple comments
+                var comment_word = "comments";
+                if(comment_count == 1) {
+                    comment_word = "comment";
+                }
+
+                annotation_insert += '<div class="comment-section" id="comment-section-' + data[i].id + '"><p class="comment-count">';
+                annotation_insert += '<span id="comment-count-' + data[i].id + '">' + comment_count + ' </span>';
+                annotation_insert += '<span id="comments-word-' + data[i].id + '">' + comment_word + '</span> ';
+                annotation_insert += '<img class="comments-button annotation-icon" src="./styles/comments.png"></p>';
+                annotation_insert += '<div class="comments" id="comments-' + data[i].id + '">';
+
+                //Comments will be inserted in order into this following div
+                annotation_insert += '<div class="comments-region" id="comments-region-' + data[i].id + '"></div> ';
+
+
+                annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + data[i].id + '" placeholder="Enter a comment..."></textarea>';
+                annotation_insert += '<img class="annotation-comment-icon" src="./styles/comment.png">';
+                annotation_insert += '</p></div>'
+
+                /*
+                    <div class="comment-section">
+                        <p class="comment-count"><span id="comments-count-15">2</span><span id="comments-word-15">comments</span>
+                            <img class="comments_button annotation_icon" src="comments.png">
+                        </p>
+                        <div class="comments" id="comments-15">
+                            <p><strong>Jamie McGowan</strong>: This is a comment.</p>
+                            <p>
+                                <textarea class="comment-box" id="comment-box-15" placeholder="Enter a comment..."></textarea>
+                                <img src="comment.png">
+                            </p>
+                        </div>
+                */
+
+                annotation_insert += '<hr></a></div>'; //TODO Test what happend when </a> is moved
                 jQuery('#annotation-list').append(annotation_insert);
             }
 
@@ -224,7 +273,16 @@ require(['jquery'], function(jQuery) {
                     scrollTop: position
                 }, 750);
             }
-        })
+        });
+
+        //Display the comment section when the user clicks on it
+        jQuery('body').on('click', '.comment-section', function(e) {
+            e.preventDefault();
+            var id = this.id;
+            var target = ".comment-section-" + id;
+            jQuery(target).toggle(400);
+
+        });
 
         function updateAnnotationList() {
             //TODO

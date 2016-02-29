@@ -88,7 +88,7 @@ require(['jquery'], function(jQuery) {
             url: getQueryVariables("id")
         };
         jQuery.post("./comments/load.php", post_data, function(data) {
-            console.log("Commenting data returned, see network log"); //TODO remove this
+            console.info("Commenting data returned, see network log"); //TODO remove this
             //Process reults
         });
     })
@@ -101,40 +101,40 @@ require(['jquery'], function(jQuery) {
     When an annotation in the side bar is clicked a popup is revealed allowing the user to enter
     a comment. Comments are not yet displayed.
 */
-require(['jquery'], function(jQuery) {
-    jQuery(document).ready(function() {
-        jQuery('body').on('click', '.annotation', function(e) {
-            e.preventDefault();
-            var id = this.id;
-            var text = "Enter your comment for annotation_id: " + id;
-            var comment = prompt(text, "");
+// require(['jquery'], function(jQuery) {
+//     jQuery(document).ready(function() {
+//         jQuery('body').on('click', '.annotation', function(e) {
+//             e.preventDefault();
+//             var id = this.id;
+//             var text = "Enter your comment for annotation_id: " + id;
+//             var comment = prompt(text, "");
 
-            //Only process comment if length > 0
-            if(comment.length > 0) {
-                //Length is > 0 so we post the comment
-                //Create a JSON encoded 'comment' object that can be posted via AJAX
+//             //Only process comment if length > 0
+//             if(comment.length > 0) {
+//                 //Length is > 0 so we post the comment
+//                 //Create a JSON encoded 'comment' object that can be posted via AJAX
 
-                var post_data = {
-                    url: getQueryVariables("id"), //page url = activity_id
-                    annotation_id: id,
-                    comment: comment
-                };
+//                 var post_data = {
+//                     url: getQueryVariables("id"), //page url = activity_id
+//                     annotation_id: id,
+//                     comment: comment
+//                 };
 
-                console.log(post_data); //TODO: Delete this
+//                 console.log(post_data); //TODO: Delete this
                 
-                //Send data to server and store response
-                var response = postComment(post_data);
-                if (response == false) {
-                    alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond
-                }
-                else {
-                    // Comment was successfully stored on the server, display it on the page?
-                    // response = ....
-                }
-            }
-        })
-    })
-});
+//                 //Send data to server and store response
+//                 var response = postComment(post_data);
+//                 if (response == false) {
+//                     alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond
+//                 }
+//                 else {
+//                     // Comment was successfully stored on the server, display it on the page?
+//                     // response = ....
+//                 }
+//             }
+//         })
+//     })
+// });
 
 /*
     Posts the comment and corresponding data to the server.

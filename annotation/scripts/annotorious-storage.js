@@ -125,7 +125,14 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
 
                 //Update the annotation in the side panel
                 var annotation_to_update = "#" + annotation.id;
-                $(annotation_to_update).find('.text').text(annotation.text);
+                if (annotation.text.length > 125) { //Check if the annotation is too long to display
+                    var text = annotation.text.substring(0, 125) + "...";
+                } 
+                else {
+                    var text = annotation.text;
+                }
+
+                $(annotation_to_update).find('.text').text(text);
             }
         });
     });
