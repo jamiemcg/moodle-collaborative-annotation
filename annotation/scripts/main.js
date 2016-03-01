@@ -74,8 +74,8 @@ function getQueryVariables(variable) {
  * Post the current url to /comments/load.php
  */
 
-require(['jquery'], function(jQuery) {
-    jQuery(document).ready(function() {
+function get_comments() {
+    require(['jquery'], function(jQuery) {
         var post_data = {
             url: getQueryVariables("id")
         };
@@ -83,7 +83,6 @@ require(['jquery'], function(jQuery) {
             var comments = JSON.parse(data);
 
             for(var i = 0; i < comments.length; i++) {
-                console.info(comments[i]);
                 var timecreated = timeConverter(comments[i].timecreated);
                 var username = comments[i].username;
                 var comment = comments[i].comment;
@@ -93,20 +92,16 @@ require(['jquery'], function(jQuery) {
                 var insert = '<p data-comment-id="' + comment_id + '"><strong title="' + timecreated + '">';
                 insert += username + ':</strong> ' + comment + '</p>';
 
-                //comments-region-55
                 var target = '#comments-region-' + annotation_id;
                 jQuery(target).append(insert);
             }
         });
-    })
-});
-
-
-
+    });
+}
 
 /*
-    When an annotation in the side bar is clicked a popup is revealed allowing the user to enter
-    a comment. Comments are not yet displayed.
+    When user clicks the comment button send the comment to the server if a comment has been
+    entered into the comment textarea
 */
 require(['jquery'], function(jQuery) {
     jQuery(document).ready(function() {
@@ -131,7 +126,8 @@ require(['jquery'], function(jQuery) {
                 //Send data to server and store response
                 jQuery.post("./comments/create.php", JSON.parse(JSON.stringify(post_data)), function(data) {
                     if(data == "false") {
-                        alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond   
+                        //Comment hasn't been stored, work out why and respond   
+                        alert("Error creating comment!"); 
                     }
                     else {
                         //Comment successfully stored, now display it on the page
@@ -149,8 +145,6 @@ require(['jquery'], function(jQuery) {
 
                         //TODO Update the number of comments (count)
                     }
-
-                    //Get the user's name and time from the response data, already have comment text
                 });
                 
             }

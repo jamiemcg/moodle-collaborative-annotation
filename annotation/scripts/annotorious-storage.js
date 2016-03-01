@@ -20,8 +20,6 @@ require(['jquery'], function($) {
             if (!editable) {
                 anno.hideSelectionWidget();
             }
-            console.log('data from server');
-            console.log(data);
 
             //The relevant annotations are stored in data (an array)
             for (var i = 0; i < data.length; i++) {
@@ -66,11 +64,38 @@ require(['jquery'], function($) {
                 annotation_insert += '[' + annotation.groupname + '] ';
             }
             annotation_insert += annotation.username + '</p>'
+
+            //Add commenting section
+            annotation_insert += '<div class="comment-section" id="comment-section-' + annotation.id +'"><p class="comment-count" data-annotation-id="' + data[i].id + '">';
+            annotation_insert += '<span id="comment-count-' + annotation.id +  '">' + "" + ' </span>';
+            annotation_insert += '<span id="comments-word-' + annotation.id + '">' + /* comment_word */ "Comments" + '</span> ';
+            annotation_insert += '<img class="comments-button annotation-icon" src="./styles/comments.png"></p>';
+            annotation_insert += '<div style="display:none" class="comments" id="comments-' + data[i].id + '">';
+
+            //Comments will be inserted in order into this following div
+            annotation_insert += '<div class="comments-region" id="comments-region-' + annotation.id + '"></div> ';
+
+
+            annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + annotation.id + '" placeholder="Enter a comment..."></textarea>';
+            annotation_insert += '<img data-annotation-id="' + annotation.id + '" class="comment-button annotation-comment-icon" src="./styles/comment.png">';
+            annotation_insert += '</p></div>'            
+
             annotation_insert += '<hr></a></div>';
 
             $('#annotation-list').append(annotation_insert);
         }
+        
+        get_comments();
     }
+
+    //Display the comment section when the user clicks on it
+        $('body').on('click', '.comment-count', function(e) {
+            e.preventDefault();            
+            var annotation_id = $(this).data('annotation-id');
+            var target = "#comments-" + annotation_id;
+            $(target).toggle(400);
+
+        });
 
 
     /** 

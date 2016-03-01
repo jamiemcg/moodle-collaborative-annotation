@@ -11,7 +11,7 @@ require(['jquery'], function(jQuery) {
                         annotation.url = getQueryVariables("id");
                     })
                     .subscribe("annotationCreated", function(annotation) {
-                        if (annotation.quote.length > 0) {
+                        if (annotation.quote.length > 0 && annotation.text.length > 0) {
                             jQuery.post("./annotator/create.php", JSON.parse(JSON.stringify(annotation)), function(data) {
                                 if(data == "false") {
                                     //Time has run out, force a reload. Annotation blocked client side.
@@ -41,6 +41,22 @@ require(['jquery'], function(jQuery) {
                                     annotation_insert += '[' + annotation.groupname + '] ';
                                 }
                                 annotation_insert += annotation.username + '</p>';
+
+                                //Section for comments
+                                annotation_insert += '<div class="comment-section" id="comment-section-' + annotation.id +'"><p class="comment-count" data-annotation-id="' + annotation.id + '">';
+                                annotation_insert += '<span id="comment-count-' + annotation.id +  '">' + "" + ' </span>';
+                                annotation_insert += '<span id="comments-word-' + annotation.id + '">' + /* comment_word */ "Comments" + '</span> ';
+                                annotation_insert += '<img class="comments-button annotation-icon" src="./styles/comments.png"></p>';
+                                annotation_insert += '<div style="display:none" class="comments" id="comments-' + annotation.id + '">';
+
+                                //Comments will be inserted in order into this following div
+                                annotation_insert += '<div class="comments-region" id="comments-region-' + annotation.id + '"></div> ';
+
+                                //Textarea for new comments
+                                annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + annotation.id + '" placeholder="Enter a comment..."></textarea>';
+                                annotation_insert += '<img data-annotation-id="' + annotation.id + '" class="comment-button annotation-comment-icon" src="./styles/comment.png">';
+                                annotation_insert += '</p></div>'
+
                                 annotation_insert += '<hr></a></div>';
 
                                 jQuery(annotation.highlights).attr("data-annotation-id", annotation.id);
@@ -227,6 +243,7 @@ require(['jquery'], function(jQuery) {
 
             //Load them to the screen[display them as highlights]
             annotator_content.annotator('loadAnnotations', data);
+            get_comments();
 
         });
 
