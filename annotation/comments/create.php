@@ -36,6 +36,7 @@ if(!empty($_POST)) {
 	$response = new stdClass();
 	$response->username = $USER->firstname . " " . $USER->lastname;
 	$response->timecreated = $comment->timecreated;
+	$response->id = $lastinsertid;
 	echo json_encode($response);
 }
 else {

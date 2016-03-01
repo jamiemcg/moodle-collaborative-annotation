@@ -67,16 +67,15 @@ foreach ($results as $result) {
 }
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
-$PAGE->requires->js('/mod/annotation/scripts/main.js');
 
 if($document_type == 2) {
-	//The document_type is an image so load annotorious css/js
-	$PAGE->requires->css('/mod/annotation/styles/annotorious.css');
-	$PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
-	$PAGE->requires->js('/mod/annotation/scripts/annotorious-storage.js');
+    //The document_type is an image so load annotorious css/js
+    $PAGE->requires->css('/mod/annotation/styles/annotorious.css');
+    $PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
+    $PAGE->requires->js('/mod/annotation/scripts/annotorious-storage.js');
 }
 else {
-	//The document is a plain text file (text document or source code)
+    //The document is a plain text file (text document or source code)
     //Load annotator.js and custom storage plugin
     $PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
@@ -91,6 +90,8 @@ if($document_type == 1) {
     $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
 }
 
+//Load main.js last to ensure the page has initialized
+$PAGE->requires->js('/mod/annotation/scripts/main.js');
 
 $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($annotation->name));

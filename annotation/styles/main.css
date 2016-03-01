@@ -104,11 +104,15 @@ a.nav-toggle {
     width: 100%;
 }
 
-/* Comments are hidden on load. Shown when clicked on. */
-.comments {
-    display: none;
-}
 
 .annotation-comment-icon {
     margin-left: 5px;
+}
+
+.comment-box {
+    width: 75%;
+}
+
+.comment-count {
+    text-align: center;
 }

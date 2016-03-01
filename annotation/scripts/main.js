@@ -69,17 +69,9 @@ function getQueryVariables(variable) {
     return false;
 }
 
-
-/*
-    Testing/driver section for testing the commenting backend.
-    =================================================
-*/
-
-
 /*
  * Load the comments for this activity when the page loads
  * Post the current url to /comments/load.php
- * TODO: display the comments on the page (sidebar?)
  */
 
 require(['jquery'], function(jQuery) {
@@ -88,8 +80,23 @@ require(['jquery'], function(jQuery) {
             url: getQueryVariables("id")
         };
         jQuery.post("./comments/load.php", post_data, function(data) {
-            console.info("Commenting data returned, see network log"); //TODO remove this
-            //Process reults
+            var comments = JSON.parse(data);
+
+            for(var i = 0; i < comments.length; i++) {
+                console.info(comments[i]);
+                var timecreated = timeConverter(comments[i].timecreated);
+                var username = comments[i].username;
+                var comment = comments[i].comment;
+                var comment_id = comments[i].id;
+                var annotation_id = comments[i].annotation_id;
+
+                var insert = '<p data-comment-id="' + comment_id + '"><strong title="' + timecreated + '">';
+                insert += username + ':</strong> ' + comment + '</p>';
+
+                //comments-region-55
+                var target = '#comments-region-' + annotation_id;
+                jQuery(target).append(insert);
+            }
         });
     })
 });
@@ -101,63 +108,52 @@ require(['jquery'], function(jQuery) {
     When an annotation in the side bar is clicked a popup is revealed allowing the user to enter
     a comment. Comments are not yet displayed.
 */
-// require(['jquery'], function(jQuery) {
-//     jQuery(document).ready(function() {
-//         jQuery('body').on('click', '.annotation', function(e) {
-//             e.preventDefault();
-//             var id = this.id;
-//             var text = "Enter your comment for annotation_id: " + id;
-//             var comment = prompt(text, "");
+require(['jquery'], function(jQuery) {
+    jQuery(document).ready(function() {
+        jQuery('body').on('click', '.comment-button', function(e) {
+            e.preventDefault();
 
-//             //Only process comment if length > 0
-//             if(comment.length > 0) {
-//                 //Length is > 0 so we post the comment
-//                 //Create a JSON encoded 'comment' object that can be posted via AJAX
+            var annotation_id = jQuery(this).data('annotation-id');
+            var target = '#comment-box-' + annotation_id;
+            var comment = jQuery(target).val();
 
-//                 var post_data = {
-//                     url: getQueryVariables("id"), //page url = activity_id
-//                     annotation_id: id,
-//                     comment: comment
-//                 };
+            //Only process comment if length > 0
+            if(comment.length > 0) {
+                //Length is > 0 so we post the comment
+                //Create a JSON encoded 'comment' object that can be posted via AJAX
 
-//                 console.log(post_data); //TODO: Delete this
+                var post_data = {
+                    url: getQueryVariables("id"), //page url = activity_id
+                    annotation_id: annotation_id,
+                    comment: comment
+                };
                 
-//                 //Send data to server and store response
-//                 var response = postComment(post_data);
-//                 if (response == false) {
-//                     alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond
-//                 }
-//                 else {
-//                     // Comment was successfully stored on the server, display it on the page?
-//                     // response = ....
-//                 }
-//             }
-//         })
-//     })
-// });
+                //Send data to server and store response
+                jQuery.post("./comments/create.php", JSON.parse(JSON.stringify(post_data)), function(data) {
+                    if(data == "false") {
+                        alert("Error creating comment!"); //Comment hasn't been stored, work out why and respond   
+                    }
+                    else {
+                        //Comment successfully stored, now display it on the page
+                        
+                        var response = JSON.parse(data);
+                        console.info(response);
+                        jQuery(target).val("");
 
-/*
-    Posts the comment and corresponding data to the server.
-    Returns _True_ if the comment was successfully stored.
-    //TODO complete!
-*/
-function postComment(post_data) {
-    require(['jquery'], function(jQuery) {
-        jQuery.post("./comments/create.php", JSON.parse(JSON.stringify(post_data)), function(data) {
-            if(data == "false") {
-                return false;
+                        target = '#comments-region-' + annotation_id;
+                        var username = response.username;
+                        var timecreated = timeConverter(response.timecreated);
+                        var insert = '<p data-comment-id="' + response.id + '"><strong title="' + timecreated + '">' + response.username + ':</strong> ' + comment + '</p>';
+
+                        jQuery(target).append(insert);
+
+                        //TODO Update the number of comments (count)
+                    }
+
+                    //Get the user's name and time from the response data, already have comment text
+                });
+                
             }
-
-            //Get the user's name and time from the response data, already have comment text
-            var response = JSON.parse(data);
-            var debug_alert = "RESPONSE:\n";
-            debug_alert += response.username + "\n";
-            debug_alert += timeConverter(response.timecreated);
-
-            //TODO: currently just using alert until front end solved && designed
-            alert(debug_alert); //Delete this
-
-            return data;
-        });
+        })
     })
-}
+});
