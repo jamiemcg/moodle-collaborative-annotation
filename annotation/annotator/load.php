@@ -4,7 +4,6 @@
  * Loads the annotations from the server for the image currently being viewed.
  * POST request with the window.location.url (cmid)
  */
-
 if(!empty($_POST['url'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_once("$CFG->dirroot/mod/annotation/locallib.php");

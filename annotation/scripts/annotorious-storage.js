@@ -108,11 +108,10 @@ require(['jquery'], function($) {
         annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
         annotation.tags = "";
 
-        //TODO HTML text?
+        //TODO HTML text TODO TODO strip HTML PROPERLY script etc... ?
 
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
-            console.log(data);
             if(trim(data) == "false") {
                 //Time has run out, forace a reload. Annotataion also blocked client side
                 window.location.reload();
@@ -120,8 +119,7 @@ require(['jquery'], function($) {
             data = JSON.parse(data);
             var editable = data.shift(); //Not used
             data = data.shift();
-            console.log('data from server');
-            console.log(data);
+            
             annotation.id = data.id; //Set id to that assigned by the server
             annotation.username = data.username;
             annotation.userid = data.userid;
@@ -137,7 +135,6 @@ require(['jquery'], function($) {
  *  Sends the new data in a POST request for the server to store it.
  */
 anno.addHandler('onAnnotationUpdated', function(annotation) {
-    console.log(annotation);
     require(['jquery'], function($) {
         $.post("./annotorious/update.php", annotation, function(data) {
             if (data == 0) {
@@ -182,16 +179,13 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
  * the annotation to be deleted.
  */
 anno.addHandler('onAnnotationRemoved', function(annotation) {
-    console.log(annotation);
     require(['jquery'], function($) {
         var post_data = {
             id: annotation.id,
             userid: annotation.userid
         }
         $.post("./annotorious/delete.php", post_data, function(data) {
-            console.log('data from server');
-            console.log(data);
-            if (data == 0) {
+            if (data == 0) { //0 indicates an error occurred (normally wrong user logged in)
                 alert("Error! Could not delete annotation!");
             } else {
                 var annotation_to_delete = "#" + annotation.id;

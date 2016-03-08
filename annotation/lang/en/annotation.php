@@ -51,6 +51,7 @@ $string['annotation_availability'] = 'Availability';
 $string['content'] = 'Content';
 $string['document_type'] = 'Document Type';
 $string['document_type_help'] = 'Select the correct document type to ensure correct rendering.';
+$string['export_data'] = 'Export annotation data';
 $string['file_select_info'] = 'Please choose either a plain text file or an image and specify the correct document type';
 $string['filemanager'] = '';
 $string['filemanager_help'] = 'Note: You can not change the selected file once you save the activity. Choose either a plain text file or an image.';

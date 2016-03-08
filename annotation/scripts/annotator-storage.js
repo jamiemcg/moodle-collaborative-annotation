@@ -25,7 +25,6 @@ require(['jquery'], function(jQuery) {
                                 annotation.timecreated = timeConverter(data.timecreated);
                                 annotation.id = data.id;
                                 annotation.groupname = data.groupname;
-                                console.info("The annotation: %o has just been created!", annotation);
 
                                 //Add the annotation to the side pane
                                 var text = annotation.text;
@@ -75,7 +74,6 @@ require(['jquery'], function(jQuery) {
                                 alert("Warning: You cannot edit annotations created by others!  Any changes you make won't be saved!");
                             } else {
                                 annotation.timecreated = timeConverter(data); //Update the time displayed
-                                console.info("The annotation: %o has just been updated!", annotation);
 
                                 var annotation_to_update = "#" + annotation.id;
                                 if (annotation.text.length > 125) { //Check if the annotation is too long to display
@@ -97,7 +95,6 @@ require(['jquery'], function(jQuery) {
                             };
                             jQuery.post("./annotator/delete.php", post_data, function(data) {
                                 if (data == 1) {
-                                    console.info("The annotation: %o has just been deleted!", annotation);
                                     var annotation_to_delete = "#" + annotation.id;
                                     jQuery(annotation_to_delete).remove();
                                 } else {
@@ -192,7 +189,6 @@ require(['jquery'], function(jQuery) {
                 data[i].highlights = JSON.parse(data[i].highlights);
                 data[i].tags = JSON.parse(data[i].tags);
                 data[i].timecreated = timeConverter(data[i].timecreated);
-                console.log(data[i]);
             }
 
             data.sort(function(a, b) {

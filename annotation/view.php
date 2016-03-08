@@ -97,6 +97,10 @@ $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($annotation->name));
 $PAGE->set_heading(format_string($course->fullname));
 
+//Determine if user is student or teacher
+$context = context_course::instance($course->id);
+$teacher = has_capability('mod/annotation:manage', $context);
+
 // Output starts here.
 echo $OUTPUT->header();
 
@@ -105,12 +109,16 @@ echo $OUTPUT->heading($annotation->name);
 // If an intro (description) exists for the current activity, display it
 if ($annotation->intro) {
     echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
-    echo "<hr>";
 }
 
-//Determine if user is student or teacher
-$context = context_course::instance($course->id);
-$teacher = has_capability('mod/annotation:manage', $context);
+// If a teacher/admin/manager is logged in, add button for exporting annotation data
+if ($teacher) {
+    echo "<a href='export.php?url=$cmid&type=$document_type'>";
+    echo "<button>" .  get_string('export_data', 'annotation') . "</button>";
+    echo "</a>";
+}
+
+echo "<hr>";
 
 //If availability settings are defined, display the settings
 if($allow_from && $allow_until) {
