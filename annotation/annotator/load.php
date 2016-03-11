@@ -59,7 +59,6 @@ if(!empty($_POST['url'])) {
 		if($record->tags == "") {
 			$record->tags = null;
 		}
-		//TODO: Disable editing client side if the current user didn't create the annotation
 
 		$response[] = $record;
 	}

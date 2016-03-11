@@ -58,6 +58,7 @@ $string['filemanager_help'] = 'Note: You can not change the selected file once y
 $string['group_annotation'] = 'Group Annotation';
 $string['group_annotations'] = 'Students annotate in groups';
 $string['group_annotations_help'] = 'If enabled, students will be divided into groups based on the default group settings for this course. Users will then be able to filter annotations by groups.';
+$string['group_annotation_tip'] = 'If you are enabling group support, please ensure you have assigned users to groups for the current course';
 $string['group_annotations_visible'] = 'Students can view annotations from other groups';
 $string['group_annotations_visible_help'] = 'If enabled, students will be able to view annotations created by other groups that they do not belong to. Teachers will be able to view annotations from all groups.';
 $string['image'] = 'Image';

@@ -22,7 +22,7 @@ if(!empty($_POST)) {
 
 	if(strlen($_POST['text']) < 1) {
 		//No text selected, do not store annotation
-		//Should be blocked client side in the future TODO
+		//Not possible to block client side with annotatorjs?
 		die();
 	}
 

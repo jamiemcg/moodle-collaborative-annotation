@@ -56,9 +56,11 @@ require(['jquery'], function($) {
             } else {
                 var text = annotation.text;
             }
+
+
             var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                 '"><a href="#">';
-            annotation_insert += '<p class="text">' + text + '</p>';
+            annotation_insert += '<p class="text">' + htmlEntities(text) + '</p>';
             annotation_insert += '<p class="username">';
             if (annotation.groupname) {
                 annotation_insert += '[' + annotation.groupname + '] ';
@@ -107,8 +109,6 @@ require(['jquery'], function($) {
         delete annotation.context; //Use annotation.url instead
         annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
         annotation.tags = "";
-
-        //TODO HTML text TODO TODO strip HTML PROPERLY script etc... ?
 
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {

@@ -184,7 +184,10 @@ require(['jquery'], function(jQuery) {
 
             for (var i = 0; i < data.length; i++) {
                 data[i].text = data[i].annotation;
-                delete data[i].annotation;
+                
+                //Changing the name to text to avoid confusion [from annotation to text]
+                delete data[i].annotation; 
+
                 data[i].ranges = JSON.parse(data[i].ranges);
                 data[i].highlights = JSON.parse(data[i].highlights);
                 data[i].tags = JSON.parse(data[i].tags);
@@ -271,10 +274,6 @@ require(['jquery'], function(jQuery) {
             jQuery(target).toggle(400);
 
         });
-
-        function updateAnnotationList() {
-            //TODO
-        }
 
         //Highlight the annotation being hovered over
         jQuery('body').on('mouseenter', '.annotation', function(e) {

@@ -112,6 +112,7 @@ require(['jquery'], function(jQuery) {
             var target = '#comment-box-' + annotation_id;
             var comment = jQuery(target).val();
 
+
             //Only process comment if length > 0
             if(comment.length > 0) {
                 //Length is > 0 so we post the comment
@@ -131,15 +132,13 @@ require(['jquery'], function(jQuery) {
                     }
                     else {
                         //Comment successfully stored, now display it on the page
-                        
                         var response = JSON.parse(data);
-                        console.info(response);
-                        jQuery(target).val("");
+                        jQuery(target).val(""); //Empty the comment text box
 
                         target = '#comments-region-' + annotation_id;
                         var username = response.username;
                         var timecreated = timeConverter(response.timecreated);
-                        var insert = '<p data-comment-id="' + response.id + '"><strong title="' + timecreated + '">' + response.username + ':</strong> ' + comment + '</p>';
+                        var insert = '<p data-comment-id="' + response.id + '"><strong title="' + timecreated + '">' + response.username + ':</strong> ' + htmlEntities(comment) + '</p>';
 
                         jQuery(target).append(insert);
 

@@ -73,7 +73,7 @@ function store_annotation_document($data) {
     $record->time_created = $timecreated;
     $record->document_type = $data->type;
     $record->location = $contenthash;
-    $record->lang = ""; //TODO : remove lang field because of automatic detection?
+    $record->lang = ""; //lang column no longer used, highlightjs automatically detects language
     $record->cmid = $cmid;
     $record->group_annotation = $data->group_annotation;
     if(isset($record->group_annotations_visible)) {

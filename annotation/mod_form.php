@@ -84,8 +84,7 @@ class mod_annotation_mod_form extends moodleform_mod {
 
         //Group options settings
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
-        //TODO: lang->en->......
-        $mform->addElement('html', '<p>If you are enabling group support, please ensure you have assigned users to groups for the current course</p>');
+        $mform->addElement('html', '<p>' . get_string('group_annotation_tip', 'annotation') . '</p>');
         
         $name = get_string('group_annotations', 'annotation');
         $mform->addElement('selectyesno', 'group_annotation', $name);
