@@ -19,10 +19,10 @@ The annotation activity module allows students and teachers to collaboratively a
 5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information on installing plugins
 
 ##Screenshots
-![Text Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Text%20Annotation.png?token=AF697_cVKz3TAywqHgYVq4_l0_Nco36jks5WVZRzwA%3D%3D "Text Annotation")
-![Source Code Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation%202.png?token=AF697zqVcSLa0-CRt5dnEHJaHoat_w7yks5WVZRxwA%3D%3D "Source Code Annotation")
-![Source Code Annotation 2](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation.png?token=AF69726DcXxmQsroCmmBvtUjf2_zMjDYks5WVZRywA%3D%3D "Source Code Annotation 2")
-![Image Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Image%20Annotation.png?token=AF6971Lx-aYpfncnNYWJ_ntHjWlylOESks5WVZTSwA%3D%3D "Image Annotation")
+![Text Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Text%20Annotation.png?token=AF697wn1y0sxw-C9baB9oxodnhVsrpoPks5W7VsNwA%3D%3D "Text Annotation")
+![Source Code Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation.png?token=AF697yPRRpGdf6xpoMWGux13v-MSBDwEks5W7VrowA%3D%3D "Source Code Annotation")
+![Source Code Annotation 2](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation%202.png?token=AF6976RNXHAy2jg-fkz8EZthTPGJtdlRks5W7VrnwA%3D%3D "Source Code Annotation 2")
+![Image Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Image%20Annotation.png?token=AF697zhSNneQzuJACdHmndLt8Gnmsj2Lks5W7VrmwA%3D%3D "Image Annotation")
 
 ##Usage
 
@@ -35,7 +35,7 @@ The installation of this module results in the creation of four new database tab
 4. ```mdl_annotation_image```: stores annotations for image files
 
 **Database Structure (may change):**
-![Database Schema ](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Current%20Database%20Structure.png?token=AF697y4MflHiyRuGzEc35lJK4HpUWoqLks5WVZRwwA%3D%3D)
+![Database Schema ](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Current%20Database%20Structure.png?token=AF6975qkU8m_oZAv1c-UzcSkt_Vo4DEqks5W7VrDwA%3D%3D)
 
 ##Issues
 You can check out existing issues or report newly discovered issues [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
