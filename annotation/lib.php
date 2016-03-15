@@ -151,6 +151,10 @@ function annotation_delete_instance($id) {
 
     $DB->execute($sql, array($cmid));
 
+    //Delete the comments created under any annotations for this activity
+    $sql = "DELETE FROM mdl_annotation_comment WHERE url=?";
+    $DB->execute($sql, array($cmid));
+
     $DB->delete_records('annotation', array('id' => $annotation->id));
     $DB->delete_records('annotation_document', array('cmid' => $cmid));
     annotation_grade_item_delete($annotation);

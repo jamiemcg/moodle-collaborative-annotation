@@ -26,6 +26,11 @@
 	if($count)	 {
 		$sql = "DELETE FROM mdl_annotation_image WHERE id = ? AND userid = ?";
 		$DB->execute($sql, array($id, $userid));
+
+		//Delete the comments attatched to this annotaton
+		$sql = "DELETE FROM mdl_annotation_comment WHERE annotation_id=?";
+    	$DB->execute($sql, array($id));
+
 		echo "1"; //Success code
 	}
 	else {

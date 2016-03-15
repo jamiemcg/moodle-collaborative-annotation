@@ -25,6 +25,11 @@
 	//If the user logged in didn't create the annotation $count will be 0
 	if($count) {
 		$result = $DB->delete_records($table, $params);
+
+		//Delete the comments attatched to this annotaton
+		$sql = "DELETE FROM mdl_annotation_comment WHERE annotation_id=?";
+    	$DB->execute($sql, array($annotation_id));
+
 		echo "1"; //Return success response
 	}
 	else {
