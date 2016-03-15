@@ -80,6 +80,8 @@ else {
     $PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-storage.js');
+    $PAGE->requires->css('/mod/annotation/styles/annotator.touch.css');
+    $PAGE->requires->js('/mod/annotation/scripts/annotator.touch.js');
 }
 
 if($document_type == 1) {

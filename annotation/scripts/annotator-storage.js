@@ -181,7 +181,7 @@ require(['jquery'], function(jQuery) {
             annotator_content.annotator('addPlugin', 'Storage');
             annotator_content.annotator('addPlugin', 'Tags');
             annotator_content.annotator('addPlugin', 'Unsupported');
-
+            annotator_content.annotator("addPlugin", "Touch");
             for (var i = 0; i < data.length; i++) {
                 data[i].text = data[i].annotation;
                 
