@@ -33,7 +33,7 @@ require(['jquery'], function(jQuery) {
                                     text = annotation.text.substring(0, 125) + "...";
                                 }
                                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
-                                    '"><a href="#">';
+                                    '"><a href="#" class="annotation-link">';
                                 annotation_insert += '<p class="text">' + htmlEntities(text) + '</p>';
                                 annotation_insert += '<p class="username">'
                                 if (annotation.groupname) {
@@ -208,13 +208,11 @@ require(['jquery'], function(jQuery) {
 
                 //All of this repeated concatenation is bad, improve (templates?)
                 var annotation_insert = '<div class="annotation" id="' + data[i].id + '" title="';
-                annotation_insert += data[i].timecreated + '"><a href="#">';
+                annotation_insert += data[i].timecreated + '"><a href="#" class="annotation-link">';
                 annotation_insert += '<p class="text">' + text + '</p>';
                 annotation_insert += '<p class="username">' + data[i].username + '</p>'
                 
-                //Check if the user created the annotation? Yes -> add delete button
-
-                var comment_count = 1; //Count how many comments have a particaulr annotation_id
+                var comment_count = 1; //Count how many comments have a particular annotation_id
 
                 //Ensure it says 1 comment or multiple comments
                 var comment_word = "comments";
@@ -247,9 +245,9 @@ require(['jquery'], function(jQuery) {
         });
 
         //Scrolls to the relevant annotation when clicked on
-        jQuery('body').on('click', '.annotation', function(e) {
+        jQuery('body').on('click', '.annotation-link', function(e) {
             e.preventDefault();
-            var id = this.id;
+            var id = jQuery(this).parent().attr('id');
             var target = "annotation_" + id;
             var position = document.getElementById(target).offsetTop;
 
