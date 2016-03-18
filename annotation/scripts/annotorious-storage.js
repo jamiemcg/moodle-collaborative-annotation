@@ -182,8 +182,7 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
 anno.addHandler('onAnnotationRemoved', function(annotation) {
     require(['jquery'], function($) {
         var post_data = {
-            id: annotation.id,
-            userid: annotation.userid
+            id: annotation.id
         }
         $.post("./annotorious/delete.php", post_data, function(data) {
             if (data == 0) { //0 indicates an error occurred (normally wrong user logged in)

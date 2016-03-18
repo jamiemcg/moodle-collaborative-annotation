@@ -30,8 +30,7 @@ if(!empty($_POST['url'])) {
 		$rs = $DB->get_recordset_sql($sql, array($url));
 	}
 	else if($group_annotation && ! $group_annotations_visible) {
-		//Load annotations only for this group and teacher/admin
-		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND (group_id = ? OR group_id = -1)";
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND group_id = ?";
 		$rs = $DB->get_recordset_sql($sql, array($url, $group));
 	}
 	else {

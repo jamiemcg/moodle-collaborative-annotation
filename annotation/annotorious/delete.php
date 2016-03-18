@@ -5,7 +5,7 @@
  * Sepecified by id number in POST request 
  */
  
- if(!empty($_POST['id']) && !empty($_POST['userid'])) {
+ if(!empty($_POST['id'])) {
 	require_once(__DIR__ . "../../../../config.php");
 	require_login();
 

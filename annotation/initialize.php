@@ -13,9 +13,10 @@ require_login();
 
 global $CFG, $DB, $USER;
 $cm = get_coursemodule_from_id('annotation', $cmid, 0, false, MUST_EXIST);
+$context = context_course::instance($cm->course);
+$teacher = has_capability('mod/annotation:manage', $context);
 
 //Determine group settings
-
 $table = "annotation_document";
 $results = $DB->get_records($table, array('cmid' => $cmid));
 foreach ($results as $result) {
