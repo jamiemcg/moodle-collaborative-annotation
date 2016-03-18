@@ -124,6 +124,7 @@ require(['jquery'], function($) {
             annotation.username = data.username;
             annotation.userid = data.userid;
             annotation.timecreated = timeConverter(data.timecreated);
+            annotation.groupname = data.groupname;
 
             updateAnnotationList();
         });
