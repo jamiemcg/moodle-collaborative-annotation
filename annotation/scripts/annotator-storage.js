@@ -210,8 +210,12 @@ require(['jquery'], function(jQuery) {
                 var annotation_insert = '<div class="annotation" id="' + data[i].id + '" title="';
                 annotation_insert += data[i].timecreated + '"><a href="#" class="annotation-link">';
                 annotation_insert += '<p class="text">' + text + '</p>';
-                annotation_insert += '<p class="username">' + data[i].username + '</p>'
-                
+                annotation_insert += '<p class="username">';
+                if (data[i].groupname) {
+                                    annotation_insert += '[' + data[i].groupname + '] ';
+                                }
+                annotation_insert += data[i].username + '</p>';
+
                 var comment_count = 1; //Count how many comments have a particular annotation_id
 
                 //Ensure it says 1 comment or multiple comments

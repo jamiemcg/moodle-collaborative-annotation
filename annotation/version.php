@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'mod_annotation';
 
 //$Plugin->version is of the format: YYYYMMDDXX, where XX is a sequenced release number
-$plugin->version = 2016031609; //TODO BEFORE RELEASE FIX VERSION NUMBER TO CORRECT DATE
+$plugin->version = 2016031801; //TODO BEFORE RELEASE FIX VERSION NUMBER TO CORRECT DATE
 $plugin->release = 'v0.3';
 $plugin->requires = 2014051200;
 $plugin->maturity = MATURITY_ALPHA;
