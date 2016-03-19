@@ -89,7 +89,7 @@ function get_comments() {
                 var comment_id = comments[i].id;
                 var annotation_id = comments[i].annotation_id;
 
-                var insert = '<p data-comment-id="' + comment_id + '"><strong title="' + timecreated + '">';
+                var insert = '<p data-comment-id="' + comment_id + '" title="' + timecreated + '"><strong>';
                 insert += username + ':</strong> ' + comment + '</p>';
 
                 var target = '#comments-region-' + annotation_id;
@@ -138,7 +138,7 @@ require(['jquery'], function(jQuery) {
                         target = '#comments-region-' + annotation_id;
                         var username = response.username;
                         var timecreated = timeConverter(response.timecreated);
-                        var insert = '<p data-comment-id="' + response.id + '"><strong title="' + timecreated + '">' + response.username + ':</strong> ' + htmlEntities(comment) + '</p>';
+                        var insert = '<p data-comment-id="' + response.id + '" title="' + timecreated + '"><strong>' + response.username + ':</strong> ' + htmlEntities(comment) + '</p>';
 
                         jQuery(target).append(insert);
 

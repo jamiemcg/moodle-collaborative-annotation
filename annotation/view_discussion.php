@@ -59,7 +59,6 @@ $document_type = $_GET['type'];
 if($document_type == 1) {
     $PAGE->requires->css('/mod/annotation/styles/highlight.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
-    $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
 }
 
 $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));

@@ -30,17 +30,20 @@ require(['jquery'], function(jQuery) {
 	            	
 	            	var insert = '<div class="annotation-item forumpost" id="annotation-' + annotation.id + '">';
 
-
-	            	insert += '<p>';
-
 	            	if(type == 1) {
 	            		insert += '<pre><code>';
 	            	}
+	            	else {
+	            		insert += '<blockquote>';
+	            	}
 
-	            	insert += annotation.quote + '</p>';
+	            	insert += annotation.quote;
 
 	            	if(type == 1) {
 	            		insert += '</code></pre>';
+	            	}
+	            	else {
+	            		insert += '</blockquote>';
 	            	}
 
 	            	insert += '<p><strong>' + annotation.username + ': </strong>' + annotation.annotation + '</p>';
@@ -62,6 +65,12 @@ require(['jquery'], function(jQuery) {
 	            	section.append(insert);
 	            	section.append('<hr>');
 
+
+	            	// Highlight source code
+	            	if(type == 1) {
+	            		hljs.initHighlighting.called = false;
+						hljs.initHighlighting();
+	            	}
 	            }
 				
 				get_comments();

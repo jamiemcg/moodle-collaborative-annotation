@@ -58,6 +58,20 @@ if(isset($_GET['url']) && isset($_GET['type'])) {
 		if($document_type != 2) {
 			$annotation->addChild('quote', $record->quote);
 		}
+		else {
+			// Don't have a "quote" for images so process and export the shape, dimensions, etc..
+			$shapes = str_replace("[", "", $record->shapes);
+			$shapes = str_replace("]", "", $shapes);
+			$shapes = json_decode($shapes);
+
+			$selection_shape = $annotation->addChild('selection-shape');
+			$selection_shape->addChild('type', $shapes->type);
+			$selection_shape->addChild('x', $shapes->geometry->x);
+			$selection_shape->addChild('y', $shapes->geometry->y);
+			$selection_shape->addChild('width', $shapes->geometry->width);
+			$selection_shape->addChild('height', $shapes->geometry->height);
+
+		}
 
 		$annotation->addChild('username', $record->username);
 		$annotation->addChild('timecreated', date('Y-m-d H:i:s', $record->timecreated));
