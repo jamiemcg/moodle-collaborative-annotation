@@ -30,7 +30,7 @@ if(!empty($_POST['url'])) {
 		$rs = $DB->get_recordset_sql($sql, array($url));
 	}
 	else if($group_annotation && ! $group_annotations_visible) {
-		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND group_id = ?";
+		$sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND (group_id = ? OR group_id = -1)";
 		$rs = $DB->get_recordset_sql($sql, array($url, $group));
 	}
 	else {

@@ -109,8 +109,30 @@ a.nav-toggle {
     margin-left: 5px;
 }
 
+.annotation-details {
+    text-align: right;    
+}
+
+.annotation-item {
+    
+}
+
 .comment-box {
     width: 75%;
+}
+
+.comments-discussion {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.comment-box-discussion {
+    width: 90%;
+    border-radius: 5px; 
+}
+
+.comments-button {
+    
 }
 
 .comment-count {

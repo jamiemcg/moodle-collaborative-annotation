@@ -113,12 +113,18 @@ if ($annotation->intro) {
     echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
 }
 
+// Add a button to allow users to switch to the 'discussion view' page
+echo "<a href='view_discussion.php?id=$cmid&type=$document_type'>";
+echo "<button>" . get_string('discussion_view', 'annotation') . "</button>";
+echo "</a>";
+
 // If a teacher/admin/manager is logged in, add button for exporting annotation data
 if ($teacher) {
     echo "<a href='export.php?url=$cmid&type=$document_type'>";
     echo "<button>" .  get_string('export_data', 'annotation') . "</button>";
     echo "</a>";
 }
+
 
 echo "<hr>";
 
@@ -181,7 +187,7 @@ $file_contents = file_get_contents($path);
 
 //Check if it is an image
 if($document_type == 2) {
-    //Can't render the images directly, have to determine MIME type and base64 encode
+    //Can't render images directly have to determine MIME type and base64 encode
     //Need to find out MIME type from mdl_files table
     $table = "files";
     $results = $DB->get_records($table, array('contenthash' => $contenthash));
