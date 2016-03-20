@@ -82,6 +82,7 @@ echo "</a>";
 
 // If a teacher/admin/manager is logged in, add button for exporting annotation data
 if ($teacher) {
+    $file_title = format_string($annotation->name);
     echo "<a href='export.php?url=$cmid&type=$document_type'>";
     echo "<button>" .  get_string('export_data', 'annotation') . "</button>";
     echo "</a>";

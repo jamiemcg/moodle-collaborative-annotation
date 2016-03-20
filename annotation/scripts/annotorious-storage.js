@@ -30,6 +30,14 @@ require(['jquery'], function($) {
                 annotation.shapes = JSON.parse(annotation.shapes);
                 annotation.src = "http://image.to.annotate"; //Base64 workaround
                 annotation.timecreated = timeConverter(annotation.timecreated);
+
+                //Process tags
+                if(annotation.tags) {
+                    annotation.tags = annotation.tags.substring(1, annotation.tags.length -1);
+                    annotation._tags = annotation.tags.split(','); //Store as array for processing
+                }
+
+
                 anno.addAnnotation(annotation);
             }
 
@@ -108,7 +116,8 @@ require(['jquery'], function($) {
         delete annotation.src; //Waste of data transfer so delete
         delete annotation.context; //Use annotation.url instead
         annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
-        annotation.tags = "";
+        
+        annotation.tags = ""; //TODO PARSE TAGS INTO ARRAY/JSON (MULTIPLE TAGS), STRIP # hashtag
 
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
@@ -145,6 +154,9 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
                 annotation.id = data.id; //Set id to that assigned by the server
                 annotation.username = data.username;
                 annotation.timecreated = timeConverter(data.timecreated);
+
+
+                //TODO UPDATE TAGS ASWELL
 
                 //Update the annotation in the side panel
                 var annotation_to_update = "#" + annotation.id;
@@ -217,6 +229,51 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     });
 }
 anno.addPlugin('ExtraData', {});
+
+//Custom plugin to add tag support to annotorious
+annotorious.plugin.Tags = function(opt_config_options) {}
+annotorious.plugin.Tags.prototype.initPlugin = function(annotator) {}
+annotorious.plugin.Tags.prototype._extendPopup = function(annotator) {
+    annotator.popup.addField(function(annotation) {
+        var popupContainer = document.createElement('div');
+        if (annotation.tags) {
+            for(var i = 0; i < annotation._tags.length; i++) {
+                var el = document.createElement('span');
+                el.className = 'annotation-tag';
+                el.innerHTML = annotation._tags[i];
+                popupContainer.appendChild(el);
+            }
+        }
+        return popupContainer;
+    });
+}
+annotorious.plugin.Tags.prototype._extendEditor = function(annotator) {
+    var self = this, container = document.createElement('textarea');
+
+    annotator.editor.addField(function(annotation) {
+        self._tags = [];
+        container.innerHTML = '';
+        container.setAttribute('placeholder', 'Add some tags...');
+        container.setAttribute('rows', '1');
+        container.setAttribute('tabindex', '1');
+        container.setAttribute('style', 'height:auto'); //Overwrite
+        container.className = 'annotorious-editor-text annotorious-editor-tag-field goog-textarea';
+
+        if (annotation && annotation.tags) { 
+            container.innerHTML = annotation.tags;  
+        }
+        return container;
+    });
+}
+annotorious.plugin.Tags.prototype.onInitAnnotator = function(annotator) {
+    this._extendPopup(annotator);
+    this._extendEditor(annotator);
+}
+
+
+anno.addPlugin('Tags', {});
+
+
 
 function findAnnotation(annotations, id) {
     for (var i = 0; i < annotations.length; i++) {

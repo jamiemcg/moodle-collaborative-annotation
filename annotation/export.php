@@ -100,7 +100,7 @@ if(isset($_GET['url']) && isset($_GET['type'])) {
 
 	//Force download of XML file (instead of viewing it)
 	Header('Content-type: text/xml');
-	header('Content-Disposition: attachment; filename="annotations.xml"');
+	header('Content-Disposition: attachment; filename="Annotations.xml"');
 	header('Content-Length: ' . strlen($xml));
 	header('Connection: close');
 	print($formatted);

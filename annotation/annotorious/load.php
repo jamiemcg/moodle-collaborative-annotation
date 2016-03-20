@@ -58,7 +58,7 @@ if(!empty($_POST['url'])) {
 		else {
 			$record->editable = false;
 		}
-
+		
 		$response[] = $record;
 	}
 	$rs->close(); //Close the record set

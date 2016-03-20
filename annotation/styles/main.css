@@ -138,3 +138,35 @@ a.nav-toggle {
 .comment-count {
     text-align: center;
 }
+
+.annotorious-popup-field {
+    color: #909090;
+    font-size: 12px;
+}
+
+.annotorious-popup-text {
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+.annotation-tag {
+    font-weight: bold;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    display: inline-block;
+    padding: 0 8px;
+    margin: 2px;
+    line-height: 1.6;
+    background-color: #e6e6e6;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.annotorious-editor-tag-field {
+    overflow-y: hidden;
+    overflow-x: auto;
+    box-sizing: border-box;
+    height: auto;
+    padding-bottom: 4px;
+}
