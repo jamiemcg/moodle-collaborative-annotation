@@ -52,7 +52,7 @@ require(['jquery'], function(jQuery) {
                 insert += '<p class="annotation-details">' + timeConverter(annotation.timecreated) + '</p>';
                 
                 insert += '<p class="comment-count" data-annotation-id="' + annotation.id + '">';
-                insert += '<span id="comment-count-"' + annotation.id + '">' + '</span>';
+                insert += '<span id="comment-count-' + annotation.id + '">' + '</span>';
                 insert += '<img class="comments-button annotation-icon" src="./styles/comments_alt.png"> Comments';
                 insert += '</p>';
                 insert += '<div style="display:none" class="comments-discussion" id="comments-' + annotation.id + '">';

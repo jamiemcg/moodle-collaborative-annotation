@@ -23,12 +23,12 @@ pre {
     top: 0px;
     height:100%;
     width: 100%;
-    max-width: 350px;
+    max-width: 300px;
     background-color: #8d322c;
     box-sizing: border-box;
     passing: 20px;
     color: white;
-    margin-right: -350px;
+    margin-right: -300px;
     transition: margin 250ms ease-in-out;
 }
 
@@ -147,6 +147,7 @@ a.nav-toggle {
 .annotorious-popup-text {
     font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-size: 13px;
+    font-style: italic;
 }
 
 .annotation-tag {

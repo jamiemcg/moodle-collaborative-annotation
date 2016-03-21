@@ -32,7 +32,7 @@ if(!empty($_POST)) {
 	$annotation->shapes = json_encode($_POST['shapes']);
 	$annotation->url = $_POST['url'];
 	$annotation->timecreated = time();
-	$annotation->tags = htmlentities(json_decode($_POST['tags'])); //TODO
+	$annotation->tags = htmlentities($_POST['tags']);
 	$annotation->group_id = $group;
 
 	$table = "annotation_image";

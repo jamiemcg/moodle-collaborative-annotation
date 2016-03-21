@@ -23,10 +23,10 @@ if(!empty($_POST)) {
 	$table ="annotation_image";
 	$count = $DB->count_records($table, $params);
 	//If the user logged in didn't create the annotation $count will be 0
-	if($count)	 {
+	if($count) {
 		$annotation = htmlentities($_POST['text']);
 		$timecreated = time();
-		$tags = htmlentities(json_decode($_POST['tags'])); //TODO
+		$tags = htmlentities($_POST['tags']);
 
 		$sql = "UPDATE mdl_annotation_image SET annotation = ?, timecreated = ?, tags = ? WHERE id = ? AND userid = ?";
 		$DB->execute($sql, array($annotation, $timecreated, $tags, $id, $userid));
