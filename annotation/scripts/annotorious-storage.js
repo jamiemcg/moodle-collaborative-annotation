@@ -38,6 +38,7 @@ require(['jquery'], function($) {
                 //Process tags
                 if(annotation.tags) {
                     annotation._tags = annotation.tags.split(/[ ,]+/); //Store as array for processing
+                    annotation._tags = stripHashtags(annotation._tags);
                 }
 
                 anno.addAnnotation(annotation);
@@ -46,7 +47,6 @@ require(['jquery'], function($) {
             updateAnnotationList();
         });
     });
-
 
     function updateAnnotationList() {
         data = anno.getAnnotations();
@@ -122,8 +122,6 @@ require(['jquery'], function($) {
         annotation.tags = $('#annotorious-editor-tag').val();
         $('#annotorious-editor-tag').val(''); //Empty the tag field to avoid conflict with other annotations
 
-
-
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
             if(trim(data) == "false") {
@@ -155,6 +153,9 @@ require(['jquery'], function($) {
 anno.addHandler('onAnnotationUpdated', function(annotation) {
     require(['jquery'], function($) {
         annotation.tags = $('#annotorious-editor-tag').val();
+        annotation._tags = annotation.tags.split(/[ ,]+/);
+        annotation._tags = stripHashtags(annotation._tags);
+
         $('#annotorious-editor-tag').val(''); //Empty the tag field to avoid conflict with other annotations
 
         $.post("./annotorious/update.php", annotation, function(data) {
@@ -226,7 +227,6 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 
 
 //Custom plugin to display extra data on the annotation popups
-//Displayed when a user hovers over an annoation
 annotorious.plugin.ExtraData = function(opt_config_options) {};
 annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {};
 annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
@@ -255,6 +255,7 @@ annotorious.plugin.Tags.prototype._extendPopup = function(annotator) {
         var popupContainer = document.createElement('div');
         if (annotation.tags) {
             annotation._tags = annotation.tags.split(/[ ,]+/);
+            annotation._tags = stripHashtags(annotation._tags);
             for(var i = 0; i < annotation._tags.length; i++) {
                 var el = document.createElement('span');
                 el.className = 'annotation-tag';
@@ -289,7 +290,6 @@ annotorious.plugin.Tags.prototype.onInitAnnotator = function(annotator) {
     this._extendPopup(annotator);
     this._extendEditor(annotator);
 };
-
 
 anno.addPlugin('Tags', {});
 
@@ -359,7 +359,7 @@ function resetAnnotations() {
     
 
 require(['jquery'], function($) {
-    $('.filter-item').keyup(function() {
+    $(document).on('keyup', '.filter-item', function() {
         resetAnnotations();
 
         filter_annotation = $('#filter-annotation').val().trim();
@@ -396,7 +396,7 @@ require(['jquery'], function($) {
                     // More tags have been entered than this annotation has so hide
                     anno.removeAnnotation(annotations[i]);
                 }
-                else if(!arrayContains(annotations[i]._tags, filter_tag.split(/[ ,]+/))) {
+                else if(!arrayContains(annotations[i]._tags, stripHashtags(filter_tag.split(/[ ,]+/)))) {
                     anno.removeAnnotation(annotations[i]);   
                 }
             }
@@ -405,7 +405,7 @@ require(['jquery'], function($) {
     });
 
     /*
-        Returns true if arr1 contains ALL of the elements in arr2
+        Returns true if arr1 contains ALL of the elements in arr2 (or a substring of every element)
         Returns false otherwise.
     */
     function arrayContains(arr1, arr2) {
@@ -416,7 +416,7 @@ require(['jquery'], function($) {
                     flag = true;
                 }
             }
-            if(flag == false) {
+            if(flag === false) {
                 return false;
             }
         }
@@ -436,4 +436,17 @@ require(['jquery'], function($) {
             return false;
         }
     }
+
 });
+
+/*
+    Strips hashtags from tags
+*/
+function stripHashtags(arr) {
+    for(var i = 0; i < arr.length; i++) {
+        if(arr[i].charAt(0) == "#") {
+            arr[i] = arr[i].substr(1);
+        }
+    }
+    return arr;
+}

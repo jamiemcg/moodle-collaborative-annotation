@@ -35,7 +35,7 @@ require(['jquery'], function(jQuery) {
                                 var annotation_insert = '<div class="annotation" id="' + annotation.id + '" title="' + annotation.timecreated +
                                     '"><a href="#" class="annotation-link">';
                                 annotation_insert += '<p class="text">' + htmlEntities(text) + '</p>';
-                                annotation_insert += '<p class="username">'
+                                annotation_insert += '<p class="username">';
                                 if (annotation.groupname) {
                                     annotation_insert += '[' + annotation.groupname + '] ';
                                 }
@@ -54,7 +54,7 @@ require(['jquery'], function(jQuery) {
                                 //Textarea for new comments
                                 annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + annotation.id + '" placeholder="Enter a comment..."></textarea>';
                                 annotation_insert += '<img data-annotation-id="' + annotation.id + '" class="comment-button annotation-comment-icon" src="./styles/comment.png">';
-                                annotation_insert += '</p></div>'
+                                annotation_insert += '</p></div>';
 
                                 annotation_insert += '<hr></a></div>';
 
@@ -68,7 +68,7 @@ require(['jquery'], function(jQuery) {
                     })
                     .subscribe("annotationUpdated", function(annotation) {
                         jQuery.post("./annotator/update.php", JSON.parse(JSON.stringify(annotation)), function(data) {
-                            if (data == 0) {
+                            if (data === 0) {
                                 //Incorrect user logged in
                                 console.error("The annotation couldn't be updated");
                                 alert("Warning: You cannot edit annotations created by others!  Any changes you make won't be saved!");
@@ -107,7 +107,7 @@ require(['jquery'], function(jQuery) {
                         }
                     });
             }
-        }
+        };
     };
 
     /**
@@ -124,15 +124,15 @@ require(['jquery'], function(jQuery) {
                         field.innerHTML = annotation.username;
                     }
                 }
-            })
+            });
             this.annotator.viewer.addField({
                 load: function(field, annotation) {
                     field.innerHTML = annotation.timecreated;
                 }
-            })
-        }
+            });
+        };
         return plugin;
-    }
+    };
 
     //Load the existing annotations when the page is loaded
     jQuery(document).ready(function() {
@@ -236,7 +236,7 @@ require(['jquery'], function(jQuery) {
 
                 annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + data[i].id + '" placeholder="Enter a comment..."></textarea>';
                 annotation_insert += '<img data-annotation-id="' + data[i].id + '" class="comment-button annotation-comment-icon" src="./styles/comment.png">';
-                annotation_insert += '</p></div>'
+                annotation_insert += '</p></div>';
 
                 annotation_insert += '<hr></a></div>';
                 jQuery('#annotation-list').append(annotation_insert);
@@ -282,7 +282,7 @@ require(['jquery'], function(jQuery) {
             var id = this.id;
             var target = "annotation_" + id;
             jQuery('.' + target).toggleClass('annotator-hl-active');
-        })
+        });
 
         //Stop annotation the highlighted annotation
         jQuery('body').on('mouseleave', '.annotation', function(e) {
@@ -290,6 +290,6 @@ require(['jquery'], function(jQuery) {
             var id = this.id;
             var target = "annotation_" + id;
             jQuery('.' + target).toggleClass('annotator-hl-active');
-        })
+        });
     });
 });

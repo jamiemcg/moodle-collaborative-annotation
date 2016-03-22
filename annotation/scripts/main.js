@@ -1,5 +1,5 @@
 /**
- *	This 'main.js' file contains code for both text and image annotating, including commenting
+ *  This 'main.js' file contains code for both text and image annotating, including commenting
  */
 
 /*
@@ -147,6 +147,6 @@ require(['jquery'], function(jQuery) {
                 });
                 
             }
-        })
-    })
+        });
+    });
 });
