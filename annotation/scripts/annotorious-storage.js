@@ -13,7 +13,7 @@ require(['jquery'], function($) {
     $(document).ready(function() {
         var post_data = {
             url: getQueryVariables("id")
-        }
+        };
         $.post("./annotorious/load.php", post_data, function(data) {
             data = JSON.parse(data);
             var editable = data.shift();
@@ -71,7 +71,7 @@ require(['jquery'], function($) {
             if (annotation.groupname) {
                 annotation_insert += '[' + annotation.groupname + '] ';
             }
-            annotation_insert += annotation.username + '</p>'
+            annotation_insert += annotation.username + '</p>';
 
             //Add commenting section
             annotation_insert += '<div class="comment-section" id="comment-section-' + annotation.id +'"><p class="comment-count" data-annotation-id="' + data[i].id + '">';
@@ -86,7 +86,7 @@ require(['jquery'], function($) {
 
             annotation_insert += '<p><textarea class="comment-box" id="comment-box-' + annotation.id + '" placeholder="Enter a comment..."></textarea>';
             annotation_insert += '<img data-annotation-id="' + annotation.id + '" class="comment-button annotation-comment-icon" src="./styles/comment.png">';
-            annotation_insert += '</p></div>'            
+            annotation_insert += '</p></div>';            
 
             annotation_insert += '<hr></a></div>';
 
@@ -151,7 +151,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
         $('#annotorious-editor-tag').val(''); //Empty the tag field to avoid conflict with other annotations
 
         $.post("./annotorious/update.php", annotation, function(data) {
-            if (data == 0) {
+            if (data === 0) {
                 alert("Error! Could not update annotation!");
             } else {
                 data = JSON.parse(data);
@@ -180,7 +180,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
  */
 anno.addHandler('beforeAnnotationRemoved', function(annotation) {
     var r = confirm("Are you sure you want to delete this annotation?");
-    if (r == false) {
+    if (r === false) {
         //User clicked cancel, prevent annotation deletion
         return false;
     }
@@ -196,9 +196,9 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
     require(['jquery'], function($) {
         var post_data = {
             id: annotation.id
-        }
+        };
         $.post("./annotorious/delete.php", post_data, function(data) {
-            if (data == 0) { //0 indicates an error occurred (normally wrong user logged in)
+            if (data === 0) { //0 indicates an error occurred (normally wrong user logged in)
                 alert("Error! Could not delete annotation!");
             } else {
                 var annotation_to_delete = "#" + annotation.id;
@@ -211,8 +211,8 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
 
 //Custom plugin to display extra data on the annotation popups
 //Displayed when a user hovers over an annoation
-annotorious.plugin.ExtraData = function(opt_config_options) {}
-annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {}
+annotorious.plugin.ExtraData = function(opt_config_options) {};
+annotorious.plugin.ExtraData.prototype.initPlugin = function(anno) {};
 annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     var self = this,
         container = document.createElement('div');
@@ -228,12 +228,12 @@ annotorious.plugin.ExtraData.prototype.onInitAnnotator = function(annotator) {
     annotator.popup.addField(function(annotation) {
         return annotation.timecreated;
     });
-}
+};
 anno.addPlugin('ExtraData', {});
 
 //Custom plugin to add tag support to annotorious
-annotorious.plugin.Tags = function(opt_config_options) {}
-annotorious.plugin.Tags.prototype.initPlugin = function(annotator) {}
+annotorious.plugin.Tags = function(opt_config_options) {};
+annotorious.plugin.Tags.prototype.initPlugin = function(annotator) {};
 annotorious.plugin.Tags.prototype._extendPopup = function(annotator) {
     annotator.popup.addField(function(annotation) {
         var popupContainer = document.createElement('div');
@@ -248,7 +248,7 @@ annotorious.plugin.Tags.prototype._extendPopup = function(annotator) {
         }
         return popupContainer;
     });
-}
+};
 annotorious.plugin.Tags.prototype._extendEditor = function(annotator) {
     var self = this, container = document.createElement('div');
 
@@ -268,11 +268,11 @@ annotorious.plugin.Tags.prototype._extendEditor = function(annotator) {
 
         return container;
     });
-}
+};
 annotorious.plugin.Tags.prototype.onInitAnnotator = function(annotator) {
     this._extendPopup(annotator);
     this._extendEditor(annotator);
-}
+};
 
 
 anno.addPlugin('Tags', {});
@@ -294,12 +294,27 @@ require(['jquery'], function($) {
         var id = this.id;
         var annotation = findAnnotation(anno.getAnnotations(), id);
         anno.highlightAnnotation(anno.getAnnotations()[annotation]);
-    })
+    });
 
     //Stop annotation the highlighted annotation
     $('body').on('mouseleave', '.annotation', function(e) {
         var id = this.id;
         anno.highlightAnnotation(); //Removes highlight
 
-    })
-})
+    });
+});
+
+
+//Filter Support
+
+/*
+    Clears the four filter input fields which will trigger all annotations to be shown
+*/
+function clear_filter() {
+    require(['jquery'], function($) {
+        $('#filter-group').val("");
+        $('#filter-user').val("");
+        $('#filter-annotation').val("");
+        $('#filter-tag').val("");
+    });
+}

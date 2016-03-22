@@ -197,6 +197,32 @@ if($document_type == 2) {
             break;
     }
 
+?>
+    <!-- Add custom filter bar above the displayed image (on image annotation only) -->
+    <div class="filter-bar">
+        <span class="filter-item">
+            <label class="filter-label" for="group">Group:</label>
+            <input type="search" name="group" id="filter-group" placeholder="Filter by Group...">
+        </span>
+        <span class="filter-item">
+            <label class="filter-label" for="user">User:</label>
+            <input type="search" name="user" id="filter-user" placeholder="Filter by User...">
+        </span>
+        <span class="filter-item">
+            <label class="filter-label" for="annotation">Annotation:</label>
+            <input type="search" name="annotation" id="filter-annotation" placeholder="Filter by Annotation...">
+        </span>
+        <span class="filter-item">
+            <label class="filter-label" for="tag">Tag:</label>
+            <input type="search" name="tag" id="filter-tag" placeholder="Filter by Tag...">
+        </span>
+    </div>
+    <!-- TODO GET STRING for Clear Filters -->
+    <button onclick="clear_filter()">Clear Filters</button>
+
+<?php
+
+
     $base64 = base64_encode($file_contents);
     echo '<img class="annotatable" data-original="http://image.to.annotate" src="data:' . $mimetype . ';base64,' . $base64 . '">';
 }
@@ -235,4 +261,5 @@ else {
 </nav>
 
 <?php
+
 echo $OUTPUT->footer();

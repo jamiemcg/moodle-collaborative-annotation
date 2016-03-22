@@ -171,3 +171,12 @@ a.nav-toggle {
     height: auto;
     padding-bottom: 4px;
 }
+
+.filter-item {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.filter-label {
+    font-weight: bold;
+}

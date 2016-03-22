@@ -78,9 +78,7 @@ require(['jquery'], function(jQuery) {
             get_comments();
         });
     });
-});
-
-require(['jquery'], function(jQuery) {
+    
     //Display the comment section when the user clicks on it
     jQuery('body').on('click', '.comment-count', function(e) {
         e.preventDefault();            

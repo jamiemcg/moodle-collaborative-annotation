@@ -49,6 +49,7 @@ $string['allow_comments'] = 'Allow comments';
 $string['allow_comments_help'] = 'If enabled, students will be able to comment on annotations.';
 $string['annotation_availability'] = 'Availability';
 $string['annotation_view'] = "Annotation View";
+$string['clear_filters'] = "Clear Filters";
 $string['content'] = 'Content';
 $string['discussion_view'] = 'Discussion View';
 $string['document_type'] = 'Document Type';
