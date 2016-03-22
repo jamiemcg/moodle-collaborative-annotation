@@ -143,6 +143,7 @@ require(['jquery'], function($) {
             //Add the new annotation to the 'annotations' array
             annotations.push(annotation);
             updateAnnotationList();
+            clear_filter();
         });
     });
 });
@@ -179,6 +180,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
                 //Update 'annotations' array also
                 var index = findAnnotation(annotations, annotation.id);
                 annotations[index] = annotation;
+                clear_filter();
             }
         });
     });
@@ -316,6 +318,16 @@ require(['jquery'], function($) {
         anno.highlightAnnotation(); //Removes highlight
 
     });
+
+
+    //This fixes an annotorious bug where annotations are moved incorrectly after resizing the window
+    var resizeTimer;
+    $(window).on('resize', function(e) {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            resetAnnotations();
+        });
+    });
 });
 
 
@@ -330,5 +342,98 @@ function clear_filter() {
         $('#filter-user').val("");
         $('#filter-annotation').val("");
         $('#filter-tag').val("");
+
+        resetAnnotations();
     });
 }
+
+/*
+    Resets the annotations displayed (shows all existing annotations)
+*/
+function resetAnnotations() {
+    anno.removeAll();
+    for(var i = 0; i < annotations.length; i++) {
+        anno.addAnnotation(annotations[i]);
+    }
+}
+    
+
+require(['jquery'], function($) {
+    $('.filter-item').keyup(function() {
+        resetAnnotations();
+
+        filter_annotation = $('#filter-annotation').val().trim();
+        filter_groupname = $('#filter-group').val().trim();
+        filter_user = $('#filter-user').val().trim();
+        filter_tag = $('#filter-tag').val().trim();
+
+        for(var i = 0; i < annotations.length; i++) {
+            // Hide the annotation if it doesn't match the filters
+            
+            //Check annotation text
+            if(!containsSubstring(annotations[i].text, filter_annotation)) {
+                anno.removeAnnotation(annotations[i]);
+            }
+
+            //Check username
+            if(!containsSubstring(annotations[i].username, filter_user)) {
+                anno.removeAnnotation(annotations[i]);
+            }
+
+            //Check groupname, teacher's annotations will always show
+            if(annotations[i].groupname) {
+                if(!containsSubstring(annotations[i].groupname, filter_groupname)) {
+                    anno.removeAnnotation(annotations[i]);
+                }
+            }
+
+            //Check tags
+            if(filter_tag.length > 0) {
+                if(!annotations[i].tags) {
+                    anno.removeAnnotation(annotations[i]);
+                }
+                else if(filter_tag.split(/[ ,]+/).length > annotations[i]._tags.length) {
+                    // More tags have been entered than this annotation has so hide
+                    anno.removeAnnotation(annotations[i]);
+                }
+                else if(!arrayContains(annotations[i]._tags, filter_tag.split(/[ ,]+/))) {
+                    anno.removeAnnotation(annotations[i]);   
+                }
+            }
+
+        }
+    });
+
+    /*
+        Returns true if arr1 contains ALL of the elements in arr2
+        Returns false otherwise.
+    */
+    function arrayContains(arr1, arr2) {
+        for(var i = 0; i < arr2.length; i++) {
+            flag = false;
+            for(var j = 0; j < arr1.length; j++) {
+                if(containsSubstring(arr1[j], arr2[i])) {
+                    flag = true;
+                }
+            }
+            if(flag == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /*
+        Returns true if a contains the string a contains the (case insensitive) substring b.
+        Returns false otherwise
+    */
+    function containsSubstring(a, b) {
+        if(a.toLowerCase().trim().indexOf(b.toLowerCase().trim()) > -1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+});

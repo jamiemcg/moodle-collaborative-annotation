@@ -202,23 +202,24 @@ if($document_type == 2) {
     <div class="filter-bar">
         <span class="filter-item">
             <label class="filter-label" for="group">Group:</label>
-            <input type="search" name="group" id="filter-group" placeholder="Filter by Group...">
+            <input class="filter-input" type="search" name="group" id="filter-group" placeholder="Filter by Group...">
         </span>
         <span class="filter-item">
             <label class="filter-label" for="user">User:</label>
-            <input type="search" name="user" id="filter-user" placeholder="Filter by User...">
+            <input class="filter-input" type="search" name="user" id="filter-user" placeholder="Filter by User...">
         </span>
         <span class="filter-item">
             <label class="filter-label" for="annotation">Annotation:</label>
-            <input type="search" name="annotation" id="filter-annotation" placeholder="Filter by Annotation...">
+            <input class="filter-input" type="search" name="annotation" id="filter-annotation" placeholder="Filter by Annotation...">
         </span>
         <span class="filter-item">
             <label class="filter-label" for="tag">Tag:</label>
-            <input type="search" name="tag" id="filter-tag" placeholder="Filter by Tag...">
+            <input class="filter-input" type="search" name="tag" id="filter-tag" placeholder="Filter by Tag...">
         </span>
     </div>
     <!-- TODO GET STRING for Clear Filters -->
-    <button onclick="clear_filter()">Clear Filters</button>
+    <button onclick="clear_filter()"><?php echo get_string('clear_filters', 'annotation'); ?></button>
+    <br>
 
 <?php
 
