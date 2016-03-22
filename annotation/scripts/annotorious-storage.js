@@ -1,6 +1,8 @@
 /*
-    This file contains functions related to Image annotating
+    This file contains functions related to Image annotations
 */
+
+var annotations = []; //Used to keep track of existing annotations for filtering support
 
 /**
  * Called when the page has loaded.
@@ -20,6 +22,8 @@ require(['jquery'], function($) {
             if (!editable) {
                 anno.hideSelectionWidget();
             }
+
+            annotations = data; //Store a copy of all annotation object in 'annotations'
 
             //The relevant annotations are stored in data (an array)
             for (var i = 0; i < data.length; i++) {
@@ -136,6 +140,8 @@ require(['jquery'], function($) {
             annotation.timecreated = timeConverter(data.timecreated);
             annotation.groupname = data.groupname;
 
+            //Add the new annotation to the 'annotations' array
+            annotations.push(annotation);
             updateAnnotationList();
         });
     });
@@ -169,6 +175,10 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
                 }
 
                 $(annotation_to_update).find('.text').text(text);
+
+                //Update 'annotations' array also
+                var index = findAnnotation(annotations, annotation.id);
+                annotations[index] = annotation;
             }
         });
     });
@@ -203,6 +213,10 @@ anno.addHandler('onAnnotationRemoved', function(annotation) {
             } else {
                 var annotation_to_delete = "#" + annotation.id;
                 $(annotation_to_delete).remove();
+
+                //Remove from 'annotations' array also
+                index = findAnnotation(annotations, annotation.id);
+                annotations.splice(index, 1);
             }
         });
     });
