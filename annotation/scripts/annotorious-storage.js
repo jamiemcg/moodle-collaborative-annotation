@@ -23,7 +23,7 @@ require(['jquery'], function($) {
                 anno.hideSelectionWidget();
             }
 
-            annotations = data; //Store a copy of all annotation object in 'annotations'
+            annotations = data.slice(); //Store a copy of all annotation object in 'annotations'
 
             //The relevant annotations are stored in data (an array)
             for (var i = 0; i < data.length; i++) {
@@ -118,14 +118,14 @@ require(['jquery'], function($) {
         delete annotation.src; //Waste of data transfer so delete
         delete annotation.context; //Use annotation.url instead
         annotation.url = getQueryVariables("id"); //Used to associate annotation with file/doc
-        
+    
         annotation.tags = $('#annotorious-editor-tag').val();
         $('#annotorious-editor-tag').val(''); //Empty the tag field to avoid conflict with other annotations
 
         //Send AJAX request to server to store new annotation
         $.post("./annotorious/create.php", annotation, function(data) {
             if(trim(data) == "false") {
-                //Time has run out, forace a reload. Annotataion also blocked client side
+                //Time has run out, force a reload. Annotataion also blocked client side
                 window.location.reload();
             }
             data = JSON.parse(data);
@@ -140,8 +140,8 @@ require(['jquery'], function($) {
 
             //Add the new annotation to the 'annotations' array
             annotations.push(annotation);
-            updateAnnotationList();
-            clear_filter();
+            
+            window.location.reload();
         });
     });
 });
@@ -181,7 +181,7 @@ anno.addHandler('onAnnotationUpdated', function(annotation) {
                 //Update 'annotations' array also
                 var index = findAnnotation(annotations, annotation.id);
                 annotations[index] = annotation;
-                clear_filter();
+                clearFilter();
             }
         });
     });
@@ -336,7 +336,7 @@ require(['jquery'], function($) {
 /*
     Clears the four filter input fields which will trigger all annotations to be shown
 */
-function clear_filter() {
+function clearFilter() {
     require(['jquery'], function($) {
         $('#filter-group').val("");
         $('#filter-user').val("");

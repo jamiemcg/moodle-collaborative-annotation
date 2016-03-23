@@ -218,7 +218,7 @@ if($document_type == 2) {
         </span>
     </div>
     <!-- TODO GET STRING for Clear Filters -->
-    <button onclick="clear_filter()"><?php echo get_string('clear_filters', 'annotation'); ?></button>
+    <button onclick="clearFilter()"><?php echo get_string('clear_filters', 'annotation'); ?></button>
     <br>
 
 <?php
