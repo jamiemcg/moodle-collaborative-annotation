@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -45,41 +45,41 @@ function store_annotation_document($data) {
 
     $context = context_module::instance($cmid);
     if ($draftitemid) {
-        $messagetext = file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation', 'content', 0, array('subdirs'=>true));
+        $messagetext = file_save_draft_area_files($draftitemid, $context->id, 'mod_annotation',
+                                                    'content', 0, array('subdirs' => true));
     }
     $files = $fs->get_area_files($context->id, 'mod_annotation', 'content', 0, 'sortorder', false);
     if (count($files) == 1) {
-        // only one file attached, set it as main file automatically
+        // Only one file attached, set it as main file automatically.
         $file = reset($files);
         file_set_sortorder($context->id, 'mod_annotation', 'content', 0, $file->get_filepath(), $file->get_filename(), 1);
     }
-   
-    //Find out the file location by getting the content hash
+
+    // Find out the file location by getting the content hash.
     $table = "files";
     $results = $DB->get_records($table, array('itemid' => $draftitemid));
     foreach ($results as $result) {
         $userid = $result->userid;
         $timecreated = $result->timecreated;
         $contenthash = $result->contenthash;
-        break; //Bad way of doing it, TODO
+        break; // Bad way of doing it, TODO.
     }
 
-    //Insert a reference into mdl_annotation_document
+    // Insert a reference into mdl_annotation_document.
     $table = 'annotation_document';
     $record = new stdClass();
-    $record->id = 0; //should auto increment it
+    $record->id = 0; // DB will auto increment it.
     $record->user_id = $userid;
     $record->group_id = 0;
     $record->time_created = $timecreated;
     $record->document_type = $data->type;
     $record->location = $contenthash;
-    $record->lang = ""; //lang column no longer used, highlightjs automatically detects language
+    $record->lang = ""; // Lang column no longer used, highlightjs automatically detects language.
     $record->cmid = $cmid;
     $record->group_annotation = $data->group_annotation;
-    if(isset($record->group_annotations_visible)) {
+    if (isset($record->group_annotations_visible)) {
         $record->group_annotations_visible = $data->group_annotations_visible;
-    }
-    else {
+    } else {
         $record->group_annotations_visible = 0;
     }
     $record->allow_from = $data->allow_from;
@@ -102,8 +102,9 @@ function update_annotation_document($data) {
     $group_annotations_visible = $data->group_annotations_visible;
     $allow_from = $data->allow_from;
     $allow_until = $data->allow_until;
-    
-    $sql = "UPDATE mdl_annotation_document SET document_type = ?, group_annotation = ?, group_annotations_visible = ?, allow_from = ?, allow_until = ? WHERE cmid = ? ";
+
+    $sql = "UPDATE mdl_annotation_document SET document_type = ?, group_annotation = ?,
+                     group_annotations_visible = ?, allow_from = ?, allow_until = ? WHERE cmid = ? ";
     $DB->execute($sql, array($document_type, $group_annotation, $group_annotations_visible, $allow_from, $allow_until, $cmid));
 }
 
@@ -113,21 +114,18 @@ function update_annotation_document($data) {
  */
 function check_time_constraint($allow_from, $allow_until) {
     $current_time = time();
-    if(!$allow_from && !$allow_until) {
+    if (!$allow_from && !$allow_until) {
         return true;
-    }
-    else if($allow_from && $allow_until) {
-        if($current_time < $allow_from || $current_time > $allow_until) {
+    } else if ($allow_from && $allow_until) {
+        if ($current_time < $allow_from || $current_time > $allow_until) {
             return false;
         }
-    }
-    else if($allow_from) {
-        if($current_time < $allow_from) {
+    } else if ($allow_from) {
+        if ($current_time < $allow_from) {
             return false;
         }
-    }
-    else if($allow_until) {
-        if($current_time > $allow_until) {
+    } else if ($allow_until) {
+        if ($current_time > $allow_until) {
             return false;
         }
     }

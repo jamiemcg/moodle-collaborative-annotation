@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,11 +29,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 defined('MOODLE_INTERNAL') || die();
-
-/**
- * Example constant, you probably want to remove this :-)
- */
-define('annotation_ULTIMATE_ANSWER', 42);
 
 /* Moodle core API */
 
@@ -80,7 +75,7 @@ function annotation_add_instance(stdClass $annotation, mod_annotation_mod_form $
     $annotation->timecreated = time();
     $annotation->id = $DB->insert_record('annotation', $annotation);
 
-    annotation_grade_item_update($annotation); //Permanently store the file and add record to DB
+    annotation_grade_item_update($annotation); // Permanently store the file and add record to DB.
     store_annotation_document($annotation);
     return $annotation->id;
 }
@@ -130,28 +125,27 @@ function annotation_delete_instance($id) {
     $cm = get_coursemodule_from_instance('annotation', $annotation->id, $course->id, false, MUST_EXIST);
     $cmid = $cm->id;
 
-    //Delete the associated annotations
-    //Determine DOC type
+    // Delete the associated annotations.
+    // Determine DOC type.
     $table = "annotation_document";
     $results = $DB->get_records($table, array('cmid' => $cmid));
     foreach ($results as $result) {
             $contenthash = $result->location;
             $document_type = $result->document_type;
-            break; //Bad way of doing this
+            break; // Bad way of doing this.
     }
 
-    if($document_type == 2) {
-        //Doc is an image
+    if ($document_type == 2) {
+        // Doc is an image.
         $sql = "DELETE FROM mdl_annotation_image WHERE url=?";
-    }
-    else {
-        //Doc is a text file/source code
+    } else {
+        // Doc is a text file/source code.
         $sql = "DELETE FROM mdl_annotation_annotation WHERE url=?";
     }
 
     $DB->execute($sql, array($cmid));
 
-    //Delete the comments created under any annotations for this activity
+    // Delete the comments created under any annotations for this activity.
     $sql = "DELETE FROM mdl_annotation_comment WHERE url=?";
     $DB->execute($sql, array($cmid));
 

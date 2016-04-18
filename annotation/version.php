@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_annotation';
 
-//$Plugin->version is of the format: YYYYMMDDXX, where XX is a sequenced release number
+// Plugin->version is of the format: YYYYMMDDXX, where XX is a sequenced release number.
 $plugin->version = 2016032307;
 $plugin->release = 'v0.3';
 $plugin->requires = 2014051200;

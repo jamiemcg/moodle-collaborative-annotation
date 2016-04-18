@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ $event->add_record_snapshot('course', $PAGE->course);
 $event->add_record_snapshot($PAGE->cm->modname, $annotation);
 $event->trigger();
 
-//Get the data about the file from the DB
+// Get the data about the file from the DB.
 $cmid = $cm->id;
 $table = "annotation_document";
 $results = $DB->get_records($table, array('cmid' => $cmid));
@@ -63,20 +63,19 @@ foreach ($results as $result) {
         $group_annotations_visible = $result->group_annotations_visible;
         $allow_from = $result->allow_from;
         $allow_until = $result->allow_until;
-        break; //Bad way of doing this
+        break; // Bad way of doing this.
 }
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
 
-if($document_type == 2) {
-    //The document_type is an image so load annotorious css/js
+if ($document_type == 2) {
+    // The document_type is an image so load annotorious css/js.
     $PAGE->requires->css('/mod/annotation/styles/annotorious.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
     $PAGE->requires->js('/mod/annotation/scripts/annotorious-storage.js');
-}
-else {
-    //The document is a plain text file (text document or source code)
-    //Load annotator.js and custom storage plugin
+} else {
+    // The document is a plain text file (text document or source code).
+    // Load annotator.js and custom storage plugin.
     $PAGE->requires->css('/mod/annotation/styles/annotator.min.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-full.min.js');
     $PAGE->requires->js('/mod/annotation/scripts/annotator-storage.js');
@@ -84,22 +83,22 @@ else {
     $PAGE->requires->js('/mod/annotation/scripts/annotator.touch.js');
 }
 
-if($document_type == 1) {
-    //The docuement is a source code file so load highlight.js css/js
+if ($document_type == 1) {
+    // The docuement is a source code file so load highlight.js css/js.
     $sourcecode = true;
     $PAGE->requires->css('/mod/annotation/styles/highlight.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
     $PAGE->requires->js_init_call("hljs.initHighlightingOnLoad");
 }
 
-//Load main.js last to ensure the page has initialized
+// Load main.js last to ensure the page has initialized.
 $PAGE->requires->js('/mod/annotation/scripts/main.js');
 
 $PAGE->set_url('/mod/annotation/view.php', array('id' => $cm->id));
 $PAGE->set_title(format_string($annotation->name));
 $PAGE->set_heading(format_string($course->fullname));
 
-//Determine if user is student or teacher
+// Determine if user is student or teacher.
 $context = context_course::instance($course->id);
 $teacher = has_capability('mod/annotation:manage', $context);
 
@@ -108,17 +107,17 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->heading($annotation->name);
 
-// If an intro (description) exists for the current activity, display it
+// If an intro (description) exists for the current activity, display it.
 if ($annotation->intro) {
     echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
 }
 
-// Add a button to allow users to switch to the 'discussion view' page
+// Add a button to allow users to switch to the 'discussion view' page.
 echo "<a href='view_discussion.php?id=$cmid&type=$document_type'>";
 echo "<button>" . get_string('discussion_view', 'annotation') . "</button>";
 echo "</a>";
 
-// If a teacher/admin/manager is logged in, add button for exporting annotation data
+// If a teacher/admin/manager is logged in, add button for exporting annotation data.
 if ($teacher) {
     $file_title = format_string($annotation->name);
     echo "<a href='export.php?url=$cmid&type=$document_type'>";
@@ -129,36 +128,32 @@ if ($teacher) {
 
 echo "<hr>";
 
-//If availability settings are defined, display the settings
-if($allow_from && $allow_until) {
-    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from) . " " . get_string('until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
+// If availability settings are defined, display the settings.
+if ($allow_from && $allow_until) {
+    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from) . " " .
+                            get_string('until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
     echo "<br>";
-}
-else if($allow_from) {
+} else if ($allow_from) {
     echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from);
     echo "<br>";
-}
-else if($allow_until) {
+} else if ($allow_until) {
     echo get_string('annotatable_until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
     echo "<br>";
 }
-else {
-    //Not set, do nothing
-}
 
-// If groups are enabled and the current user is a teacher or group visibility is enabled
-// display the names of the groups so they are available for filtering
+// If groups are enabled and the current user is a teacher or group visibility is enabled,
+// Display the names of the groups so they are available for filtering.
 
-if($group_annotation && ($group_annotations_visible || $teacher)) {
-    //Find and display all of the group names relevant to this activity (i.e. the course groups)    
+if ($group_annotation && ($group_annotations_visible || $teacher)) {
+    // Find and display all of the group names relevant to this activity (i.e. the course groups).
     $params = array(
                     "courseid" => $course->id
                    );
 
-    $table ="groups";
+    $table = "groups";
     $count = $DB->count_records($table, $params);
-    //Only print "Groups:" if any groups actually exist
-    if($count > 0) {
+    // Only print "Groups:" if any groups actually exist.
+    if ($count > 0) {
         echo "<p>Groups:</p>";
         $sql = "SELECT * FROM mdl_groups WHERE courseid = ?";
         $rs = $DB->get_recordset_sql($sql, array($course->id));
@@ -171,25 +166,17 @@ if($group_annotation && ($group_annotations_visible || $teacher)) {
     }
 }
 
-else if($group_annotation) {
-    //Group annotation is enabled but not group visibility, do not display group names, only show
-    //annotations created by this group
-}
-else {
-    //No groups
-}
 
-
-//Build the path to the file from the content_hash
+// Build the path to the file from the content_hash.
 $path = $CFG->dataroot . DIRECTORY_SEPARATOR . "filedir" . DIRECTORY_SEPARATOR;
-$path = $path . substr($contenthash, 0, 2) . DIRECTORY_SEPARATOR  . substr($contenthash, 2, 2) . DIRECTORY_SEPARATOR ;
+$path = $path . substr($contenthash, 0, 2) . DIRECTORY_SEPARATOR  . substr($contenthash, 2, 2) . DIRECTORY_SEPARATOR;
 $path = $path . $contenthash;
 $file_contents = file_get_contents($path);
 
-//Check if it is an image
-if($document_type == 2) {
-    //Can't render images directly have to determine MIME type and base64 encode
-    //Need to find out MIME type from mdl_files table
+// Check if it is an image.
+if ($document_type == 2) {
+    // Can't render images directly have to determine MIME type and base64 encode.
+    // Need to find out MIME type from mdl_files table.
     $table = "files";
     $results = $DB->get_records($table, array('contenthash' => $contenthash));
     foreach ($results as $result) {
@@ -201,8 +188,8 @@ if($document_type == 2) {
     <!-- Add custom filter bar above the displayed image (on image annotation only) -->
     <div class="filter-bar">
         <span class="filter-item">
-            <label class="filter-label" for="annotation">Annotation:</label>
-            <input class="filter-input" type="search" name="annotation" id="filter-annotation" placeholder="Filter by Annotation...">
+        <label class="filter-label" for="annotation">Annotation:</label>
+        <input class="filter-input" type="search" name="annotation" id="filter-annotation" placeholder="Filter by Annotation...">
         </span>
         <span class="filter-item">
             <label class="filter-label" for="group">Group:</label>
@@ -226,30 +213,27 @@ if($document_type == 2) {
 
     $base64 = base64_encode($file_contents);
     echo '<img class="annotatable" data-original="http://image.to.annotate" src="data:' . $mimetype . ';base64,' . $base64 . '">';
-}
-else {
-    //It is a plain text document 
-	echo '<div id="annotator-content">'; //Start of annotatable content
+} else {
+    // It is a plain text document.
+    echo '<div id="annotator-content">'; // Start of annotatable content.
 
-    if($document_type == 1) {
-        //It is source code
+    if ($document_type == 1) {
+        // It is source code.
         echo "<pre><code>";
-    }
-    else {
+    } else {
         echo "<pre class='pre-text'>";
     }
 
-    $file_contents = htmlentities($file_contents); //always replace the HTML entities
+    $file_contents = htmlentities($file_contents); // Always replace the HTML entities.
     echo $file_contents;
 
-    if($document_type == 1) {
+    if ($document_type == 1) {
         echo "</code></pre>";
-    }
-    else {
+    } else {
         echo "</pre>";
     }
 
-    echo '</div>'; //The end of annotatable content
+    echo '</div>'; // The end of annotatable content.
 }
 ?>
 

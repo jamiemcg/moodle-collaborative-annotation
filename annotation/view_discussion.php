@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Prints a particular instance of annotation
+ * Prints the discussion view for a particular instance of annotation
  *
  * @package    mod_annotation
  * @copyright  2015 Jamie McGowan
@@ -46,17 +46,17 @@ if ($id) {
 require_login($course, true, $cm);
 $cmid = $cm->id;
 
-//Determine if user is student or teacher
+// Determine if user is student or teacher.
 $context = context_course::instance($course->id);
 $teacher = has_capability('mod/annotation:manage', $context);
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
 $PAGE->requires->js('/mod/annotation/scripts/main.js');
-$PAGE->requires->js('/mod/annotation/scripts/discussion.js'); // JS specific to this page
+$PAGE->requires->js('/mod/annotation/scripts/discussion.js'); // JS specific to this page.
 
 $document_type = $_GET['type'];
 
-if($document_type == 1) {
+if ($document_type == 1) {
     $PAGE->requires->css('/mod/annotation/styles/highlight.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
 }
@@ -70,17 +70,17 @@ echo $OUTPUT->header();
 
 echo $OUTPUT->heading($annotation->name . " | Discussion View");
 
-// If an intro (description) exists for the current activity, display it
+// If an intro (description) exists for the current activity, display it.
 if ($annotation->intro) {
     echo $OUTPUT->box(format_module_intro('annotation', $annotation, $cm->id), 'generalbox mod_introbox', 'annotationintro');
 }
 
-// Add a button to allow users to switch back to the 'annotation view' page
+// Add a button to allow users to switch back to the 'annotation view' page.
 echo "<a href='view.php?id=$cmid'>";
 echo "<button>" . get_string('annotation_view', 'annotation') . "</button>";
 echo "</a>";
 
-// If a teacher/admin/manager is logged in, add button for exporting annotation data
+// If a teacher/admin/manager is logged in, add button for exporting annotation data.
 if ($teacher) {
     $file_title = format_string($annotation->name);
     echo "<a href='export.php?url=$cmid&type=$document_type'>";
@@ -90,8 +90,8 @@ if ($teacher) {
 
 echo "<hr>";
 
-echo "<div id='discussion-area'></div>"; // Populated with annotations by JS
+echo "<div id='discussion-area'></div>"; // Populated with annotations by JS.
 
 
-// End of custom output, add default footer, blocks, etc
+// End of custom output, add default footer, blocks, etc.
 echo $OUTPUT->footer();

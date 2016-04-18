@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once ($CFG->libdir.'/formslib.php');
+require_once($CFG->libdir.'/formslib.php');
 
 /**
  * Module instance settings form
@@ -67,9 +67,10 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->setExpanded('contentsection');
         $mform->addElement('html', '<b>' . get_string('file_select_info', 'annotation') . '</b><br>');
 
-        //Add selector for document type - text, source, image
-        $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'), 2 => get_string('image', 'annotation'));
-        $mform->addElement('select', 'type', get_String('document_type', 'annotation'), $doctypes);
+        // Add selector for document type - text, source, image.
+        $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'),
+            2 => get_string('image', 'annotation'));
+        $mform->addElement('select', 'type', get_string('document_type', 'annotation'), $doctypes);
         $mform->addRule('type', null, 'required', null, 'client');
         $mform->addHelpButton('type', 'document_type', 'annotation');
 
@@ -82,10 +83,10 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addRule('files', null, 'required', 'client');
         $mform->addHelpButton('files', 'filemanager', 'annotation');
 
-        //Group options settings
+        // Group options settings.
         $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
         $mform->addElement('html', '<p>' . get_string('group_annotation_tip', 'annotation') . '</p>');
-        
+
         $name = get_string('group_annotations', 'annotation');
         $mform->addElement('selectyesno', 'group_annotation', $name);
         $mform->addHelpButton('group_annotation', 'group_annotations', 'annotation');
@@ -95,45 +96,44 @@ class mod_annotation_mod_form extends moodleform_mod {
         $mform->addHelpButton('group_annotations_visible', 'group_annotations_visible', 'annotation');
         $mform->disabledIf('group_annotations_visible', 'group_annotation', 'eq', 0);
 
-        //Availabilty / time restriction section
+        // Availabilty / time restriction section.
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
         $mform->setExpanded('availability', false);
-        
 
         $name = get_string('allow_annotations_from', 'annotation');
-        $mform->addElement('date_time_selector', 'allow_from', $name, array('optional'=>true));
+        $mform->addElement('date_time_selector', 'allow_from', $name, array('optional' => true));
         $mform->addHelpButton('allow_from', 'allow_annotations_from', 'annotation');
 
         $name = get_string('allow_annotations_until', 'annotation');
-        $mform->addElement('date_time_selector', 'allow_until', $name, array('optional'=>true));
+        $mform->addElement('date_time_selector', 'allow_until', $name, array('optional' => true));
         $mform->addHelpButton('allow_until', 'allow_annotations_until', 'annotation');
 
-        // Add standard elements, common to all modules
+        // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
 
-        // Add standard grading elements
+        // Add standard grading elements.
         $this->standard_grading_coursemodule_elements();
 
-        // Add standard buttons, common to all modules
+        // Add standard buttons, common to all modules.
         $this->add_action_buttons();
-	}
+    }
 
 
     public function definition_after_data() {
-    	parent::definition_after_data();
+        parent::definition_after_data();
         global $DB;
-    	$mform = $this->_form;
-    	$cmid = $mform->getElementValue('coursemodule');
+        $mform = $this->_form;
+        $cmid = $mform->getElementValue('coursemodule');
 
-        $mform->removeElement('groupmode'); //Remove group mode as cutom method is implemented
+        $mform->removeElement('groupmode'); // Remove group mode as cutom method is implemented.
 
-    	if(!empty($cmid)) {
-    		//The user is updating the instance of the activity
-            //Remove the file manager as the annotations may not make 
-            //sense if the file they are applied to are changed
+        if (!empty($cmid)) {
+            // The user is updating the instance of the activity.
+            // Remove the file manager as the annotations may not make .
+            // sense if the file they are applied to are changed.
             $mform->removeElement('files');
 
-            //Find out what type of document it was and set selector
+            // Find out what type of document it was and set selector.
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
             foreach ($results as $result) {
@@ -144,12 +144,12 @@ class mod_annotation_mod_form extends moodleform_mod {
                     $allow_until = $result->allow_until;
                     break;
             }
-            
+
             $mform->setDefault('type', $document_type);
             $mform->setDefault('group_annotation', $group_annotation);
             $mform->setDefault('group_annotations_visible', $group_annotations_visible);
             $mform->setDefault('allow_from', $allow_from);
-            $mform->setDefault('allow_until', $allow_until); 
-    	}
+            $mform->setDefault('allow_until', $allow_until);
+        }
     }
 }
