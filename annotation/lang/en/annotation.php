@@ -1,5 +1,5 @@
 <?php
-
+// This file is part of mod_annotation
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-//Standard/required moodle strings
+// Standard/required moodle strings.
 $string['annotation'] = 'annotation';
 $string['annotationname'] = 'Activity Name';
 $string['annotationname_help'] = 'This is the name that users will see for the activity.';
@@ -40,7 +40,7 @@ $string['modulenameplural'] = 'Annotated Documents';
 $string['pluginadministration'] = 'Annotation administration';
 $string['pluginname'] = 'annotation';
 
-//Customs strings for annotation
+// Customs strings for annotation.
 $string['allow_annotations_from'] = 'Allow annotations from';
 $string['allow_annotations_from_help'] = 'If enabled, students will be able to view but not annotate the file before this date. If disabled, students will be able to start annotating straight away.';
 $string['allow_annotations_until'] = 'Allow annotations until';
@@ -70,7 +70,7 @@ $string['source_code'] = 'Source Code';
 $string['teacher_permissions'] = 'Allow teachers to edit and delete students annotations';
 $string['text_document'] = 'Text Document';
 
-//Strings for view.php
+// Strings for view.php.
 $string['annotatable_from'] = 'This file is annotatable from';
 $string['annotatable_until'] = 'This file is annotatable until';
 $string['until'] = 'until';

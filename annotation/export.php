@@ -18,7 +18,6 @@
  * Exports all annotation data to an XML file. Restricted to teachers.
  *
  * @package   mod_annotation
- * @category  export
  * @copyright 2015 Jamie McGowan
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

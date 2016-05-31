@@ -1,11 +1,11 @@
 .pre-text {
-	font-family: inherit;
-	font-size: inherit;
-	font-style: inherit;
-	font-weight: inherit;
-	word-wrap: normal;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    word-wrap: normal;
     word-break: keep-all;
-	background-color: inherit;
+    background-color: inherit;
 }
 
 pre {
@@ -85,7 +85,7 @@ a.nav-toggle {
 }
 
 .nav-side .annotation .text {
-    text-align: left;   
+    text-align: left;
 }
 
 .nav-side .annotation .username {
@@ -110,11 +110,7 @@ a.nav-toggle {
 }
 
 .annotation-details {
-    text-align: right;    
-}
-
-.annotation-item {
-    
+    text-align: right;
 }
 
 .comment-box {
@@ -129,10 +125,6 @@ a.nav-toggle {
 .comment-box-discussion {
     width: 90%;
     border-radius: 5px; 
-}
-
-.comments-button {
-    
 }
 
 .comment-count {

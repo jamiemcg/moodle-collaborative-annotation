@@ -18,7 +18,6 @@
  * Determines the current users group and time restriction settings.
  *
  * @package   initialize
- * @category  export
  * @copyright 2015 Jamie McGowan
  * @license   http:// www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
