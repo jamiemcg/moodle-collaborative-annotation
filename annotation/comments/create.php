@@ -39,10 +39,10 @@ if (!empty($_POST)) {
 
     $comment = new stdClass();
     $comment->url = $_POST['url'];
-    $comment->annotation_id = $_POST['annotation_id'];
+    $comment->annotationid = $_POST['annotationid'];
     $comment->timecreated = time();
     $comment->comment = htmlentities($_POST['comment']);
-    $comment->user_id = $USER->id;
+    $comment->userid = $USER->id;
     $comment->id = 0; // This will be changed by the DB.
 
     $table = "annotation_comment";

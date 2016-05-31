@@ -54,9 +54,9 @@ $PAGE->requires->css('/mod/annotation/styles/main.css');
 $PAGE->requires->js('/mod/annotation/scripts/main.js');
 $PAGE->requires->js('/mod/annotation/scripts/discussion.js'); // JS specific to this page.
 
-$document_type = $_GET['type'];
+$documenttype = $_GET['type'];
 
-if ($document_type == 1) {
+if ($documenttype == 1) {
     $PAGE->requires->css('/mod/annotation/styles/highlight.css');
     $PAGE->requires->js('/mod/annotation/scripts/highlight.pack.js');
 }
@@ -82,8 +82,8 @@ echo "</a>";
 
 // If a teacher/admin/manager is logged in, add button for exporting annotation data.
 if ($teacher) {
-    $file_title = format_string($annotation->name);
-    echo "<a href='export.php?url=$cmid&type=$document_type'>";
+    $filetitle = format_string($annotation->name);
+    echo "<a href='export.php?url=$cmid&type=$documenttype'>";
     echo "<button>" .  get_string('export_data', 'annotation') . "</button>";
     echo "</a>";
 }

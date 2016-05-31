@@ -16,7 +16,7 @@
 
 /**
  * Stores an annotation with the data received from a POST request
- * Must attatch timestamp, id, user_id to the annotation
+ * Must attatch timestamp, id, userid to the annotation
  * Returns the id of the created annotation
  *
  * @package   mod_annotation
@@ -73,7 +73,7 @@ if (!empty($_POST)) {
     $annotation->id = $lastinsertid;
     $annotation->username = $USER->firstname . " " . $USER->lastname;
 
-    if ($group_annotation) {
+    if ($groupannotation) {
         // Gets the name of the group that the current user belongs to.
         $annotation->groupname = groups_get_group_name($group);
     }

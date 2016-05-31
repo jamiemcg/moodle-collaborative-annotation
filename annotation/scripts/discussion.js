@@ -81,8 +81,8 @@ require(['jquery'], function(jQuery) {
     // Display the comment section when the user clicks on it.
     jQuery('body').on('click', '.comment-count', function(e) {
         e.preventDefault();
-        var annotation_id = jQuery(this).data('annotation-id');
-        var target = "#comments-" + annotation_id;
+        var annotationid = jQuery(this).data('annotation-id');
+        var target = "#comments-" + annotationid;
         jQuery(target).toggle(400);
 
     });

@@ -30,10 +30,10 @@ if (!empty($_POST['id'])) {
     global $CFG, $DB, $USER;
 
     $userid = $USER->id; // Gets the current users id.
-    $annotation_id = $_POST['id'];
+    $annotationid = $_POST['id'];
 
     $params = array(
-                    "id" => $annotation_id,
+                    "id" => $annotationid,
                     "userid" => $userid
                    );
 
@@ -45,8 +45,8 @@ if (!empty($_POST['id'])) {
         $result = $DB->delete_records($table, $params);
 
         // Delete the comments attatched to this annotaton.
-        $sql = "DELETE FROM mdl_annotation_comment WHERE annotation_id=?";
-        $DB->execute($sql, array($annotation_id));
+        $sql = "DELETE FROM mdl_annotation_comment WHERE annotationid=?";
+        $DB->execute($sql, array($annotationid));
 
         echo "1"; // Return success response.
     } else {

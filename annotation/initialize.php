@@ -37,10 +37,10 @@ $teacher = has_capability('mod/annotation:manage', $context);
 $table = "annotation_document";
 $results = $DB->get_records($table, array('cmid' => $cmid));
 foreach ($results as $result) {
-        $group_annotation = $result->group_annotation;
-        $group_annotations_visible = $result->group_annotations_visible;
-        $allow_from = $result->allow_from;
-        $allow_until = $result->allow_until;
+        $groupannotation = $result->groupannotation;
+        $groupannotationsvisible = $result->groupannotationsvisible;
+        $allowfrom = $result->allowfrom;
+        $allowuntil = $result->allowuntil;
         break; // Bad way of doing this.
 }
 
@@ -53,4 +53,4 @@ if (count($group[0]) > 0) { // User may not have a group? E.g teacher?
 }
 
 // Determine availability settings.
-$editable = check_time_constraint($allow_from, $allow_until);
+$editable = check_time_constraint($allowfrom, $allowuntil);

@@ -131,11 +131,11 @@ function annotation_delete_instance($id) {
     $results = $DB->get_records($table, array('cmid' => $cmid));
     foreach ($results as $result) {
             $contenthash = $result->location;
-            $document_type = $result->document_type;
+            $documenttype = $result->documenttype;
             break; // Bad way of doing this.
     }
 
-    if ($document_type == 2) {
+    if ($documenttype == 2) {
         // Doc is an image.
         $sql = "DELETE FROM mdl_annotation_image WHERE url=?";
     } else {

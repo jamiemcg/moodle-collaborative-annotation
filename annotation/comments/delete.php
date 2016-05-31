@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Receive a comment based on comment_id in POST request
+ * Receive a comment based on commentid in POST request
  * Checks if the current user created the corresponding comment
  *
  * @package   mod_annotation
@@ -29,12 +29,12 @@ if (!empty($_POST['id'])) {
 
     global $CFG, $DB, $USER;
 
-    $user_id = $USER->id; // Gets the current users id.
-    $comment_id = $_POST['id']; // The id of the comment.
+    $userid = $USER->id; // Gets the current users id.
+    $commentid = $_POST['id']; // The id of the comment.
 
     $params = array(
-                    "id" => $comment_id,
-                    "user_id" => $user_id
+                    "id" => $commentid,
+                    "userid" => $userid
                    );
 
     $table = "annotation_comment";

@@ -82,13 +82,13 @@ function get_comments() {
                 var timecreated = timeConverter(comments[i].timecreated);
                 var username = comments[i].username;
                 var comment = comments[i].comment;
-                var comment_id = comments[i].id;
-                var annotation_id = comments[i].annotation_id;
+                var commentid = comments[i].id;
+                var annotationid = comments[i].annotationid;
 
-                var insert = '<p data-comment-id="' + comment_id + '" title="' + timecreated + '"><strong>';
+                var insert = '<p data-comment-id="' + commentid + '" title="' + timecreated + '"><strong>';
                 insert += username + ':</strong> ' + comment + '</p>';
 
-                var target = '#comments-region-' + annotation_id;
+                var target = '#comments-region-' + annotationid;
                 jQuery(target).append(insert);
             }
         });
@@ -104,8 +104,8 @@ require(['jquery'], function(jQuery) {
         jQuery('body').on('click', '.comment-button', function(e) {
             e.preventDefault();
 
-            var annotation_id = jQuery(this).data('annotation-id');
-            var target = '#comment-box-' + annotation_id;
+            var annotationid = jQuery(this).data('annotation-id');
+            var target = '#comment-box-' + annotationid;
             var comment = jQuery(target).val();
 
             // Only process comment if length > 0.
@@ -115,7 +115,7 @@ require(['jquery'], function(jQuery) {
 
                 var post_data = {
                     url: getQueryVariables("id"), // Page url = activity_id.
-                    annotation_id: annotation_id,
+                    annotationid: annotationid,
                     comment: comment
                 };
 
@@ -130,7 +130,7 @@ require(['jquery'], function(jQuery) {
                         var response = JSON.parse(data);
                         jQuery(target).val(""); // Empty the comment text box.
 
-                        target = '#comments-region-' + annotation_id;
+                        target = '#comments-region-' + annotationid;
                         var username = response.username;
                         var timecreated = timeConverter(response.timecreated);
                         var insert = '<p data-comment-id="' + response.id + '" title="' + timecreated + '"><strong>' + response.username + ':</strong> ' + htmlEntities(comment) + '</p>';

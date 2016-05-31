@@ -29,7 +29,7 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
     require_login();
 
     $url = $_GET['url'];
-    $document_type = $_GET['type']; // 0 -> plain text; 1 -> source code; 2 -> image.
+    $documenttype = $_GET['type']; // 0 -> plain text; 1 -> source code; 2 -> image.
 
     $cmid = $url; // Used by initialize.php.
     require_once("initialize.php");
@@ -44,7 +44,7 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
         die(); // Blocking export function from students.
     }
 
-    if ($document_type == 2) {
+    if ($documenttype == 2) {
         // Load annotations from db.
         $sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
         $rs = $DB->get_recordset_sql($sql, array($url));
@@ -60,12 +60,12 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
 
     // Load comments.
     $sql = "SELECT * FROM mdl_annotation_comment WHERE url = ?";
-    $rs_comment = $DB->get_recordset_sql($sql, array($url));
+    $rscomment = $DB->get_recordset_sql($sql, array($url));
 
     // Convert comments record set to array for easier processing.
-    $comments_array = array();
-    foreach ($rs_comment as $record_comment) {
-        $comments_array[] = $record_comment;
+    $commentsarray = array();
+    foreach ($rscomment as $recordcomment) {
+        $commentsarray[] = $recordcomment;
     }
 
     // Iterate through the annotations.
@@ -76,7 +76,7 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
 
         $annotation = $annotations->addChild('annotation');
 
-        if ($document_type != 2) {
+        if ($documenttype != 2) {
             $annotation->addChild('quote', $record->quote);
         } else {
             // Don't have a "quote" for images so process and export the shape, dimensions, etc..
@@ -84,12 +84,12 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
             $shapes = str_replace("]", "", $shapes);
             $shapes = json_decode($shapes);
 
-            $selection_shape = $annotation->addChild('selection-shape');
-            $selection_shape->addChild('type', $shapes->type);
-            $selection_shape->addChild('x', $shapes->geometry->x);
-            $selection_shape->addChild('y', $shapes->geometry->y);
-            $selection_shape->addChild('width', $shapes->geometry->width);
-            $selection_shape->addChild('height', $shapes->geometry->height);
+            $selectionshape = $annotation->addChild('selection-shape');
+            $selectionshape->addChild('type', $shapes->type);
+            $selectionshape->addChild('x', $shapes->geometry->x);
+            $selectionshape->addChild('y', $shapes->geometry->y);
+            $selectionshape->addChild('width', $shapes->geometry->width);
+            $selectionshape->addChild('height', $shapes->geometry->height);
 
         }
 
@@ -100,14 +100,14 @@ if (isset($_GET['url']) && isset($_GET['type'])) {
         // Append comments if any exist.
         $comments = $annotation->addChild('comments');
 
-        for ($i = 0; $i < count($comments_array); $i++) {
-            if ($comments_array[$i]->annotation_id == $record->id) {
+        for ($i = 0; $i < count($commentsarray); $i++) {
+            if ($commentsarray[$i]->annotationid == $record->id) {
                 $comment = $comments->addChild('comment');
 
-                $user = $DB->get_record('user', array("id" => $comments_array[$i]->user_id));
+                $user = $DB->get_record('user', array("id" => $commentsarray[$i]->userid));
                 $comment->addChild('username', $user->firstname . " " . $user->lastname);
-                $comment->addChild('timecreated', date('Y-m-d H:i:s', $comments_array[$i]->timecreated));
-                $comment->addChild('comment_text', $comments_array[$i]->comment);
+                $comment->addChild('timecreated', date('Y-m-d H:i:s', $commentsarray[$i]->timecreated));
+                $comment->addChild('comment_text', $commentsarray[$i]->comment);
             }
         }
     }

@@ -30,7 +30,7 @@ if (!empty($_POST['url'])) {
 
     global $CFG, $DB, $USER;
 
-    $user_id = $USER->id; // Gets the current users id.
+    $userid = $USER->id; // Gets the current users id.
     $url = $_POST['url'];
 
     // Select all comments where the url matches that posted.
@@ -40,10 +40,10 @@ if (!empty($_POST['url'])) {
     $response = array(); // Store the response in an array.
 
     foreach ($rs as $record) {
-        $user = $DB->get_record('user', array("id" => $record->user_id));
+        $user = $DB->get_record('user', array("id" => $record->userid));
         $record->username = $user->firstname . " " . $user->lastname;
 
-        unset($record->user_id); // Don't send the user's id to the client.
+        unset($record->userid); // Don't send the user's id to the client.
 
         $response[] = $record; // Apend the record to the response array.
     }

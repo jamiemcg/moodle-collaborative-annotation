@@ -70,43 +70,43 @@ class mod_annotation_mod_form extends moodleform_mod {
         // Add selector for document type - text, source, image.
         $doctypes = array(0 => get_string('text_document', 'annotation'), 1 => get_string('source_code', 'annotation'),
             2 => get_string('image', 'annotation'));
-        $mform->addElement('select', 'type', get_string('document_type', 'annotation'), $doctypes);
+        $mform->addElement('select', 'type', get_string('documenttype', 'annotation'), $doctypes);
         $mform->addRule('type', null, 'required', null, 'client');
-        $mform->addHelpButton('type', 'document_type', 'annotation');
+        $mform->addHelpButton('type', 'documenttype', 'annotation');
 
-        $filemanager_options = array();
-        $filemanager_options['accepted_types'] = '*';
-        $filemanager_options['maxbytes'] = 0;
-        $filemanager_options['maxfiles'] = 1;
-        $filemanager_options['mainfile'] = true;
-        $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanager_options);
+        $filemanageroptions = array();
+        $filemanageroptions['accepted_types'] = '*';
+        $filemanageroptions['maxbytes'] = 0;
+        $filemanageroptions['maxfiles'] = 1;
+        $filemanageroptions['mainfile'] = true;
+        $mform->addElement('filemanager', 'files', get_string('selectfile', 'annotation'), null, $filemanageroptions);
         $mform->addRule('files', null, 'required', 'client');
         $mform->addHelpButton('files', 'filemanager', 'annotation');
 
         // Group options settings.
-        $mform->addElement('header', 'group', get_string('group_annotation', 'annotation'));
-        $mform->addElement('html', '<p>' . get_string('group_annotation_tip', 'annotation') . '</p>');
+        $mform->addElement('header', 'group', get_string('groupannotation', 'annotation'));
+        $mform->addElement('html', '<p>' . get_string('groupannotation_tip', 'annotation') . '</p>');
 
-        $name = get_string('group_annotations', 'annotation');
-        $mform->addElement('selectyesno', 'group_annotation', $name);
-        $mform->addHelpButton('group_annotation', 'group_annotations', 'annotation');
+        $name = get_string('groupannotations', 'annotation');
+        $mform->addElement('selectyesno', 'groupannotation', $name);
+        $mform->addHelpButton('groupannotation', 'groupannotations', 'annotation');
 
-        $name = get_string('group_annotations_visible', 'annotation');
-        $mform->addElement('selectyesno', 'group_annotations_visible', $name);
-        $mform->addHelpButton('group_annotations_visible', 'group_annotations_visible', 'annotation');
-        $mform->disabledIf('group_annotations_visible', 'group_annotation', 'eq', 0);
+        $name = get_string('groupannotationsvisible', 'annotation');
+        $mform->addElement('selectyesno', 'groupannotationsvisible', $name);
+        $mform->addHelpButton('groupannotationsvisible', 'groupannotationsvisible', 'annotation');
+        $mform->disabledIf('groupannotationsvisible', 'groupannotation', 'eq', 0);
 
         // Availabilty / time restriction section.
         $mform->addElement('header', 'availability', get_string('annotation_availability', 'annotation'));
         $mform->setExpanded('availability', false);
 
         $name = get_string('allow_annotations_from', 'annotation');
-        $mform->addElement('date_time_selector', 'allow_from', $name, array('optional' => true));
-        $mform->addHelpButton('allow_from', 'allow_annotations_from', 'annotation');
+        $mform->addElement('date_time_selector', 'allowfrom', $name, array('optional' => true));
+        $mform->addHelpButton('allowfrom', 'allow_annotations_from', 'annotation');
 
         $name = get_string('allow_annotations_until', 'annotation');
-        $mform->addElement('date_time_selector', 'allow_until', $name, array('optional' => true));
-        $mform->addHelpButton('allow_until', 'allow_annotations_until', 'annotation');
+        $mform->addElement('date_time_selector', 'allowuntil', $name, array('optional' => true));
+        $mform->addHelpButton('allowuntil', 'allow_annotations_until', 'annotation');
 
         // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
@@ -137,19 +137,19 @@ class mod_annotation_mod_form extends moodleform_mod {
             $table = "annotation_document";
             $results = $DB->get_records($table, array('cmid' => $cmid));
             foreach ($results as $result) {
-                    $document_type = $result->document_type;
-                    $group_annotation = $result->group_annotation;
-                    $group_annotations_visible = $result->group_annotations_visible;
-                    $allow_from = $result->allow_from;
-                    $allow_until = $result->allow_until;
+                    $documenttype = $result->documenttype;
+                    $groupannotation = $result->groupannotation;
+                    $groupannotationsvisible = $result->groupannotationsvisible;
+                    $allowfrom = $result->allowfrom;
+                    $allowuntil = $result->allowuntil;
                     break;
             }
 
-            $mform->setDefault('type', $document_type);
-            $mform->setDefault('group_annotation', $group_annotation);
-            $mform->setDefault('group_annotations_visible', $group_annotations_visible);
-            $mform->setDefault('allow_from', $allow_from);
-            $mform->setDefault('allow_until', $allow_until);
+            $mform->setDefault('type', $documenttype);
+            $mform->setDefault('groupannotation', $groupannotation);
+            $mform->setDefault('groupannotationsvisible', $groupannotationsvisible);
+            $mform->setDefault('allowfrom', $allowfrom);
+            $mform->setDefault('allowuntil', $allowuntil);
         }
     }
 }

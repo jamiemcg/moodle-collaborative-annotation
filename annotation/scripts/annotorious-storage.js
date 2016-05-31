@@ -1,13 +1,10 @@
-/*
-    This file contains functions related to Image annotations
-*/
+// This file contains functions related to Image annotations.
 
 var annotations = []; // Used to keep track of existing annotations for filtering support.
 
 // Called when the page has loaded.
 // Sends a POST request to get all relevant annotations for the image currently being viewed.
 // The url of the current page is sent and is used to load the relevant annotations.
-
 require(['jquery'], function($) {
     $(document).ready(function() {
         var post_data = {
@@ -29,7 +26,7 @@ require(['jquery'], function($) {
                 annotation.text = annotation.annotation;
                 delete annotation.annotation;
                 annotation.shapes = JSON.parse(annotation.shapes);
-                annotation.src = "http:// image.to.annotate"; // Base64 workaround.
+                annotation.src = "http://image.to.annotate"; // Base64 workaround.
                 annotation.timecreated = timeConverter(annotation.timecreated);
 
                 // Process tags.
@@ -75,7 +72,7 @@ require(['jquery'], function($) {
             // Add commenting section.
             annotation_insert += '<div class="comment-section" id="comment-section-' + annotation.id + '"><p class="comment-count" data-annotation-id="' + data[i].id + '">';
             annotation_insert += '<span id="comment-count-' + annotation.id + '">' + "" + ' </span>';
-            annotation_insert += '<span id="comments-word-' + annotation.id + '">' + /* comment_word */ "Comments" + '</span> ';
+            annotation_insert += '<span id="comments-word-' + annotation.id + '">' + "Comments" + '</span> ';
             annotation_insert += '<img class="comments-button annotation-icon" src="./styles/comments.png"></p>';
             annotation_insert += '<div style="display:none" class="comments" id="comments-' + data[i].id + '">';
 
@@ -100,10 +97,11 @@ require(['jquery'], function($) {
             var annotation_id = $(this).data('annotation-id');
             var target = "#comments-" + annotation_id;
             $(target).toggle(400);
+
         });
 
-        // Called when an annotation has been created.
-        // Sends the data to the server in a POST request for it to process and save it.
+        // Called when an annotation has been created. Sends the data.
+        // to the server in a POST request for it to process and save it.
         anno.addHandler('onAnnotationCreated', function(annotation) {
             delete annotation.src; // Waste of data transfer so delete.
             delete annotation.context; // Use annotation.url instead.
@@ -186,7 +184,8 @@ anno.addHandler('beforeAnnotationRemoved', function(annotation) {
 });
 
 // Called when the user confirms that they want to delete an annotation.
-// Sends POST request to server to delete the annotation. Sends the id of the annotation to be deleted.
+// Sends POST request to server to delete the annotation.
+// Sends the id of the annotation to be deleted.
 anno.addHandler('onAnnotationRemoved', function(annotation) {
     require(['jquery'], function($) {
         var post_data = {
@@ -380,10 +379,8 @@ require(['jquery'], function($) {
         }
     });
 
-    /*
-        Returns true if arr1 contains ALL of the elements in arr2 (or a substring of every element).
-        Returns false otherwise.
-    */
+    // Returns true if arr1 contains ALL of the elements in arr2 (or a substring of every element).
+    // Returns false otherwise.
     function arrayContains(arr1, arr2) {
         for(var i = 0; i < arr2.length; i++) {
             flag = false;
@@ -399,10 +396,8 @@ require(['jquery'], function($) {
         return true;
     }
 
-    /*
-        Returns true if a contains the string a contains the (case insensitive) substring b.
-        Returns false otherwise.
-    */
+    // Returns true if a contains the string a contains the (case insensitive) substring b.
+    // Returns false otherwise.
     function containsSubstring(a, b) {
         if(a.toLowerCase().trim().indexOf(b.toLowerCase().trim()) > -1) {
             return true;
@@ -414,9 +409,7 @@ require(['jquery'], function($) {
 
 });
 
-/*
-    Strips hashtags from tags.
-*/
+// Strips hashtags from tags.
 function stripHashtags(arr) {
     for(var i = 0; i < arr.length; i++) {
         if(arr[i].charAt(0) == "#") {

@@ -214,7 +214,7 @@ require(['jquery'], function(jQuery) {
                 }
                 annotation_insert += data[i].username + '</p>';
 
-                var comment_count = 1; // Count how many comments have a particular annotation_id.
+                var comment_count = 1; // Count how many comments have a particular annotationid.
 
                 // Ensure it says 1 comment or multiple comments.
                 var comment_word = "comments";
@@ -268,8 +268,8 @@ require(['jquery'], function(jQuery) {
         // Display the comment section when the user clicks on it.
         jQuery('body').on('click', '.comment-count', function(e) {
             e.preventDefault();
-            var annotation_id = jQuery(this).data('annotation-id');
-            var target = "#comments-" + annotation_id;
+            var annotationid = jQuery(this).data('annotation-id');
+            var target = "#comments-" + annotationid;
             jQuery(target).toggle(400);
 
         });

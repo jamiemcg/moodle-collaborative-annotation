@@ -41,11 +41,11 @@ if (!empty($_POST['url'])) {
     $context = context_course::instance($cm->course);
     $teacher = has_capability('mod/annotation:manage', $context);
 
-    if ($group_annotation && $teacher) {
+    if ($groupannotation && $teacher) {
         // The user is a teacher, load all annotations [from every group].
         $sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ?";
         $rs = $DB->get_recordset_sql($sql, array($url));
-    } else if ($group_annotation && ! $group_annotations_visible) {
+    } else if ($groupannotation && ! $groupannotationsvisible) {
         // Load only annotations for this group and teachers/admins.
         $sql = "SELECT * FROM mdl_annotation_annotation WHERE url = ? AND (group_id = ? OR group_id = -1)";
         $rs = $DB->get_recordset_sql($sql, array($url, $group));
@@ -65,7 +65,7 @@ if (!empty($_POST['url'])) {
         $record->username = $user->firstname . " " . $user->lastname;
 
         // Determine group name from the annotations group id if groups enabled.
-        if ($group_annotation) {
+        if ($groupannotation) {
                 $record->groupname = groups_get_group_name($record->group_id);
         }
 

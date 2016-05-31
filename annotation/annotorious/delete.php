@@ -46,7 +46,7 @@ if (!empty($_POST['id'])) {
         $DB->execute($sql, array($id, $userid));
 
         // Delete the comments attatched to this annotaton.
-        $sql = "DELETE FROM mdl_annotation_comment WHERE annotation_id=?";
+        $sql = "DELETE FROM mdl_annotation_comment WHERE annotationid=?";
         $DB->execute($sql, array($id));
 
         echo "1"; // Success code.

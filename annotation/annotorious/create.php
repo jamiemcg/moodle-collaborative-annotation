@@ -16,7 +16,7 @@
 
 /**
  * Stores an annotation with the data received from a POST request
- * Must attatch timestamp, id, user_id to the annotation
+ * Must attatch timestamp, id, userid to the annotation
  * Returns the id of the created annotation
  *
  * @package   mod_annotation

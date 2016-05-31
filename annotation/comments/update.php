@@ -31,20 +31,20 @@ if (!empty($_POST)) {
 
     global $CFG, $DB, $USER;
 
-    $user_id = $USER->id;
+    $userid = $USER->id;
     $id = $_POST['id']; // The comment id.
     $comment = htmlentities($_POST['comment']);
 
     $timecreated = time(); // New time, timecreated isn't a good name.
 
-    $params = array("id" => $id, "user_id" => $user_id);
+    $params = array("id" => $id, "userid" => $userid);
     $table = "annotation_comment";
     $count = $DB->count_records($table, $params);
 
     // Count will be TRUE if the current user created the original comment.
     if ($count) {
-        $sql = "UPDAT mdl_annotation_comment SET timecreated = ?, comment = ? WHERE id = ? AND user_id = ?";
-        $DB->execute($sql, array($timecreated, $comment, $id, $user_id));
+        $sql = "UPDAT mdl_annotation_comment SET timecreated = ?, comment = ? WHERE id = ? AND userid = ?";
+        $DB->execute($sql, array($timecreated, $comment, $id, $userid));
 
         echo $timecreated; // Return the new time.
     } else {

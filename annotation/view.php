@@ -58,18 +58,18 @@ $table = "annotation_document";
 $results = $DB->get_records($table, array('cmid' => $cmid));
 foreach ($results as $result) {
         $contenthash = $result->location;
-        $document_type = $result->document_type;
-        $group_annotation = $result->group_annotation;
-        $group_annotations_visible = $result->group_annotations_visible;
-        $allow_from = $result->allow_from;
-        $allow_until = $result->allow_until;
+        $documenttype = $result->documenttype;
+        $groupannotation = $result->groupannotation;
+        $groupannotationsvisible = $result->groupannotationsvisible;
+        $allowfrom = $result->allowfrom;
+        $allowuntil = $result->allowuntil;
         break; // Bad way of doing this.
 }
 
 $PAGE->requires->css('/mod/annotation/styles/main.css');
 
-if ($document_type == 2) {
-    // The document_type is an image so load annotorious css/js.
+if ($documenttype == 2) {
+    // The documenttype is an image so load annotorious css/js.
     $PAGE->requires->css('/mod/annotation/styles/annotorious.css');
     $PAGE->requires->js('/mod/annotation/scripts/annotorious.min.js');
     $PAGE->requires->js('/mod/annotation/scripts/annotorious-storage.js');
@@ -83,7 +83,7 @@ if ($document_type == 2) {
     $PAGE->requires->js('/mod/annotation/scripts/annotator.touch.js');
 }
 
-if ($document_type == 1) {
+if ($documenttype == 1) {
     // The docuement is a source code file so load highlight.js css/js.
     $sourcecode = true;
     $PAGE->requires->css('/mod/annotation/styles/highlight.css');
@@ -113,14 +113,14 @@ if ($annotation->intro) {
 }
 
 // Add a button to allow users to switch to the 'discussion view' page.
-echo "<a href='view_discussion.php?id=$cmid&type=$document_type'>";
+echo "<a href='view_discussion.php?id=$cmid&type=$documenttype'>";
 echo "<button>" . get_string('discussion_view', 'annotation') . "</button>";
 echo "</a>";
 
 // If a teacher/admin/manager is logged in, add button for exporting annotation data.
 if ($teacher) {
-    $file_title = format_string($annotation->name);
-    echo "<a href='export.php?url=$cmid&type=$document_type'>";
+    $filetitle = format_string($annotation->name);
+    echo "<a href='export.php?url=$cmid&type=$documenttype'>";
     echo "<button>" .  get_string('export_data', 'annotation') . "</button>";
     echo "</a>";
 }
@@ -129,22 +129,22 @@ if ($teacher) {
 echo "<hr>";
 
 // If availability settings are defined, display the settings.
-if ($allow_from && $allow_until) {
-    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from) . " " .
-                            get_string('until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
+if ($allowfrom && $allowuntil) {
+    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allowfrom) . " " .
+                            get_string('until', 'annotation') . " " . date('d/m/Y H:i:s', $allowuntil);
     echo "<br>";
-} else if ($allow_from) {
-    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allow_from);
+} else if ($allowfrom) {
+    echo get_string('annotatable_from', 'annotation') . " " . date('d/m/Y H:i:s', $allowfrom);
     echo "<br>";
-} else if ($allow_until) {
-    echo get_string('annotatable_until', 'annotation') . " " . date('d/m/Y H:i:s', $allow_until);
+} else if ($allowuntil) {
+    echo get_string('annotatable_until', 'annotation') . " " . date('d/m/Y H:i:s', $allowuntil);
     echo "<br>";
 }
 
 // If groups are enabled and the current user is a teacher or group visibility is enabled,
 // Display the names of the groups so they are available for filtering.
 
-if ($group_annotation && ($group_annotations_visible || $teacher)) {
+if ($groupannotation && ($groupannotationsvisible || $teacher)) {
     // Find and display all of the group names relevant to this activity (i.e. the course groups).
     $params = array(
                     "courseid" => $course->id
@@ -171,10 +171,10 @@ if ($group_annotation && ($group_annotations_visible || $teacher)) {
 $path = $CFG->dataroot . DIRECTORY_SEPARATOR . "filedir" . DIRECTORY_SEPARATOR;
 $path = $path . substr($contenthash, 0, 2) . DIRECTORY_SEPARATOR  . substr($contenthash, 2, 2) . DIRECTORY_SEPARATOR;
 $path = $path . $contenthash;
-$file_contents = file_get_contents($path);
+$filecontents = file_get_contents($path);
 
 // Check if it is an image.
-if ($document_type == 2) {
+if ($documenttype == 2) {
     // Can't render images directly have to determine MIME type and base64 encode.
     // Need to find out MIME type from mdl_files table.
     $table = "files";
@@ -211,23 +211,23 @@ if ($document_type == 2) {
 <?php
 
 
-    $base64 = base64_encode($file_contents);
+    $base64 = base64_encode($filecontents);
     echo '<img class="annotatable" data-original="http://image.to.annotate" src="data:' . $mimetype . ';base64,' . $base64 . '">';
 } else {
     // It is a plain text document.
     echo '<div id="annotator-content">'; // Start of annotatable content.
 
-    if ($document_type == 1) {
+    if ($documenttype == 1) {
         // It is source code.
         echo "<pre><code>";
     } else {
         echo "<pre class='pre-text'>";
     }
 
-    $file_contents = htmlentities($file_contents); // Always replace the HTML entities.
-    echo $file_contents;
+    $filecontents = htmlentities($filecontents); // Always replace the HTML entities.
+    echo $filecontents;
 
-    if ($document_type == 1) {
+    if ($documenttype == 1) {
         echo "</code></pre>";
     } else {
         echo "</pre>";

@@ -44,10 +44,10 @@ if (!empty($_POST['url'])) {
     $teacher = has_capability('mod/annotation:manage', $context);
 
     // Check if group annotations are enabled and if group visibility is enabled.
-    if ($group_annotation && $teacher) {
+    if ($groupannotation && $teacher) {
         $sql = "SELECT * FROM mdl_annotation_image WHERE url = ?";
         $rs = $DB->get_recordset_sql($sql, array($url));
-    } else if ($group_annotation && ! $group_annotations_visible) {
+    } else if ($groupannotation && ! $groupannotationsvisible) {
         $sql = "SELECT * FROM mdl_annotation_image WHERE url = ? AND (group_id = ? OR group_id = -1)";
         $rs = $DB->get_recordset_sql($sql, array($url, $group));
     } else {
@@ -65,7 +65,7 @@ if (!empty($_POST['url'])) {
         // Get username of annotation creator.
         $user = $DB->get_record('user', array("id" => $record->userid));
         $record->username = $user->firstname . " " . $user->lastname;
-        if ($group_annotation) {
+        if ($groupannotation) {
             $record->groupname = groups_get_group_name($record->group_id);
         }
         // Enable editing of annotation only if current user created it.

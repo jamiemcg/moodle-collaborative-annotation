@@ -69,21 +69,21 @@ function store_annotation_document($data) {
     $table = 'annotation_document';
     $record = new stdClass();
     $record->id = 0; // DB will auto increment it.
-    $record->user_id = $userid;
+    $record->userid = $userid;
     $record->group_id = 0;
     $record->time_created = $timecreated;
-    $record->document_type = $data->type;
+    $record->documenttype = $data->type;
     $record->location = $contenthash;
     $record->lang = ""; // Lang column no longer used, highlightjs automatically detects language.
     $record->cmid = $cmid;
-    $record->group_annotation = $data->group_annotation;
-    if (isset($record->group_annotations_visible)) {
-        $record->group_annotations_visible = $data->group_annotations_visible;
+    $record->groupannotation = $data->groupannotation;
+    if (isset($record->groupannotationsvisible)) {
+        $record->groupannotationsvisible = $data->groupannotationsvisible;
     } else {
-        $record->group_annotations_visible = 0;
+        $record->groupannotationsvisible = 0;
     }
-    $record->allow_from = $data->allow_from;
-    $record->allow_until = $data->allow_until;
+    $record->allowfrom = $data->allowfrom;
+    $record->allowuntil = $data->allowuntil;
 
     $insertid = $DB->insert_record('annotation_document', $record, false);
 }
@@ -97,35 +97,35 @@ function update_annotation_document($data) {
     $context = context_module::instance($cmid);
     $record = $DB->get_records($table);
 
-    $document_type = $data->type;
-    $group_annotation = $data->group_annotation;
-    $group_annotations_visible = $data->group_annotations_visible;
-    $allow_from = $data->allow_from;
-    $allow_until = $data->allow_until;
+    $documenttype = $data->type;
+    $groupannotation = $data->groupannotation;
+    $groupannotationsvisible = $data->groupannotationsvisible;
+    $allowfrom = $data->allowfrom;
+    $allowuntil = $data->allowuntil;
 
-    $sql = "UPDATE mdl_annotation_document SET document_type = ?, group_annotation = ?,
-                     group_annotations_visible = ?, allow_from = ?, allow_until = ? WHERE cmid = ? ";
-    $DB->execute($sql, array($document_type, $group_annotation, $group_annotations_visible, $allow_from, $allow_until, $cmid));
+    $sql = "UPDATE mdl_annotation_document SET documenttype = ?, groupannotation = ?,
+                     groupannotationsvisible = ?, allowfrom = ?, allowuntil = ? WHERE cmid = ? ";
+    $DB->execute($sql, array($documenttype, $groupannotation, $groupannotationsvisible, $allowfrom, $allowuntil, $cmid));
 }
 
 /**
  * Checks time constraints. Returns true if
  * the document is annotatable. Returns false otherwise.
  */
-function check_time_constraint($allow_from, $allow_until) {
-    $current_time = time();
-    if (!$allow_from && !$allow_until) {
+function check_time_constraint($allowfrom, $allowuntil) {
+    $currenttime = time();
+    if (!$allowfrom && !$allowuntil) {
         return true;
-    } else if ($allow_from && $allow_until) {
-        if ($current_time < $allow_from || $current_time > $allow_until) {
+    } else if ($allowfrom && $allowuntil) {
+        if ($currenttime < $allowfrom || $currenttime > $allowuntil) {
             return false;
         }
-    } else if ($allow_from) {
-        if ($current_time < $allow_from) {
+    } else if ($allowfrom) {
+        if ($currenttime < $allowfrom) {
             return false;
         }
-    } else if ($allow_until) {
-        if ($current_time > $allow_until) {
+    } else if ($allowuntil) {
+        if ($currenttime > $allowuntil) {
             return false;
         }
     }
