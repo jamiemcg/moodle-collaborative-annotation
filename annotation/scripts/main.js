@@ -1,6 +1,4 @@
-/**
- *  This 'main.js' file contains code for both text and image annotating, including commenting
- */
+// This 'main.js' file contains code for both text and image annotating, including commenting.
 
 /*
     Adds toggling support to the annotation side-bar
@@ -10,7 +8,6 @@ require(['jquery'], function($) {
         e.preventDefault();
         $(this).parent().toggleClass('nav-open');
     });
-
 
     $('body').on('click', '.annotation', function(e) {
         e.preventDefault();
@@ -46,12 +43,11 @@ function htmlEntities(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-
 /**
-  * Simple function to trim whitespace from strings instead of using jQuery
-  */
-function trim(s){ 
-    return ( s || '' ).replace( /^\s+|\s+$/g, '' ); 
+ * Simple function to trim whitespace from strings instead of using jQuery
+ */
+function trim(s){
+    return ( s || '' ).replace( /^\s+|\s+$/g, '' );
 }
 
 /**
@@ -112,28 +108,27 @@ require(['jquery'], function(jQuery) {
             var target = '#comment-box-' + annotation_id;
             var comment = jQuery(target).val();
 
-
-            //Only process comment if length > 0
+            // Only process comment if length > 0.
             if(comment.length > 0) {
-                //Length is > 0 so we post the comment
-                //Create a JSON encoded 'comment' object that can be posted via AJAX
+                // Length is > 0 so we post the comment.
+                // Create a JSON encoded 'comment' object that can be posted via AJAX.
 
                 var post_data = {
-                    url: getQueryVariables("id"), //page url = activity_id
+                    url: getQueryVariables("id"), // Page url = activity_id.
                     annotation_id: annotation_id,
                     comment: comment
                 };
-                
-                //Send data to server and store response
+
+                // Send data to server and store response.
                 jQuery.post("./comments/create.php", JSON.parse(JSON.stringify(post_data)), function(data) {
                     if(data == "false") {
-                        //Comment hasn't been stored, work out why and respond   
-                        alert("Error creating comment!"); 
+                        // Comment hasn't been stored, work out why and respond.
+                        alert("Error creating comment!");
                     }
                     else {
-                        //Comment successfully stored, now display it on the page
+                        // Comment successfully stored, now display it on the page.
                         var response = JSON.parse(data);
-                        jQuery(target).val(""); //Empty the comment text box
+                        jQuery(target).val(""); // Empty the comment text box.
 
                         target = '#comments-region-' + annotation_id;
                         var username = response.username;
@@ -142,10 +137,10 @@ require(['jquery'], function(jQuery) {
 
                         jQuery(target).append(insert);
 
-                        //TODO Update the number of comments (count)
+                        // TODO Update the number of comments (count).
                     }
                 });
-                
+
             }
         });
     });
