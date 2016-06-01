@@ -18,10 +18,10 @@ The annotation activity module allows students and teachers to collaboratively a
 5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information on installing plugins
 
 ##Screenshots
-![Text Annotation](http://imgur.com/2GFevFS "Text Annotation")
-![Source Code Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation.png?token=AF697yPRRpGdf6xpoMWGux13v-MSBDwEks5W7VrowA%3D%3D "Source Code Annotation")
-![Source Code Annotation 2](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation%202.png?token=AF6976RNXHAy2jg-fkz8EZthTPGJtdlRks5W7VrnwA%3D%3D "Source Code Annotation 2")
-![Image Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Image%20Annotation.png?token=AF697zhSNneQzuJACdHmndLt8Gnmsj2Lks5W7VrmwA%3D%3D "Image Annotation")
+![Text Annotation](http://i.imgur.com/2GFevFS.png "Text Annotation")
+![Source Code Annotation](http://i.imgur.com/iBz8dJh.png "Source Code Annotation")
+![Source Code Annotation 2](http://i.imgur.com/ZWPjAmk.png "Source Code Annotation 2")
+![Image Annotation](http://i.imgur.com/ieoxEnz.png "Image Annotation")
 
 ##Usage
 
