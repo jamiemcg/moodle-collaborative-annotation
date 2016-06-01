@@ -1,6 +1,6 @@
 #Moodle Collaborative Annotation
 
-The annotation activity module allows students and teachers to collaboratively annotate text documents, source code and images. Students can be divided into groups to enhance peer learning. Time restrictions can be applied to make the module useful for in-class learning.
+The annotation activity module allows students and teachers to collaboratively annotate text documents, source code and images. Students can be divided into groups to enhance peer learning. Time restrictions can be applied to make the module useful for in-class learning. Users can attach comments to annotations, furthering discussion. Teachers can also choose to grade students based on any annotation activities.
 
 ####Contents
  - [Installation](#installation)
@@ -9,7 +9,6 @@ The annotation activity module allows students and teachers to collaboratively a
  - [Installation Details](#installation-details)
  - [Issues](#issues)
  - [Libraries](#libraries)
- - [Source Code](#source-code)
 
 ##Installation
 1. Download the latest [zip file from GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/archive/master.zip)
@@ -19,7 +18,7 @@ The annotation activity module allows students and teachers to collaboratively a
 5. Check out the [Moodle docs](https://docs.moodle.org/28/en/Installing_plugins) for more information on installing plugins
 
 ##Screenshots
-![Text Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Text%20Annotation.png?token=AF697wn1y0sxw-C9baB9oxodnhVsrpoPks5W7VsNwA%3D%3D "Text Annotation")
+![Text Annotation](http://imgur.com/2GFevFS "Text Annotation")
 ![Source Code Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation.png?token=AF697yPRRpGdf6xpoMWGux13v-MSBDwEks5W7VrowA%3D%3D "Source Code Annotation")
 ![Source Code Annotation 2](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Source%20Code%20Annotation%202.png?token=AF6976RNXHAy2jg-fkz8EZthTPGJtdlRks5W7VrnwA%3D%3D "Source Code Annotation 2")
 ![Image Annotation](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Image%20Annotation.png?token=AF697zhSNneQzuJACdHmndLt8Gnmsj2Lks5W7VrmwA%3D%3D "Image Annotation")
@@ -33,18 +32,14 @@ The installation of this module results in the creation of four new database tab
 2. ```mdl_annotation_annotation```: stores annotations for text files
 3. ```mdl_annotation_document```: stores details about the uploaded files
 4. ```mdl_annotation_image```: stores annotations for image files
-
-**Database Structure (may change):**
-![Database Schema ](https://raw.githubusercontent.com/jamiemcg/moodle-collaborative-annotation/master/images/Current%20Database%20Structure.png?token=AF6975qkU8m_oZAv1c-UzcSkt_Vo4DEqks5W7VrDwA%3D%3D)
+5. ```mdl_annotation_comment```: stores comments attatched to annotations for both images and text files
 
 ##Issues
 You can check out existing issues or report newly discovered issues [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
 
 ##Libraries
 This module makes use of the following open source projects:
-- [Annotatorjs](http://annotatorjs.org/) - Text annotations
-- [Annotorious](http://annotorious.github.io/) - Image annotations
-- [highlight.js](https://highlightjs.org/) - Source code highlighting
 
-##Source Code
-You can check out the source code [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation)
+- [Annotatorjs](http://annotatorjs.org/) - Text annotations  
+- [Annotorious](http://annotorious.github.io/) - Image annotations  
+- [highlight.js](https://highlightjs.org/) - Source code highlighting  
