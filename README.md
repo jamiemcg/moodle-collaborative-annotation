@@ -5,10 +5,10 @@ The annotation activity module allows students and teachers to collaboratively a
 ####Contents
  - [Installation](#installation)
  - [Screenshots](#screenshots)
- - [Usage](#usage)
  - [Installation Details](#installation-details)
  - [Issues](#issues)
  - [Libraries](#libraries)
+ - [Source Code](#source-code)
 
 ##Installation
 1. Download the latest [zip file from GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/archive/master.zip)
@@ -23,16 +23,17 @@ The annotation activity module allows students and teachers to collaboratively a
 ![Source Code Annotation 2](http://i.imgur.com/ZWPjAmk.png "Source Code Annotation 2")
 ![Image Annotation](http://i.imgur.com/ieoxEnz.png "Image Annotation")
 
-##Usage
 
 ##Installation Details
-The installation of this module results in the creation of four new database tables:
+The installation of this module results in the creation of five new database tables:
 
 1. ```mdl_annotation```: stores details about the activities created with this module
-2. ```mdl_annotation_annotation```: stores annotations for text files
+2. ```mdl_annotation_annotation```: stores annotations for text files (including source code and plain text)
 3. ```mdl_annotation_document```: stores details about the uploaded files
 4. ```mdl_annotation_image```: stores annotations for image files
 5. ```mdl_annotation_comment```: stores comments attatched to annotations for both images and text files
+
+Note that both plain text files and source code files are treated the same. Source code files have ```highlight.js``` applied to achieve syntax highlighting. Info about image annotations has to be stored in a different database table due to different annotation formats between ```annotator.js``` and ```annotorious```.
 
 ##Issues
 You can check out existing issues or report newly discovered issues [on GitHub](https://github.com/jamiemcg/moodle-collaborative-annotation/issues)
@@ -43,3 +44,6 @@ This module makes use of the following open source projects:
 - [Annotatorjs](http://annotatorjs.org/) - Text annotations  
 - [Annotorious](http://annotorious.github.io/) - Image annotations  
 - [highlight.js](https://highlightjs.org/) - Source code highlighting  
+
+#Source Code
+You can check out and contribute to the source code on the [GitHub repository](https://github.com/jamiemcg/moodle-collaborative-annotation)
